@@ -1,0 +1,11 @@
+C:\Users\rache\source\repos\GraphsClassProject\bin\Debug\GraphsClassProject.exe.config
+C:\Users\rache\source\repos\GraphsClassProject\bin\Debug\GraphsClassProject.exe
+C:\Users\rache\source\repos\GraphsClassProject\bin\Debug\GraphsClassProject.pdb
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.AssemblyReference.cache
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.SuggestedBindingRedirects.cache
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.Form1.resources
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.Properties.Resources.resources
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.GenerateResource.cache
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.CoreCompileInputs.cache
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.exe
+C:\Users\rache\source\repos\GraphsClassProject\obj\Debug\GraphsClassProject.pdb
