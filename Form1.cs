@@ -34,10 +34,10 @@ namespace GraphsClassProject
             //int x = 0; int y = 20;
 
             // int x = 300; int y = 20;
-            for (int nodeNumber = 0; nodeNumber < digraph.Nodes.Count; nodeNumber++) // every node is on its own line
+            for (int nodeNumber = 0; nodeNumber < digraph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
-                label.Text = digraph.Nodes[nodeNumber].Name;
+                label.Text = digraph.Vertices[nodeNumber].Name;
                 label.TextAlign = ContentAlignment.MiddleCenter;
                 // label.Location = new Point(x, y);
 
@@ -66,7 +66,7 @@ namespace GraphsClassProject
                 Graphics graphics = panelGraph.CreateGraphics();
                 Pen pen = new Pen(Color.Black);
 
-                Point location = GetLocation(nodeNumber, digraph.Nodes.Count);
+                Point location = GetLocation(nodeNumber, digraph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
                 nodeCircleLocations.Add(location);
 
@@ -89,9 +89,9 @@ namespace GraphsClassProject
                 label.Refresh();
             }
 
-            for (int nodeNumber = 0; nodeNumber < digraph.Nodes.Count; nodeNumber++)
+            for (int nodeNumber = 0; nodeNumber < digraph.Vertices.Count; nodeNumber++)
             {
-                Vertex currNode = digraph.Nodes[nodeNumber];
+                Vertex currNode = digraph.Vertices[nodeNumber];
                 foreach (Vertex neighbor in currNode.Neighbors)
                 {
                     if (currNode.Neighbors.Contains(neighbor))

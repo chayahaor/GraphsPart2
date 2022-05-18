@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Data;
 
 namespace GraphsClassProject
 {
@@ -15,6 +16,10 @@ namespace GraphsClassProject
             Vertices.Add(v);
         }
 
+        public bool LoadGraph(DataSet dataSet)
+        {
+            return true;
+        }
         public bool LoadVertices(String FileName)
         {
             bool RetVal = true;

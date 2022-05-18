@@ -11,84 +11,65 @@ namespace GraphsClassProject
 {
     class Digraph
     {
-        public List<Vertex> Nodes { get; set; }
+        public List<Vertex> Vertices { get; set; }
 
         public Digraph()
         {
-            Nodes = new List<Vertex>();
+            Vertices = new List<Vertex>();
         }
 
         public Digraph(List<Vertex> nodes)
         {
-            Nodes = nodes;
+            Vertices = nodes;
         }
 
         public void AddNode(Vertex node)
         {
-            Nodes.Add(node);
+            Vertices.Add(node);
         }
 
-        public bool LoadVerticesFromSQL(String server, String database)
+        public bool LoadGraph(DataSet dataSet)
         {
-            SqlConnection sqlCon = null;
             bool retVal = true;
-            try
+
+            // edge table: initialNode, terminalNode, weight (should be 1)
+
+            var nrEdges = dataSet.Tables["Edges"].Rows.Count;
+            for (int row = 1; row < nrEdges; ++row)
             {
-                String strConnect = $"Server={server};Database={database};Trusted_Connection=True;";
-                sqlCon = new SqlConnection(strConnect);
-                sqlCon.Open();
+                // check initial node
+                String initialNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[0];
+                String terminalNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[1];
 
-                // get all of the graphs and filter them,
-                // or reduce the list we have to unweighted digraphs
-                // get all graphs from SQL, via sp, and then only turn unweighted digraphs into this class
+                int initialIndex = Vertices.FindIndex(item => initialNode.Equals(item.Name));
+                int terminalIndex = Vertices.FindIndex(item => terminalNode.Equals(item.Name));
 
-                // stored procedure #1) to get all graph ids
-                // stored procedure #2) get graph type from graph id
-                // for all relevant graph ids, (unweighted digraph): 
-                // graph type should be a parameter for the following stored procedure: 
-                // stored procedure #3) get the edge information for each graph
-                // stored procedure #4) get the nodes for each graph
+                Vertex initial = initialIndex < 0 ? new Vertex(initialNode)
+                                                : Vertices[initialIndex];
+                Vertex terminal = terminalIndex < 0 ? new Vertex(terminalNode)
+                                                : Vertices[terminalIndex];
 
-                SqlCommand sqlCommand1 = new SqlCommand("spName1", sqlCon);
-                sqlCommand1.CommandType = CommandType.StoredProcedure;
-                sqlCommand1.ExecuteNonQuery();
-
-                SqlCommand sqlCommand2 = new SqlCommand("spName2", sqlCon);
-                sqlCommand2.CommandType = CommandType.StoredProcedure;
-                sqlCommand2.ExecuteNonQuery();
-
-                SqlCommand sqlCommand3 = new SqlCommand("spName3", sqlCon);
-                sqlCommand3.CommandType = CommandType.StoredProcedure;
-                sqlCommand3.ExecuteNonQuery();
-
-                SqlCommand sqlCommand4 = new SqlCommand("spName4", sqlCon);
-                sqlCommand4.CommandType = CommandType.StoredProcedure;
-                sqlCommand4.ExecuteNonQuery();
-
-                SqlDataAdapter da = new SqlDataAdapter(sqlCommand1);
-
-            }
-            catch (Exception ex)
-
-            {
-                retVal = false;
-                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-
-            finally
-
-            {
-
-                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
-
-                    sqlCon.Close();
-
+                if (initialIndex < 0 && terminalIndex < 0)
+                {
+                    // neither exist - create both, add edge between them with weight = 1
+                    Vertices.Add(initial);
+                    Vertices.Add(terminal);
+                }
+                else if (initialIndex < 0 && terminalIndex > -1)
+                {
+                    // initial doesn't exist, create and add edge between it and terminal with weight = 1
+                    Vertices.Add(initial);
+                }
+                else if (initialIndex > -1 && terminalIndex < 0)
+                {
+                    // terminal doesn't exist, create and add edge between initial and it with weight = 1
+                    Vertices.Add(terminal);
+                }
+                // if they both already exist, no need to add anything
+                initial.AddEdge(terminal, 1);
             }
 
             return retVal;
-
-
         }
 
         public bool LoadVertices(String fileName)
@@ -112,7 +93,7 @@ namespace GraphsClassProject
                         {
                             // TODO add check that the vertex names are not repeated  
                             Vertex v = new Vertex(vertices[0]);
-                            Nodes.Add(v);
+                            Vertices.Add(v);
                             string vertexName = vertices[0];
                             for (int eix = 1; eix < vertices.Length; ++eix)
                             {

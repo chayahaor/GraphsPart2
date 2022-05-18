@@ -1,10 +1,118 @@
 ﻿using System;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+
+
+
 namespace GraphsClassProject
 {
     public class GetData
     {
+        private Digraph digraph = new Digraph();
+        private WeightedDigraph weightedDigraph = new WeightedDigraph();
+        private Graph graph = new Graph();
+        private WeightedGraph weightedGraph = new WeightedGraph();
+
         public GetData()
         {
         }
+
+        public bool LoadVerticesFromSQL(String server, String database)
+        {
+            SqlConnection sqlCon = null;
+            bool retVal = true;
+            try
+            {
+                String strConnect = $"Server={server};Database={database};Trusted_Connection=True;";
+                sqlCon = new SqlConnection(strConnect);
+                sqlCon.Open();
+
+                // get all of the graphs and filter them,
+                // or reduce the list we have to unweighted digraphs
+                // get all graphs from SQL, via sp, and then only turn unweighted digraphs into this class
+
+                // stored procedure #1) to get all graph ids
+                // stored procedure #2) get graph type from graph id
+                // for all relevant graph ids, (unweighted digraph):
+                // graph type should be a parameter for the following stored procedure:
+                // stored procedure #3) get the edge information for each graph
+                // stored procedure #4) get the nodes for each graph
+
+                // get graph names
+                SqlCommand getAllGraphs = new SqlCommand("spGetAllGraphs", sqlCon);
+                getAllGraphs.CommandType = CommandType.StoredProcedure;
+                getAllGraphs.ExecuteNonQuery();
+                SqlDataAdapter da1 = new SqlDataAdapter(getAllGraphs);
+                DataSet dataset1 = new DataSet();
+                da1.Fill(dataset1, "Graphs");
+
+                // table contains graphName, graphType
+
+                Dictionary<String, String> graphTypes = new Dictionary<string, string>();
+
+                var nrGraphs = dataset1.Tables["Graphs"].Rows.Count;
+                for (int row = 1; row < nrGraphs; ++row)
+                {
+                    String name = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[0];
+                    String type = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
+                    graphTypes.Add(name, type);
+                }
+
+                foreach (KeyValuePair<String, String> entry in graphTypes)
+                {
+                    SqlCommand getEdgesForGraph = new SqlCommand("spGetEdgesForGraph", sqlCon);
+                    getEdgesForGraph.CommandType = CommandType.StoredProcedure;
+                    getEdgesForGraph.ExecuteNonQuery();
+                    SqlDataAdapter da2 = new SqlDataAdapter(getEdgesForGraph);
+                    DataSet dataset2 = new DataSet();
+                    da2.Fill(dataset2, "Edges");
+
+                    // edge table: initialNode, terminalNode, weight
+
+                    switch (entry.Value)
+                    {
+                        case "WeightedDigraph":
+                            weightedDigraph.LoadGraph(dataset2);
+                            break;
+
+                        case "UnweightedDigraph":
+                            digraph.LoadGraph(dataset2);
+                            break;
+
+                        case "WeightedGraph":
+                            weightedGraph.LoadGraph(dataset2);
+                            break;
+
+                        case "UnweightedGraph":
+                            graph.LoadGraph(dataset2);
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+
+            {
+                retVal = false;
+                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+
+            finally
+
+            {
+
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+
+                    sqlCon.Close();
+
+            }
+
+            return retVal;
+
+
+        }
+
     }
 }
