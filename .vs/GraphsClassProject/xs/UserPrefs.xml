@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{9E2F921D-C173-442A-8284-1E2357115A60}|Default">
+  <MonoDevelop.Ide.ItemProperties.GraphsClassProject PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Graph.cs">
+    <Files>
+      <File FileName="Digraph.cs" Line="3" Column="17" />
+      <File FileName="Form1.cs" Line="2" Column="34" />
+      <File FileName="Graph.cs" Line="3" Column="17" />
+      <File FileName="Program.cs" Line="1" Column="14" />
+      <File FileName="Vertex.cs" Line="2" Column="34" />
+      <File FileName="WeightedDigraph.cs" Line="3" Column="17" />
+      <File FileName="WeightedGraph.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="GraphsClassProject" expanded="True">
+            <Node name="GraphsClassProject" expanded="True">
+              <Node name="Graph.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
