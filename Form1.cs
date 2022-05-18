@@ -59,8 +59,8 @@ namespace GraphsClassProject
 
             for (int nodeNumber = 0; nodeNumber < digraph.Nodes.Count; nodeNumber++)
             {
-                Node currNode = digraph.Nodes[nodeNumber];
-                foreach (Node neighbor in currNode.Neighbors)
+                Vertex currNode = digraph.Nodes[nodeNumber];
+                foreach (Vertex neighbor in currNode.Neighbors)
                 {
                     if (currNode.Neighbors.Contains(neighbor))
                     {
@@ -125,7 +125,7 @@ namespace GraphsClassProject
 
         }
 
-        private Point GetNeighborLocation(Node neighbor, Point point)
+        private Point GetNeighborLocation(Vertex neighbor, Point point)
         {
             for (int labelIndex = 0; labelIndex < labelNodes.Count; labelIndex++)
             {

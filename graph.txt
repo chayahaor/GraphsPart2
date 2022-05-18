@@ -17,9 +17,9 @@ P
 Q
 R B
 S
-T V A
+T V
 U J
-V H
+V H A
 W
 X H
 Y
