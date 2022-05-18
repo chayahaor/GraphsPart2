@@ -15,12 +15,13 @@ namespace GraphsClassProject
     public partial class Form1 : Form
     {
         private List<Label> labelNodes = new List<Label>();
+        private List<Point> nodeCircleLocations = new List<Point>();
 
         private Digraph digraph;
 
         private Font SmallFont = new Font("Arial", 8);
 
-        private readonly int CENTER = 200;
+        private readonly int CENTER = 325;
 
         public Form1()
         {
@@ -35,12 +36,48 @@ namespace GraphsClassProject
 
         public void FillPanel()
         {
+            //int x = 0; int y = 20;
+
+            // int x = 300; int y = 20;
             for (int nodeNumber = 0; nodeNumber < digraph.Nodes.Count; nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
                 label.Text = digraph.Nodes[nodeNumber].Name;
                 label.TextAlign = ContentAlignment.MiddleCenter;
-                label.Location = GetLocation(nodeNumber, digraph.Nodes.Count);
+                // label.Location = new Point(x, y);
+
+                /*
+                y += 50;
+
+                if (y > 600)
+                {
+                    x += 200;
+                    y = 20;
+                }
+                */
+
+                /*
+                if (x > 700)
+                {
+                    x = 0; y += 100;
+                }
+                else
+                {
+                    x += 100;
+                }
+                */
+
+
+                Graphics graphics = panelGraph.CreateGraphics();
+                Pen pen = new Pen(Color.Black);
+
+                Point location = GetLocation(nodeNumber, digraph.Nodes.Count);
+                graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
+                nodeCircleLocations.Add(location);
+
+
+                //label.Location = new Point(location.X, location.Y - 20);
+                label.Location = GetNewXAndY(location);
                 label.Font = SmallFont;
                 label.Size = new Size(20, 15);
                 label.ForeColor = Color.White;
@@ -69,9 +106,11 @@ namespace GraphsClassProject
 
                         AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
                         pen.CustomEndCap = adjustableArrowCap;
+
                         pen.Width = 3;
                         pen.Color = Color.Black;
 
+                        /*
                         if (nodeNumber > 16)
                         {
                             graphics.DrawLine(pen, labelNodes[nodeNumber].Location, GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
@@ -80,6 +119,10 @@ namespace GraphsClassProject
                         {
                             graphics.DrawLine(pen, GetNewXAndY(labelNodes[nodeNumber]), GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
                         }
+                        */
+
+
+                        graphics.DrawLine(pen, nodeCircleLocations[nodeNumber], GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
                     }
                 }
             }
@@ -133,27 +176,36 @@ namespace GraphsClassProject
                 {
                     Label label = labelNodes[labelIndex];
 
-                    return GetNewXAndY(label);
+                    return nodeCircleLocations[labelIndex];
+                    // return new Point(label.Location.X, label.Location.Y + 20);
+
+                    //return GetNewXAndY(label.Location);
                 }
             }
             //return point;
             return new Point(200, 200);
         }
 
-        private Point GetNewXAndY(Label label)
+        private Point GetNewXAndY(Point location)
         {
             int xCoord;
             int yCoord;
 
-            if (label.Location.X >= 200)
-                xCoord = label.Location.X - 20;
+            if (location.X >= 200)
+                xCoord = location.X + 10;
             else
-                xCoord = label.Location.X + 20;
-            if (label.Location.Y >= 200)
-                yCoord = label.Location.Y - 15;
+                xCoord = location.X - 15;
+            if (location.Y >= 200)
+                yCoord = location.Y + 15;
             else
-                yCoord = label.Location.Y + 15;
+                yCoord = location.Y - 15;
             return new Point(xCoord, yCoord);
+
+        }
+
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
 
         }
 
@@ -161,6 +213,5 @@ namespace GraphsClassProject
         {
             FillPanel();
         }
-
     }
 }
