@@ -19,10 +19,12 @@ namespace GraphsClassProject
         {
         }
 
-        public bool LoadVerticesFromSQL(String server, String database)
+        public Dictionary<String, String> LoadVerticesFromSQL(String server, String database)
         {
+            // table contains graphName, graphType
+            Dictionary<String, String> graphTypes = new Dictionary<string, string>();
+
             SqlConnection sqlCon = null;
-            bool retVal = true;
             try
             {
                 String strConnect = $"Server={server};Database={database};Trusted_Connection=True;";
@@ -47,10 +49,6 @@ namespace GraphsClassProject
                 SqlDataAdapter da1 = new SqlDataAdapter(getAllGraphs);
                 DataSet dataset1 = new DataSet();
                 da1.Fill(dataset1, "Graphs");
-
-                // table contains graphName, graphType
-
-                Dictionary<String, String> graphTypes = new Dictionary<string, string>();
 
                 var nrGraphs = dataset1.Tables["Graphs"].Rows.Count;
                 for (int row = 1; row < nrGraphs; ++row)
@@ -89,13 +87,13 @@ namespace GraphsClassProject
                             graph.LoadGraph(dataset2);
                             break;
                     }
+
                 }
             }
             catch (Exception ex)
 
             {
-                retVal = false;
-                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
+                 MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 
@@ -109,10 +107,19 @@ namespace GraphsClassProject
 
             }
 
-            return retVal;
-
-
+            return graphTypes;
         }
 
     }
+
+    /*
+     * Return the dictionary so that the form will access all the graphs that we're dealing with
+     * The GUI displays a list of all the graph names
+     * Clicking on the graph name will load that graph
+     * 
+     * Graph1 Graph2 Graph3
+     * 
+     * Click on Graph1 (unweighted digraph):
+     * the form calls new Digraph(), digraph.LoadData(Graph1);
+     */
 }

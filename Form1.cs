@@ -25,7 +25,7 @@ namespace GraphsClassProject
             panelGraph.BackColor = Color.Gray;
 
             digraph = new Digraph();
-
+            
             digraph.LoadVertices(ConfigurationManager.AppSettings["TXT"]);
         }
 

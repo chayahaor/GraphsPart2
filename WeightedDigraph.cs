@@ -17,8 +17,58 @@ namespace GraphsClassProject
 
         public bool LoadGraph(DataSet dataSet)
         {
-            return true;
+            bool retVal = true;
+
+            try
+            {
+                // edge table: initialNode, terminalNode, weight (should be 1)
+
+                var nrEdges = dataSet.Tables["Edges"].Rows.Count;
+                for (int row = 1; row < nrEdges; ++row)
+                {
+                    // check initial node
+                    String initialNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[0];
+                    String terminalNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[1];
+                    int weight = (int)dataSet.Tables["Edges"].Rows[row].ItemArray[2];
+
+                    int initialIndex = Vertices.FindIndex(item => initialNode.Equals(item.Name));
+                    int terminalIndex = Vertices.FindIndex(item => terminalNode.Equals(item.Name));
+
+                    Vertex initial = initialIndex < 0 ? new Vertex(initialNode)
+                                                    : Vertices[initialIndex];
+                    Vertex terminal = terminalIndex < 0 ? new Vertex(terminalNode)
+                                                    : Vertices[terminalIndex];
+
+                    if (initialIndex < 0 && terminalIndex < 0)
+                    {
+                        // neither exist - create both, add edge between them with weight = 1
+                        Vertices.Add(initial);
+                        Vertices.Add(terminal);
+                    }
+                    else if (initialIndex < 0 && terminalIndex > -1)
+                    {
+                        // initial doesn't exist, create and add edge between it and terminal with weight = 1
+                        Vertices.Add(initial);
+                    }
+                    else if (initialIndex > -1 && terminalIndex < 0)
+                    {
+                        // terminal doesn't exist, create and add edge between initial and it with weight = 1
+                        Vertices.Add(terminal);
+                    }
+                    // if they both already exist, no need to add anything
+                    initial.AddEdge(terminal, weight);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.GetBaseException());
+                Console.WriteLine(e.StackTrace);
+                retVal = false;
+            }
+
+            return retVal;
         }
+
         public bool LoadVertices(String FileName)
         {
             bool RetVal = true;
