@@ -77,7 +77,6 @@ namespace GraphsClassProject
                 Console.WriteLine(e.StackTrace);
                 retVal = false;
             }
-
             return retVal;
         }
 
