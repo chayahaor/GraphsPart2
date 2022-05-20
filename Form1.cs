@@ -12,8 +12,8 @@ namespace GraphsClassProject
     {
         //private Digraph digraph;
 
-        private List<Label> labelNodes = new List<Label>();
-        private List<Point> nodeCircleLocations = new List<Point>();
+        public List<Label> LabelNodes { get; set; }
+        public List<Point> NodeCircleLocations { get; set; }
 
         private List<Digraph> digraphs;
 
@@ -39,7 +39,7 @@ namespace GraphsClassProject
             InitializeComponent();
 
             //digraph = new Digraph("TXT");
-         //   digraph.LoadVertices(ConfigurationManager.AppSettings["TXT"]);
+            //digraph.LoadVertices(ConfigurationManager.AppSettings["TXT"]);
 
 
             digraphs = new List<Digraph>();
@@ -101,10 +101,6 @@ namespace GraphsClassProject
                         break;
                 }
             }
-
-
-
-
         }
 
         private void btn_Click(object sender, EventArgs e)
@@ -118,44 +114,46 @@ namespace GraphsClassProject
                     {
                         if (weightedDigraph.GraphName.Equals(button.Name))
                         {
-                            SetUpWeightedDigraph(weightedDigraph);// fill the panel
+                            SetUpWeightedDigraph(weightedDigraph); // fill the panel
                             break;
                         }
                     }
+
                     break;
                 case "Unweighted_Directed":
                     foreach (Digraph digraph in digraphs)
                     {
                         if (digraph.GraphName.Equals(button.Name))
                         {
-                            SetUpDigraph(digraph);// fill the panel
+                            SetUpDigraph(digraph); // fill the panel
                             break;
                         }
                     }
+
                     break;
                 case "Weighted_Undirected":
                     foreach (WeightedGraph weightedGraph in weightedGraphs)
                     {
                         if (weightedGraph.GraphName.Equals(button.Name))
                         {
-                            SetUpWeightedGraph(weightedGraph);// fill the panel
+                            SetUpWeightedGraph(weightedGraph); // fill the panel
                             break;
                         }
                     }
+
                     break;
                 case "Unweighted_Undirected":
                     foreach (Graph graph in graphs)
                     {
                         if (graph.GraphName.Equals(button.Name))
                         {
-                            SetUpGraph(graph);// fill the panel
+                            SetUpGraph(graph); // fill the panel
                             break;
                         }
                     }
+
                     break;
-
             }
-
         }
 
         private void SetUpWeightedDigraph(WeightedDigraph weightedDigraph)
@@ -180,6 +178,8 @@ namespace GraphsClassProject
 
         internal void FillPanel(Digraph digraph)
         {
+            LabelNodes = new List<Label>();
+            NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
 
@@ -195,7 +195,7 @@ namespace GraphsClassProject
 
                 Point location = GetLocation(nodeNumber, digraph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
-                nodeCircleLocations.Add(location);
+                NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
                 label.Font = SmallFont;
@@ -204,11 +204,10 @@ namespace GraphsClassProject
                 label.SendToBack();
                 label.Refresh();
 
-                labelNodes.Add(label);
-
+                LabelNodes.Add(label);
             }
 
-            foreach (Label label in labelNodes)
+            foreach (Label label in LabelNodes)
             {
                 panelGraph.Controls.Add(label);
                 label.Refresh();
@@ -231,8 +230,8 @@ namespace GraphsClassProject
                         pen.Color = Color.Black;
 
 
-                        Point originalLocation = nodeCircleLocations[nodeNumber];
-                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        Point originalLocation = NodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, LabelNodes[nodeNumber].Location);
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
@@ -241,10 +240,16 @@ namespace GraphsClassProject
 
         internal void FillPanel(WeightedDigraph weightedDigraph)
         {
+            
+            LabelNodes = new List<Label>();
+            NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
 
-            for (int nodeNumber = 0; nodeNumber < weightedDigraph.Vertices.Count; nodeNumber++) // every node is on its own line
+
+            for (int nodeNumber = 0;
+                 nodeNumber < weightedDigraph.Vertices.Count;
+                 nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
                 label.Text = weightedDigraph.Vertices[nodeNumber].Name;
@@ -253,10 +258,9 @@ namespace GraphsClassProject
 
                 Graphics graphics = panelGraph.CreateGraphics();
                 Pen pen = new Pen(Color.Black);
-
                 Point location = GetLocation(nodeNumber, weightedDigraph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
-                nodeCircleLocations.Add(location);
+                NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
                 label.Font = SmallFont;
@@ -265,11 +269,10 @@ namespace GraphsClassProject
                 label.SendToBack();
                 label.Refresh();
 
-                labelNodes.Add(label);
-
+                LabelNodes.Add(label);
             }
 
-            foreach (Label label in labelNodes)
+            foreach (Label label in LabelNodes)
             {
                 panelGraph.Controls.Add(label);
                 label.Refresh();
@@ -288,22 +291,25 @@ namespace GraphsClassProject
                         AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
                         pen.CustomEndCap = adjustableArrowCap;
 
-                        pen.Width = 3;
+                        int penWidth = weightedDigraph.Vertices[nodeNumber].Neighbors.IndexOf(neighbor);
+                        penWidth = weightedDigraph.Vertices[nodeNumber].Weights[penWidth];
+                        penWidth /= 10;
+                        //pen.Width = 3;
+                        pen.Width = penWidth;
                         pen.Color = Color.Black;
 
-                        Point originalLocation = nodeCircleLocations[nodeNumber];
-                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        Point originalLocation = NodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, LabelNodes[nodeNumber].Location);
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
 
-                        Label weightLabel = new Label();
+                        /*Label weightLabel = new Label();
                         weightLabel.Text = "1";
                         weightLabel.Font = SmallFont;
                         weightLabel.Size = new Size(20, 15);
                         // LABEL WEIGHT TEXT GOES HERE
                         weightLabel.Location = new Point((neighborLocation.X + labelNodes[nodeNumber].Location.X) / 2 - 20, (neighborLocation.Y + labelNodes[nodeNumber].Location.Y) / 2);
                         panelGraph.Controls.Add(weightLabel);
-                        weightLabel.Refresh();
-
+                        weightLabel.Refresh();*/
                     }
                 }
             }
@@ -311,8 +317,12 @@ namespace GraphsClassProject
 
         internal void FillPanel(Graph graph)
         {
+            
+            LabelNodes = new List<Label>();
+            NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
+            
 
             for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
@@ -326,7 +336,7 @@ namespace GraphsClassProject
 
                 Point location = GetLocation(nodeNumber, graph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
-                nodeCircleLocations.Add(location);
+                NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
                 label.Font = SmallFont;
@@ -335,11 +345,10 @@ namespace GraphsClassProject
                 label.SendToBack();
                 label.Refresh();
 
-                labelNodes.Add(label);
-
+                LabelNodes.Add(label);
             }
 
-            foreach (Label label in labelNodes)
+            foreach (Label label in LabelNodes)
             {
                 panelGraph.Controls.Add(label);
                 label.Refresh();
@@ -362,8 +371,8 @@ namespace GraphsClassProject
                         pen.Color = Color.Black;
 
 
-                        Point originalLocation = nodeCircleLocations[nodeNumber];
-                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        Point originalLocation = NodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, LabelNodes[nodeNumber].Location);
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
@@ -372,10 +381,15 @@ namespace GraphsClassProject
 
         internal void FillPanel(WeightedGraph weightedGraph)
         {
+            LabelNodes = new List<Label>();
+            NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
 
-            for (int nodeNumber = 0; nodeNumber < weightedGraph.Vertices.Count; nodeNumber++) // every node is on its own line
+
+            for (int nodeNumber = 0;
+                 nodeNumber < weightedGraph.Vertices.Count;
+                 nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
                 label.Text = weightedGraph.Vertices[nodeNumber].Name;
@@ -387,7 +401,7 @@ namespace GraphsClassProject
 
                 Point location = GetLocation(nodeNumber, weightedGraph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
-                nodeCircleLocations.Add(location);
+                NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
                 label.Font = SmallFont;
@@ -396,11 +410,10 @@ namespace GraphsClassProject
                 label.SendToBack();
                 label.Refresh();
 
-                labelNodes.Add(label);
-
+                LabelNodes.Add(label);
             }
 
-            foreach (Label label in labelNodes)
+            foreach (Label label in LabelNodes)
             {
                 panelGraph.Controls.Add(label);
                 label.Refresh();
@@ -418,12 +431,15 @@ namespace GraphsClassProject
 
                         AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
                         pen.CustomEndCap = adjustableArrowCap;
-
-                        pen.Width = 3;
+                        int penWidth = weightedGraph.Vertices[nodeNumber].Neighbors.IndexOf(neighbor);
+                        penWidth = weightedGraph.Vertices[nodeNumber].Weights[penWidth];
+                        //penWidth /= 10;
+                        //pen.Width = 3;
+                        pen.Width = penWidth;
                         pen.Color = Color.Black;
 
-                        Point originalLocation = nodeCircleLocations[nodeNumber];
-                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        Point originalLocation = NodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, LabelNodes[nodeNumber].Location);
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
@@ -447,8 +463,6 @@ namespace GraphsClassProject
 
             if (numNodes < 16 || nodeNumber < 16)
             {
-
-
                 int DISTANCE_FROM_CENTER = 200;
 
                 int num = (numNodes < 16) ? numNodes : (numNodes % 16);
@@ -468,18 +482,18 @@ namespace GraphsClassProject
             }
 
             return new Point(xCoord, yCoord);
-
         }
 
         private Point GetNeighborLocation(Vertex neighbor, Point point)
         {
-            for (int labelIndex = 0; labelIndex < labelNodes.Count; labelIndex++)
+            for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
             {
-                if (labelNodes[labelIndex].Text == neighbor.Name)
+                if (LabelNodes[labelIndex].Text == neighbor.Name)
                 {
-                    return nodeCircleLocations[labelIndex];
+                    return NodeCircleLocations[labelIndex];
                 }
             }
+
             return new Point(200, 200);
         }
 
@@ -497,12 +511,11 @@ namespace GraphsClassProject
             else
                 yCoord = location.Y - 15;
             return new Point(xCoord, yCoord);
-
         }
 
         private void button1_Click(object sender, EventArgs e)
-       {
-         //   FillPanel();
+        {
+            //   FillPanel();
         }
     }
 }

@@ -34,29 +34,32 @@
             // 
             // panelGraph
             // 
-            this.panelGraph.Location = new System.Drawing.Point(12, 12);
+            this.panelGraph.Location = new System.Drawing.Point(38, 34);
+            this.panelGraph.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(600, 600);
+            this.panelGraph.Size = new System.Drawing.Size(1900, 1708);
             this.panelGraph.TabIndex = 0;
             // 
             // panelGraphButtons
             // 
-            this.panelGraphButtons.Location = new System.Drawing.Point(678, 12);
+            this.panelGraphButtons.Location = new System.Drawing.Point(2147, 34);
+            this.panelGraphButtons.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.panelGraphButtons.Name = "panelGraphButtons";
-            this.panelGraphButtons.Size = new System.Drawing.Size(80, 600);
+            this.panelGraphButtons.Size = new System.Drawing.Size(253, 1708);
             this.panelGraphButtons.TabIndex = 0;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 693);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ClientSize = new System.Drawing.Size(2562, 1972);
             this.Controls.Add(this.panelGraphButtons);
             this.Controls.Add(this.panelGraph);
+            this.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Graphs";
             this.ResumeLayout(false);
-
         }
 
         #endregion

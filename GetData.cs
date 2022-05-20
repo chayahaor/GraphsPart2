@@ -63,7 +63,7 @@ namespace GraphsClassProject
                     GraphTypes.Add(name, type);
                 }
 
-                foreach (KeyValuePair<String, String> entry in GraphTypes)
+                /*foreach (KeyValuePair<String, String> entry in GraphTypes)
                 {
                     SqlCommand getEdgesForGraph = new SqlCommand("spGetEdges", sqlCon);
 
@@ -99,9 +99,11 @@ namespace GraphsClassProject
                             graph.LoadGraph(dataset2);
                             break;
                     }
-                    */
+                    #1#
 
-                }
+                }*/
+                
+                
             }
             catch (Exception ex)
 
