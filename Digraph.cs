@@ -13,14 +13,14 @@ namespace GraphsClassProject
     {
         public List<Vertex> Vertices { get; set; }
 
-        public Digraph()
-        {
-            Vertices = new List<Vertex>();
-        }
+        public String GraphName { get; set; }
 
-        public Digraph(List<Vertex> nodes)
+        public Digraph(String graphName)
         {
-            Vertices = nodes;
+            this.GraphName = graphName;
+
+            Vertices = new List<Vertex>();
+
         }
 
         public void AddNode(Vertex node)
@@ -28,16 +28,36 @@ namespace GraphsClassProject
             Vertices.Add(node);
         }
 
-        public bool LoadGraph(DataSet dataSet)
+        public bool LoadGraph(String name, String server, String database)
         {
             bool retVal = true;
 
+            SqlConnection sqlCon;
+            
+
             try
             {
+                String strConnect = $"Server={server};Database={database};Trusted_Connection=True;";
+                sqlCon = new SqlConnection(strConnect);
+                sqlCon.Open();
+
+                SqlCommand getEdgesForGraph = new SqlCommand("spGetEdges", sqlCon);
+
+                SqlParameter sqlParameter = new SqlParameter();
+                sqlParameter.ParameterName = "@GraphName";
+                sqlParameter.Value = name;
+                getEdgesForGraph.Parameters.Add(sqlParameter);
+
+                getEdgesForGraph.CommandType = CommandType.StoredProcedure;
+                getEdgesForGraph.ExecuteNonQuery();
+                SqlDataAdapter da2 = new SqlDataAdapter(getEdgesForGraph);
+                DataSet dataSet = new DataSet();
+                da2.Fill(dataSet, "Edges");
+
                 // edge table: initialNode, terminalNode, weight (should be 1)
 
                 var nrEdges = dataSet.Tables["Edges"].Rows.Count;
-                for (int row = 1; row < nrEdges; ++row)
+                for (int row = 0; row < nrEdges; ++row)
                 {
                     // check initial node
                     String initialNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[0];

@@ -10,19 +10,24 @@ namespace GraphsClassProject
 {
     public class GetData
     {
+        /*
         private Digraph digraph = new Digraph();
         private WeightedDigraph weightedDigraph = new WeightedDigraph();
         private Graph graph = new Graph();
         private WeightedGraph weightedGraph = new WeightedGraph();
+        */
 
-        public GetData()
+        public Dictionary<String, String> GraphTypes { get; set; } 
+
+        public GetData(String server, String database)
         {
+            LoadVerticesFromSQL(server, database);
         }
 
-        public Dictionary<String, String> LoadVerticesFromSQL(String server, String database)
+        private Dictionary<String, String> LoadVerticesFromSQL(String server, String database)
         {
             // table contains graphName, graphType
-            Dictionary<String, String> graphTypes = new Dictionary<string, string>();
+            GraphTypes = new Dictionary<string, string>();
 
             SqlConnection sqlCon = null;
             try
@@ -43,7 +48,7 @@ namespace GraphsClassProject
                 // stored procedure #4) get the nodes for each graph
 
                 // get graph names
-                SqlCommand getAllGraphs = new SqlCommand("spGetAllGraphs", sqlCon);
+                SqlCommand getAllGraphs = new SqlCommand("spGetGraphNames", sqlCon);
                 getAllGraphs.CommandType = CommandType.StoredProcedure;
                 getAllGraphs.ExecuteNonQuery();
                 SqlDataAdapter da1 = new SqlDataAdapter(getAllGraphs);
@@ -51,16 +56,22 @@ namespace GraphsClassProject
                 da1.Fill(dataset1, "Graphs");
 
                 var nrGraphs = dataset1.Tables["Graphs"].Rows.Count;
-                for (int row = 1; row < nrGraphs; ++row)
+                for (int row = 0; row < nrGraphs; ++row)
                 {
                     String name = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[0];
                     String type = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
-                    graphTypes.Add(name, type);
+                    GraphTypes.Add(name, type);
                 }
 
-                foreach (KeyValuePair<String, String> entry in graphTypes)
+                foreach (KeyValuePair<String, String> entry in GraphTypes)
                 {
-                    SqlCommand getEdgesForGraph = new SqlCommand("spGetEdgesForGraph", sqlCon);
+                    SqlCommand getEdgesForGraph = new SqlCommand("spGetEdges", sqlCon);
+
+                    SqlParameter sqlParameter = new SqlParameter();
+                    sqlParameter.ParameterName = "@GraphName";
+                    sqlParameter.Value = entry.Key;
+                    getEdgesForGraph.Parameters.Add(sqlParameter);
+
                     getEdgesForGraph.CommandType = CommandType.StoredProcedure;
                     getEdgesForGraph.ExecuteNonQuery();
                     SqlDataAdapter da2 = new SqlDataAdapter(getEdgesForGraph);
@@ -69,6 +80,7 @@ namespace GraphsClassProject
 
                     // edge table: initialNode, terminalNode, weight
 
+                    /*
                     switch (entry.Value)
                     {
                         case "WeightedDigraph":
@@ -87,6 +99,7 @@ namespace GraphsClassProject
                             graph.LoadGraph(dataset2);
                             break;
                     }
+                    */
 
                 }
             }
@@ -107,9 +120,8 @@ namespace GraphsClassProject
 
             }
 
-            return graphTypes;
+            return GraphTypes;
         }
-
     }
 
     /*

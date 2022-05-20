@@ -2,24 +2,51 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace GraphsClassProject
 {
     class Graph
     {
-        public List<Vertex> Vertices = new List<Vertex>();
+        public List<Vertex> Vertices { get; set; }
 
+        public String GraphName { get; set; }
+
+        public Graph(String graphName)
+        {
+            this.GraphName = graphName;
+
+            Vertices = new List<Vertex>();
+        }
         public void AddVertex(Vertex v)
         {
             Vertices.Add(v);
         }
 
-        public bool LoadGraph(DataSet dataSet)
+        public bool LoadGraph(String name, String server, String database)
         {
             bool retVal = true;
+            SqlConnection sqlCon;
+
 
             try
             {
+                String strConnect = $"Server={server};Database={database};Trusted_Connection=True;";
+                sqlCon = new SqlConnection(strConnect);
+                sqlCon.Open();
+
+                SqlCommand getEdgesForGraph = new SqlCommand("spGetEdges", sqlCon);
+
+                SqlParameter sqlParameter = new SqlParameter();
+                sqlParameter.ParameterName = "@GraphName";
+                sqlParameter.Value = name;
+                getEdgesForGraph.Parameters.Add(sqlParameter);
+
+                getEdgesForGraph.CommandType = CommandType.StoredProcedure;
+                getEdgesForGraph.ExecuteNonQuery();
+                SqlDataAdapter da2 = new SqlDataAdapter(getEdgesForGraph);
+                DataSet dataSet = new DataSet();
+                da2.Fill(dataSet, "Edges");
                 // edge table: initialNode, terminalNode, weight (should be 1)
 
                 var nrEdges = dataSet.Tables["Edges"].Rows.Count;
