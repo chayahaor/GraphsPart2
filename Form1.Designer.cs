@@ -29,49 +29,32 @@
         private void InitializeComponent()
         {
             this.panelGraph = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelGraphButtons = new System.Windows.Forms.Panel();
-            this.panelGraph.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGraph
             // 
-            this.panelGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelGraph.Controls.Add(this.panelGraphButtons);
             this.panelGraph.Location = new System.Drawing.Point(12, 12);
             this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(650, 635);
+            this.panelGraph.Size = new System.Drawing.Size(600, 600);
             this.panelGraph.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(677, 439);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(192, 34);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Ready?";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panelGraphButtons
             // 
-            this.panelGraphButtons.Location = new System.Drawing.Point(28, 32);
+            this.panelGraphButtons.Location = new System.Drawing.Point(678, 12);
             this.panelGraphButtons.Name = "panelGraphButtons";
-            this.panelGraphButtons.Size = new System.Drawing.Size(591, 31);
+            this.panelGraphButtons.Size = new System.Drawing.Size(80, 600);
             this.panelGraphButtons.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 693);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(809, 693);
+            this.Controls.Add(this.panelGraphButtons);
             this.Controls.Add(this.panelGraph);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.panelGraph.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -79,7 +62,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panelGraph;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panelGraphButtons;
     }
 }

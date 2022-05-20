@@ -73,7 +73,7 @@ namespace GraphsClassProject
                 graphNameButtons.Add(button);
 
                 currNumber++;
-                x += 100;
+                y += 100;
 
                 panelGraphButtons.Controls.Add(button);
 
@@ -180,8 +180,8 @@ namespace GraphsClassProject
 
         internal void FillPanel(Digraph digraph)
         {
-            bool found = false;
-
+            panelGraph.Controls.Clear();
+            panelGraph.Refresh();
 
             for (int nodeNumber = 0; nodeNumber < digraph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
@@ -230,7 +230,10 @@ namespace GraphsClassProject
                         pen.Width = 3;
                         pen.Color = Color.Black;
 
-                        graphics.DrawLine(pen, nodeCircleLocations[nodeNumber], GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
+
+                        Point originalLocation = nodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
             }
@@ -238,8 +241,8 @@ namespace GraphsClassProject
 
         internal void FillPanel(WeightedDigraph weightedDigraph)
         {
-            bool found = false;
-
+            panelGraph.Controls.Clear();
+            panelGraph.Refresh();
 
             for (int nodeNumber = 0; nodeNumber < weightedDigraph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
@@ -288,7 +291,19 @@ namespace GraphsClassProject
                         pen.Width = 3;
                         pen.Color = Color.Black;
 
-                        graphics.DrawLine(pen, nodeCircleLocations[nodeNumber], GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
+                        Point originalLocation = nodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        graphics.DrawLine(pen, originalLocation, neighborLocation);
+
+                        Label weightLabel = new Label();
+                        weightLabel.Text = "1";
+                        weightLabel.Font = SmallFont;
+                        weightLabel.Size = new Size(20, 15);
+                        // LABEL WEIGHT TEXT GOES HERE
+                        weightLabel.Location = new Point((neighborLocation.X + labelNodes[nodeNumber].Location.X) / 2 - 20, (neighborLocation.Y + labelNodes[nodeNumber].Location.Y) / 2);
+                        panelGraph.Controls.Add(weightLabel);
+                        weightLabel.Refresh();
+
                     }
                 }
             }
@@ -296,8 +311,8 @@ namespace GraphsClassProject
 
         internal void FillPanel(Graph graph)
         {
-            bool found = false;
-
+            panelGraph.Controls.Clear();
+            panelGraph.Refresh();
 
             for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
@@ -346,7 +361,10 @@ namespace GraphsClassProject
                         pen.Width = 3;
                         pen.Color = Color.Black;
 
-                        graphics.DrawLine(pen, nodeCircleLocations[nodeNumber], GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
+
+                        Point originalLocation = nodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
             }
@@ -354,6 +372,9 @@ namespace GraphsClassProject
 
         internal void FillPanel(WeightedGraph weightedGraph)
         {
+            panelGraph.Controls.Clear();
+            panelGraph.Refresh();
+
             for (int nodeNumber = 0; nodeNumber < weightedGraph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
@@ -401,7 +422,9 @@ namespace GraphsClassProject
                         pen.Width = 3;
                         pen.Color = Color.Black;
 
-                        graphics.DrawLine(pen, nodeCircleLocations[nodeNumber], GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location));
+                        Point originalLocation = nodeCircleLocations[nodeNumber];
+                        Point neighborLocation = GetNeighborLocation(neighbor, labelNodes[nodeNumber].Location);
+                        graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
             }
