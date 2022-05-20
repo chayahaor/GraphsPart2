@@ -247,14 +247,11 @@ namespace GraphsClassProject
             panelGraph.Refresh();
 
 
-            for (int nodeNumber = 0;
-                 nodeNumber < weightedDigraph.Vertices.Count;
-                 nodeNumber++) // every node is on its own line
+            for (int nodeNumber = 0; nodeNumber < weightedDigraph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
                 label.Text = weightedDigraph.Vertices[nodeNumber].Name;
                 label.TextAlign = ContentAlignment.MiddleCenter;
-
 
                 Graphics graphics = panelGraph.CreateGraphics();
                 Pen pen = new Pen(Color.Black);
@@ -387,14 +384,11 @@ namespace GraphsClassProject
             panelGraph.Refresh();
 
 
-            for (int nodeNumber = 0;
-                 nodeNumber < weightedGraph.Vertices.Count;
-                 nodeNumber++) // every node is on its own line
+            for (int nodeNumber = 0; nodeNumber < weightedGraph.Vertices.Count; nodeNumber++) // every node is on its own line
             {
                 Label label = new Label();
                 label.Text = weightedGraph.Vertices[nodeNumber].Name;
                 label.TextAlign = ContentAlignment.MiddleCenter;
-
 
                 Graphics graphics = panelGraph.CreateGraphics();
                 Pen pen = new Pen(Color.Black);
@@ -465,8 +459,7 @@ namespace GraphsClassProject
             {
                 int DISTANCE_FROM_CENTER = 200;
 
-                int num = (numNodes < 16) ? numNodes : (numNodes % 16);
-                double angle = 2.0 * Math.PI / (num) * nodeNumber;
+                double angle = 2.0 * Math.PI / (numNodes) * nodeNumber;
 
                 xCoord = (int)Math.Floor(CENTER + DISTANCE_FROM_CENTER * Math.Cos(angle));
                 yCoord = (int)Math.Floor(CENTER - DISTANCE_FROM_CENTER * Math.Sin(angle));
@@ -511,11 +504,6 @@ namespace GraphsClassProject
             else
                 yCoord = location.Y - 15;
             return new Point(xCoord, yCoord);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //   FillPanel();
         }
     }
 }

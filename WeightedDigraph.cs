@@ -54,7 +54,7 @@ namespace GraphsClassProject
                 // edge table: initialNode, terminalNode, weight (should be 1)
 
                 var nrEdges = dataSet.Tables["Edges"].Rows.Count;
-                for (int row = 1; row < nrEdges; ++row)
+                for (int row = 0; row < nrEdges; ++row)
                 {
                     // check initial node
                     String initialNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[0];
