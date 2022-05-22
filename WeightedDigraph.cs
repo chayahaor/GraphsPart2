@@ -6,23 +6,12 @@ using System.Data.SqlClient;
 
 namespace GraphsClassProject
 {
-    class WeightedDigraph
-    
+    class WeightedDigraph : ParentGraph
     {
-        public String GraphName { get; set; }
-        public List<Vertex> Vertices { get; set; }
-
-        public WeightedDigraph(String graphName)
+        public WeightedDigraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
-
             Vertices = new List<Vertex>();
-
-        }
-
-        public void AddVertex(Vertex v)
-        {
-            Vertices.Add(v);
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -64,10 +53,12 @@ namespace GraphsClassProject
                     int initialIndex = Vertices.FindIndex(item => initialNode.Equals(item.Name));
                     int terminalIndex = Vertices.FindIndex(item => terminalNode.Equals(item.Name));
 
-                    Vertex initial = initialIndex < 0 ? new Vertex(initialNode)
-                                                    : Vertices[initialIndex];
-                    Vertex terminal = terminalIndex < 0 ? new Vertex(terminalNode)
-                                                    : Vertices[terminalIndex];
+                    Vertex initial = initialIndex < 0
+                        ? new Vertex(initialNode)
+                        : Vertices[initialIndex];
+                    Vertex terminal = terminalIndex < 0
+                        ? new Vertex(terminalNode)
+                        : Vertices[terminalIndex];
 
                     if (initialIndex < 0 && terminalIndex < 0)
                     {
@@ -85,6 +76,7 @@ namespace GraphsClassProject
                         // terminal doesn't exist, create and add edge between initial and it with weight = 1
                         Vertices.Add(terminal);
                     }
+
                     // if they both already exist, no need to add anything
                     initial.AddEdge(terminal, weight);
                 }
@@ -98,41 +90,5 @@ namespace GraphsClassProject
 
             return retVal;
         }
-
-        public bool LoadVertices(String FileName)
-        {
-            bool RetVal = true;
-            try
-            {
-                using (TextReader reader = new StreamReader(FileName))
-                {
-                    String line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        String[] vertices = line.Split(' ');
-                        if (vertices.Length > 0)
-                        {
-                            // TODO add check that the vertex names are not repeated  
-                            Vertex v = new Vertex(vertices[0]);
-                            for (int eix = 1; eix < vertices.Length; ++eix)
-                            {
-                                Vertex nbr = new Vertex(vertices[eix]);
-                                int weight = 1;
-                                // TODO get actual weight from SQL DB
-                                v.AddEdge(nbr, weight);
-                            }
-                            Vertices.Add(v);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                RetVal = false;
-            }
-            return RetVal;
-        }
-
-        
     }
 }

@@ -17,13 +17,6 @@ namespace GraphsClassProject
             this.GraphName = graphName;
 
             Vertices = new List<Vertex>();
-
         }
-
-        internal void AddNode(Vertex node)
-        {
-            Vertices.Add(node);
-        }
-
     }
 }

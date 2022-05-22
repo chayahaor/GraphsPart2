@@ -6,12 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Digraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Digraph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GetData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GetData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParentGraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ParentGraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedDigraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedDigraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedGraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedGraph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" afterDir="false" />
@@ -67,8 +69,17 @@
       <updated>1652899484708</updated>
       <workItem from="1652899492376" duration="53000" />
       <workItem from="1653059673003" duration="343000" />
-      <workItem from="1653064913505" duration="3533000" />
+      <workItem from="1653064913505" duration="4301000" />
+      <workItem from="1653259306106" duration="2676000" />
     </task>
+    <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
+      <created>1653068617641</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1653068617641</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -89,5 +100,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI" />
   </component>
 </project>

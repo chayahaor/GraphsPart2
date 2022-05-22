@@ -9,25 +9,15 @@ using System.Windows.Forms;
 
 namespace GraphsClassProject 
 {
-    class Digraph
+    class Digraph : ParentGraph
     {
-        public List<Vertex> Vertices { get; set; }
-
-        public String GraphName { get; set; }
-
-        public Digraph(String graphName)
+        public Digraph(String graphName) : base(graphName)
         {
-            this.GraphName = graphName;
-
+            GraphName = graphName;
             Vertices = new List<Vertex>();
 
         }
-
-        public void AddNode(Vertex node)
-        {
-            Vertices.Add(node);
-        }
-
+        
         public bool LoadGraph(String name, String server, String database)
         {
             bool retVal = true;
@@ -99,53 +89,6 @@ namespace GraphsClassProject
             }
             return retVal;
         }
-
-        public bool LoadVertices(String fileName)
-        {
-
-            bool retVal = true;
-
-            try
-            {
-                using (TextReader reader = new StreamReader(fileName))
-                {
-                    // assume 1 line per vertex, first element is name of vertex, rest is name of neighbors (unidirectional)
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        if (line.Trim().Length == 0) continue;
-
-                        string[] vertices = line.Split();
-
-                        if (vertices.Length > 0)
-                        {
-                            // TODO add check that the vertex names are not repeated  
-                            Vertex v = new Vertex(vertices[0]);
-                            Vertices.Add(v);
-                            string vertexName = vertices[0];
-                            for (int eix = 1; eix < vertices.Length; ++eix)
-                            {
-                                Vertex nbr = new Vertex(vertices[eix]);
-                                v.AddEdge(nbr, 1);
-                            }
-                        }
-
-
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                retVal = false;
-            }
-
-
-            return retVal;
-        }
-
 
     }
 }
