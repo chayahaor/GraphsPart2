@@ -39,7 +39,6 @@ namespace GraphsClassProject
             //digraph = new Digraph("TXT");
             //digraph.LoadVertices(ConfigurationManager.AppSettings["TXT"]);
 
-
             digraphs = new List<Digraph>();
 
             graphs = new List<Graph>();
@@ -156,26 +155,27 @@ namespace GraphsClassProject
 
         private void SetUpWeightedDigraph(WeightedDigraph weightedDigraph)
         {
-            CSFillPanel(weightedDigraph, GraphTypes.WEIGHTED_DIGRAPH);
+            CSFillPanel(weightedDigraph);
             //FillPanel(weightedDigraph);
         }
 
         private void SetUpDigraph(Digraph digraph)
         {
-            FillPanel(digraph);
+            CSFillPanel(digraph);
         }
 
         private void SetUpWeightedGraph(WeightedGraph weightedGraph)
         {
-            CSFillPanel(weightedGraph, GraphTypes.WEIGHTED_GRAPH);
+            CSFillPanel(weightedGraph);
             //FillPanel(weightedGraph);
         }
 
         private void SetUpGraph(Graph graph)
         {
-            FillPanel(graph);
+            CSFillPanel(graph);
         }
 
+        /*
         internal void FillPanel(Digraph digraph)
         {
             LabelNodes = new List<Label>();
@@ -236,7 +236,7 @@ namespace GraphsClassProject
                     }
                 }
             }
-        }
+        }*/
 
         /*internal void FillPanel(WeightedDigraph weightedDigraph)
         {
@@ -301,7 +301,7 @@ namespace GraphsClassProject
             }
         }*/
 
-        internal void FillPanel(Graph graph)
+       /* internal void FillPanel(Graph graph)
         {
             LabelNodes = new List<Label>();
             NodeCircleLocations = new List<Point>();
@@ -362,7 +362,7 @@ namespace GraphsClassProject
                     }
                 }
             }
-        }
+        } */
 
         /*internal void FillPanel(WeightedGraph weightedGraph)
         {
@@ -460,7 +460,7 @@ namespace GraphsClassProject
             return new Point(xCoord, yCoord);
         }
 
-        private Point GetNeighborLocation(Vertex neighbor, Point point)
+        private Point GetNeighborLocation(Vertex neighbor)
         {
             for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
             {
@@ -489,7 +489,7 @@ namespace GraphsClassProject
             return new Point(xCoord, yCoord);
         }
 
-        private void CSFillPanel(ParentGraph graph, GraphTypes type)
+        private void CSFillPanel(ParentGraph graph)
         {
             LabelNodes = new List<Label>();
             NodeCircleLocations = new List<Point>();
@@ -543,15 +543,17 @@ namespace GraphsClassProject
 
                         penWidth = width;
 
-                        //TODO: if the max weight is greater than 15, divide the weight by 10
-                        penWidth /= 10;
+                        if (graph.maxWeight > 15)
+                        {
+                            penWidth /= 10;
+                        }
                         
                         
                         pen.Width = penWidth;
                         pen.Color = Color.Black;
 
                         Point originalLocation = NodeCircleLocations[nodeNumber];
-                        Point neighborLocation = GetNeighborLocation(neighbor, LabelNodes[nodeNumber].Location);
+                        Point neighborLocation = GetNeighborLocation(neighbor);
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
