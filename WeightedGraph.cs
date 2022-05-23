@@ -47,9 +47,9 @@ namespace GraphsClassProject
                     String terminalNode = (String)dataSet.Tables["Edges"].Rows[row].ItemArray[1];
                     int weight = (int)dataSet.Tables["Edges"].Rows[row].ItemArray[2];
 
-                    if (weight > maxWeight)
+                    if (weight > MaxWeight)
                     {
-                        maxWeight = weight;
+                        MaxWeight = weight;
                     }
 
                     int initialIndex = Vertices.FindIndex(item => initialNode.Equals(item.Name));
@@ -93,7 +93,7 @@ namespace GraphsClassProject
 
         public int GetMaxWeight()
         {
-            return maxWeight;
+            return MaxWeight;
         }
 
     }

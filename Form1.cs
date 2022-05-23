@@ -250,17 +250,11 @@ namespace GraphsClassProject
                         AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
                         pen.CustomEndCap = adjustableArrowCap;
 
-                        int penWidth = graph.Vertices[nodeNumber].Neighbors.IndexOf(neighbor);
-
-                        int width = graph.Vertices[nodeNumber].Weights[penWidth];
-
-                        penWidth = width;
-
-                        if (graph.maxWeight > 15)
+                        int penWidth = graph.GetWeight(graph.Vertices[nodeNumber], neighbor);
+                        if (graph.MaxWeight > 15)
                         {
                             penWidth /= 10;
                         }
-                        
                         
                         pen.Width = penWidth;
                         pen.Color = Color.Black;
