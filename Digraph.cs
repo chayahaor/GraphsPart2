@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Data;
 using System.Data.SqlClient;
-using System.Windows.Forms;
-
-
 
 namespace GraphsClassProject 
 {
@@ -23,7 +19,6 @@ namespace GraphsClassProject
             bool retVal = true;
 
             SqlConnection sqlCon;
-            
 
             try
             {
