@@ -28,6 +28,8 @@ namespace GraphsClassProject
 
         private readonly int CENTER = 325;
 
+        private ParentGraph currentGraphShowing;
+
         public Form1()
         {
             InitializeComponent();
@@ -102,6 +104,7 @@ namespace GraphsClassProject
                         if (weightedDigraph.GraphName.Equals(button.Name))
                         {
                             FillPanel(weightedDigraph);
+                            currentGraphShowing = weightedDigraph;
                             break;
                         }
                     }
@@ -113,6 +116,7 @@ namespace GraphsClassProject
                         if (digraph.GraphName.Equals(button.Name))
                         {
                             FillPanel(digraph);
+                            currentGraphShowing = digraph;
                             break;
                         }
                     }
@@ -124,6 +128,7 @@ namespace GraphsClassProject
                         if (weightedGraph.GraphName.Equals(button.Name))
                         {
                             FillPanel(weightedGraph);
+                            currentGraphShowing = weightedGraph;
                             break;
                         }
                     }
@@ -135,6 +140,7 @@ namespace GraphsClassProject
                         if (graph.GraphName.Equals(button.Name))
                         {
                             FillPanel(graph);
+                            currentGraphShowing = graph;
                             break;
                         }
                     }
@@ -204,11 +210,23 @@ namespace GraphsClassProject
 
         private void FillPanel(ParentGraph graph)
         {
+            ClearPanel();
+
+            CreateLabelNodes(graph);
+
+            CreateGraphics(graph);
+        }
+
+        private void ClearPanel()
+        {
             LabelNodes = new List<Label>();
             NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
+        }
 
+        private void CreateLabelNodes(ParentGraph graph)
+        {
             for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++)
             {
                 Label label = new Label();
@@ -236,7 +254,10 @@ namespace GraphsClassProject
                 panelGraph.Controls.Add(label);
                 label.Refresh();
             }
+        }
 
+        private void CreateGraphics(ParentGraph graph)
+        {
             for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++)
             {
                 Vertex currNode = graph.Vertices[nodeNumber];
@@ -255,7 +276,7 @@ namespace GraphsClassProject
                         {
                             penWidth /= 10;
                         }
-                        
+
                         pen.Width = penWidth;
                         pen.Color = Color.Black;
 
@@ -264,6 +285,71 @@ namespace GraphsClassProject
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
+            }
+        }
+
+
+        private void Dijkstra_Click(object sender, EventArgs e)
+        {
+            if (currentGraphShowing == null)
+            {
+                MessageBox.Show("There is no graph showing yet.");
+            }
+            else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
+            {
+                MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
+            }
+            else
+            {
+                // Dijkstra's Algorithm code
+            }
+        }
+
+        private void Kruskal_Click(object sender, EventArgs e)
+        {
+            if (currentGraphShowing == null)
+            {
+                MessageBox.Show("There is no graph showing yet.");
+            }
+            else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
+            {
+                MessageBox.Show("Kruskal's Algorithm is not available for selected graph.");
+            }
+            else
+            {
+                // Kruskal code
+            }
+        }
+
+        private void Topological_Click(object sender, EventArgs e)
+        {
+            if (currentGraphShowing == null)
+            {
+                MessageBox.Show("There is no graph showing yet.");
+            }
+            else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH || currentGraphShowing.Type == GraphType.GRAPH)
+            {
+                MessageBox.Show("Topological Sort is not available for selected graph.");
+            }
+            else
+            {
+                // Topological Sort code
+            }
+        }
+
+        private void Prim_Click(object sender, EventArgs e)
+        {
+            if (currentGraphShowing == null)
+            {
+                MessageBox.Show("There is no graph showing yet.");
+            }
+            else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
+            {
+                MessageBox.Show("Prim's Algorithm is not available for selected graph.");
+            }
+            else
+            {
+                // Prim code
             }
         }
     }

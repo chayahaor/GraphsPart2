@@ -11,6 +11,7 @@ namespace GraphsClassProject
         {
             GraphName = graphName;
             Vertices = new List<Vertex>();
+            Type = GraphType.WEIGHTED_DIGRAPH;
         }
 
         public bool LoadGraph(String name, String server, String database)

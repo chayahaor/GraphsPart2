@@ -11,6 +11,7 @@ namespace GraphsClassProject
         {
             GraphName = graphName;
             Vertices = new List<Vertex>();
+            Type = GraphType.GRAPH;
         }
 
         public bool LoadGraph(String name, String server, String database)

@@ -9,6 +9,7 @@ namespace GraphsClassProject
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
 
+        public GraphType Type { get; set; }
         public ParentGraph(String graphName)
         {
             this.GraphName = graphName;
