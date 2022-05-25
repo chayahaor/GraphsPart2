@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-    internal class Kruskal
+    internal class Kruskal 
     {
         private readonly ParentGraph graph;
         private List<Vertex> Vertices;
