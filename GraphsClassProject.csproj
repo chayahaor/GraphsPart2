@@ -56,6 +56,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Graph.cs" />
+    <Compile Include="AlgorithmType.cs" />
     <Compile Include="GraphType.cs" />
     <Compile Include="Kruskal.cs" />
     <Compile Include="ParentGraph.cs" />

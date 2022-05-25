@@ -17,8 +17,6 @@ namespace GraphsClassProject
         private List<WeightedDigraph> weightedDigraphs;
         private List<WeightedGraph> weightedGraphs;
 
-        private Vertex SelectedVertex;
-
         private Dictionary<String, String> graphNamesAndTypes;
 
         public List<Button> GraphNameButtons { get; set; }
@@ -31,6 +29,8 @@ namespace GraphsClassProject
         private readonly int CENTER = 325;
 
         private ParentGraph currentGraphShowing;
+        private Vertex SelectedVertex;
+        private AlgorithmType? algorithmType = null;
 
         public Form1()
         {
@@ -303,6 +303,8 @@ namespace GraphsClassProject
             }
             else
             {
+                algorithmType = AlgorithmType.DIJKSTRA;
+
                 // Dijkstra's Algorithm code
             }
         }
@@ -319,6 +321,8 @@ namespace GraphsClassProject
             }
             else
             {
+                algorithmType = AlgorithmType.KRUSKAL;
+
                 // Kruskal code
             }
         }
@@ -336,6 +340,8 @@ namespace GraphsClassProject
             }
             else
             {
+                algorithmType = AlgorithmType.TOPOLOGICAL;
+
                 if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                 {
                     foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
@@ -387,50 +393,55 @@ namespace GraphsClassProject
             }
             else
             {
-                getInput(currentGraphShowing);
-                foreach (WeightedGraph weightedGraph in weightedGraphs)
-                {
-                    if (weightedGraph.GraphName == currentGraphShowing.GraphName)
-                    {
-                        Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertex);
-                        string showingOutput = "";
-                        foreach (Vertex vertex in output)
-                        {
-                            showingOutput += vertex + " ";
-                        }
-
-                        MessageBox.Show(showingOutput);
-                        break;
-                    }
-                }
+                algorithmType = AlgorithmType.PRIM;
+                panelNodeSelection.Visible = true;
+                panelNodeSelection.Refresh();
+                GetInput(currentGraphShowing);               
             }
         }
 
 
-        private void getInput(ParentGraph parentGraph)
+        private void GetInput(ParentGraph parentGraph) 
         {
-            ComboBox myBox = new ComboBox();
-            myBox.SelectionChangeCommitted += new EventHandler(selectionFromCombo);
+            //myBox.SelectedValue = parentGraph.Vertices[0]; // default value
+            //SelectedVertex = parentGraph.Vertices[0];
             foreach (Vertex vertex in parentGraph.Vertices)
             {
                 myBox.Items.Add(vertex.Name);
-            }
+            }           
         }
 
-        private void selectionFromCombo(object sender, EventArgs e)
+        private void myBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox senderComboBox = (ComboBox)sender;
-
-            if (senderComboBox.SelectionLength > 0)
-            {
-                SelectedVertex = currentGraphShowing.Vertices[senderComboBox.SelectedIndex];
-            }
-            else
-            {
-                SelectedVertex = currentGraphShowing.Vertices[0];
-            }
+            SelectedVertex = currentGraphShowing.Vertices[myBox.SelectedIndex];
 
             MessageBox.Show("You selected " + SelectedVertex.Name);
+
+
+            if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
+            { 
+                DoPrim();
+            }
+            
+        }
+
+        private void DoPrim()
+        {
+            foreach (WeightedGraph weightedGraph in weightedGraphs)
+            {
+                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                {
+                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertex);
+                    string showingOutput = "";
+                    foreach (Vertex vertex in output)
+                    {
+                        showingOutput += vertex.Name + " ";
+                    }
+
+                    MessageBox.Show(showingOutput);
+                    break;
+                }
+            }
         }
     }
 }
