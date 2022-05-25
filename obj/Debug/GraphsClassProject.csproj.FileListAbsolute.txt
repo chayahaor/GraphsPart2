@@ -30,3 +30,14 @@ C:\Users\chaya\RiderProjects\GraphsClassProject\obj\Debug\GraphsClassProject.csp
 C:\Users\chaya\RiderProjects\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.CoreCompileInputs.cache
 C:\Users\chaya\RiderProjects\GraphsClassProject\obj\Debug\GraphsClassProject.exe
 C:\Users\chaya\RiderProjects\GraphsClassProject\obj\Debug\GraphsClassProject.pdb
+C:\Users\mirdr\Source\Repos\GraphsClassProject\bin\Debug\GraphsClassProject.exe.config
+C:\Users\mirdr\Source\Repos\GraphsClassProject\bin\Debug\GraphsClassProject.exe
+C:\Users\mirdr\Source\Repos\GraphsClassProject\bin\Debug\GraphsClassProject.pdb
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.AssemblyReference.cache
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.SuggestedBindingRedirects.cache
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.Form1.resources
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.Properties.Resources.resources
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.GenerateResource.cache
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.csproj.CoreCompileInputs.cache
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.exe
+C:\Users\mirdr\Source\Repos\GraphsClassProject\obj\Debug\GraphsClassProject.pdb
