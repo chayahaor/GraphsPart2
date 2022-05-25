@@ -30,7 +30,8 @@ namespace GraphsClassProject
         private readonly int CENTER = 325;
 
         private ParentGraph currentGraphShowing;
-        private Vertex SelectedVertex;
+        private Vertex SelectedVertexA;
+        private Vertex SelectedVertexB;
         private AlgorithmType? algorithmType = null;
 
         public Form1()
@@ -306,7 +307,14 @@ namespace GraphsClassProject
             {
                 algorithmType = AlgorithmType.DIJKSTRA;
 
-                // Dijkstra's Algorithm code
+                panelNodeSelection.Visible = true;
+                destDropDown.Visible = true;
+                anotherNode.Visible = true;
+                destDropDown.Enabled = true;
+                destDropDown.Refresh();
+                anotherNode.Refresh();
+                panelNodeSelection.Refresh();
+                GetInput(currentGraphShowing);
             }
         }
 
@@ -396,34 +404,26 @@ namespace GraphsClassProject
             {
                 algorithmType = AlgorithmType.PRIM;
                 panelNodeSelection.Visible = true;
+                destDropDown.Visible = false;
+                anotherNode.Visible = false;
                 panelNodeSelection.Refresh();
-                GetInput(currentGraphShowing);               
+                GetInput(currentGraphShowing);
             }
         }
 
 
-        private void GetInput(ParentGraph parentGraph) 
+        private void GetInput(ParentGraph parentGraph)
         {
             //myBox.SelectedValue = parentGraph.Vertices[0]; // default value
             //SelectedVertex = parentGraph.Vertices[0];
             foreach (Vertex vertex in parentGraph.Vertices)
             {
                 myBox.Items.Add(vertex.Name);
-            }           
-        }
-
-        private void myBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SelectedVertex = currentGraphShowing.Vertices[myBox.SelectedIndex];
-
-            MessageBox.Show("You selected " + SelectedVertex.Name);
-
-
-            if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
-            { 
-                DoPrim();
             }
-            
+            foreach (Vertex vertex in parentGraph.Vertices)
+            {
+                destDropDown.Items.Add(vertex.Name);
+            }
         }
 
         private void DoPrim()
@@ -432,8 +432,27 @@ namespace GraphsClassProject
             {
                 if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                 {
-                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertex);
-                    StringBuilder showingOutput = new StringBuilder(); 
+                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertexA);
+                    StringBuilder showingOutput = new StringBuilder();
+                    foreach (Vertex vertex in output)
+                    {
+                        showingOutput.Append(vertex.Name).Append(" "); // 2D list
+                    }
+
+                    MessageBox.Show(showingOutput.ToString());
+                    break;
+                }
+            }
+        }
+
+        private void DoDijkstra()
+        {
+            foreach (WeightedGraph weightedGraph in weightedGraphs)
+            {
+                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                {
+                    List<Vertex> output = weightedGraph.DoDijkstraAlgorithm(SelectedVertexA, SelectedVertexB);
+                    StringBuilder showingOutput = new StringBuilder();
                     foreach (Vertex vertex in output)
                     {
                         showingOutput.Append(vertex.Name).Append(" ");
@@ -442,6 +461,33 @@ namespace GraphsClassProject
                     MessageBox.Show(showingOutput.ToString());
                     break;
                 }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SelectedVertexA = currentGraphShowing.Vertices[myBox.SelectedIndex];
+
+            MessageBox.Show("You selected " + SelectedVertexA.Name);
+
+            if (destDropDown.SelectedIndex == -1)
+            {
+                SelectedVertexB = currentGraphShowing.Vertices[0];
+            }
+            else
+            {
+                SelectedVertexB = currentGraphShowing.Vertices[destDropDown.SelectedIndex];
+
+                MessageBox.Show("You selected " + SelectedVertexB.Name);
+            }
+
+            if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
+            {
+                DoPrim();
+            }
+            else if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
+            {
+                DoDijkstra();
             }
         }
     }

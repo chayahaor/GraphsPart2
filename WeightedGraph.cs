@@ -8,12 +8,14 @@ namespace GraphsClassProject
     class WeightedGraph  : ParentGraph
     {
         private Prim prim;
+        private DijkstrasAlgorithm dijkstra;
         public WeightedGraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
             Vertices = new List<Vertex>();
             Type = GraphType.WEIGHTED_GRAPH;
             prim = new Prim(this);
+            dijkstra = new DijkstrasAlgorithm(this);
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -105,5 +107,11 @@ namespace GraphsClassProject
             return prim.PrimMinSpanningGraph(start);
         }
 
+        public List<Vertex> DoDijkstraAlgorithm(Vertex start, Vertex end)
+        {
+            dijkstra.DijskstrasShortestPath(start, end);
+
+            return dijkstra.Path;
+        }
     }
 }

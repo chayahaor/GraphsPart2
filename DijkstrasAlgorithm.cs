@@ -13,10 +13,15 @@ namespace GraphsClassProject
         //only relevant to weighted graphs
         private ParentGraph graph;
 
+        public List<Vertex> Path { get; set; }
         public DijkstrasAlgorithm(ParentGraph graph)
         {
             this.graph = graph;
+
+            //path of nodes
+            Path = new List<Vertex>();
         }
+
 
 
         public double DijskstrasShortestPath(Vertex source, Vertex target)
@@ -31,9 +36,6 @@ namespace GraphsClassProject
             //return -1 if no path exists
             double shortestDist = -1.0;
 
-            //path of nodes
-            List<Vertex> path = new List<Vertex>();
-
             //vertex->corresponding structure
             Dictionary<Vertex, Dijkstra> vertexStructs =
                 new Dictionary<Vertex, Dijkstra>();
@@ -47,13 +49,14 @@ namespace GraphsClassProject
 
             dijkstras.Add(currNode);
             vertexStructs.Add(source, currNode); //add to dictionary
-
-            while (currNode.vertex != target && !targetNode.sdFound)
+            int stopper = 0;
+            while (currNode.vertex != target && !targetNode.sdFound && stopper<30)
             {
+                stopper++;
                 foreach (Vertex v in currNode.vertex.Neighbors)
                 {
 
-                    //if newNode from this vertex doesnt exist
+                    //if newNode from this vertex doesn't exist
                     if (!vertexStructs.ContainsKey(v))
                     {
                         Dijkstra newNode = new Dijkstra(false, int.MaxValue, null, v);
@@ -99,23 +102,25 @@ namespace GraphsClassProject
             if (shortestDist != -1)
             {
                 Vertex parent = targetNode.parent;
-                path.Add(parent);
+                Path.Add(parent);
 
                 //create path - add parent vertex of node until reach node with source vertex
                 while (parent != source)
                 {
                     parent = vertexStructs[parent].parent;
-                    path.Insert(0, parent);
+                    Path.Insert(0, parent);
                 }
                 
-                PrintVertexSequence(path);
+                PrintVertexSequence(Path);
             }
 
             return shortestDist;
         }
 
+        
         private void PrintVertexSequence(List<Vertex> path)
         {
+            Console.WriteLine(path.Count);
             for (int i = 0; i < path.Count; i++)
             {
                 Console.Write(path[i].Name);

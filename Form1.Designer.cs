@@ -35,8 +35,11 @@
             this.Topological = new System.Windows.Forms.Button();
             this.Prim = new System.Windows.Forms.Button();
             this.panelNodeSelection = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.destDropDown = new System.Windows.Forms.ComboBox();
+            this.anotherNode = new System.Windows.Forms.Label();
             this.myBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelNodeSelection.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,31 +99,62 @@
             // 
             // panelNodeSelection
             // 
+            this.panelNodeSelection.Controls.Add(this.button1);
+            this.panelNodeSelection.Controls.Add(this.destDropDown);
+            this.panelNodeSelection.Controls.Add(this.anotherNode);
             this.panelNodeSelection.Controls.Add(this.myBox);
             this.panelNodeSelection.Controls.Add(this.label1);
             this.panelNodeSelection.Location = new System.Drawing.Point(634, 382);
             this.panelNodeSelection.Name = "panelNodeSelection";
-            this.panelNodeSelection.Size = new System.Drawing.Size(150, 230);
+            this.panelNodeSelection.Size = new System.Drawing.Size(165, 230);
             this.panelNodeSelection.TabIndex = 3;
             this.panelNodeSelection.Visible = false;
+            // 
+            // destDropDown
+            // 
+            this.destDropDown.FormattingEnabled = true;
+            this.destDropDown.Location = new System.Drawing.Point(22, 142);
+            this.destDropDown.Name = "destDropDown";
+            this.destDropDown.Size = new System.Drawing.Size(121, 21);
+            this.destDropDown.TabIndex = 3;
+            this.destDropDown.Visible = false;
+            // 
+            // anotherNode
+            // 
+            this.anotherNode.AutoSize = true;
+            this.anotherNode.Location = new System.Drawing.Point(10, 109);
+            this.anotherNode.Name = "anotherNode";
+            this.anotherNode.Size = new System.Drawing.Size(145, 13);
+            this.anotherNode.TabIndex = 2;
+            this.anotherNode.Text = "Please choose another Node";
+            this.anotherNode.Visible = false;
+            // 
+            // myBox
+            // 
+            this.myBox.FormattingEnabled = true;
+            this.myBox.Location = new System.Drawing.Point(22, 50);
+            this.myBox.Name = "myBox";
+            this.myBox.Size = new System.Drawing.Size(121, 21);
+            this.myBox.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 17);
+            this.label1.Location = new System.Drawing.Point(28, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(115, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Please choose a Node";
             // 
-            // myBox
+            // button1
             // 
-            this.myBox.FormattingEnabled = true;
-            this.myBox.Location = new System.Drawing.Point(13, 45);
-            this.myBox.Name = "myBox";
-            this.myBox.Size = new System.Drawing.Size(121, 21);
-            this.myBox.TabIndex = 1;
-            this.myBox.SelectedIndexChanged += new System.EventHandler(this.myBox_SelectedIndexChanged);
+            this.button1.Location = new System.Drawing.Point(44, 190);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(76, 19);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -154,6 +188,9 @@
         private System.Windows.Forms.Panel panelNodeSelection;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox myBox;
+        private System.Windows.Forms.ComboBox destDropDown;
+        private System.Windows.Forms.Label anotherNode;
+        private System.Windows.Forms.Button button1;
     }
 }
 
