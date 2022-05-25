@@ -9,9 +9,14 @@ namespace GraphsClassProject
         //only relevant to weighted graphs
         private readonly ParentGraph graph;
 
+        private List<String> edgesNames = new List<String>();
+
+        //private Dictionary<Vertex, Vertex> alreadyTraversed;
+
         public Prim(ParentGraph graph)
         {
             this.graph = graph;
+            //alreadyTraversed = new Dictionary<Vertex, Vertex>();
         }
 
         public Vertex[,] PrimMinSpanningGraph(Vertex start)
@@ -31,29 +36,33 @@ namespace GraphsClassProject
                 prims.Sort((x, y) => x.Cost.CompareTo(y.Cost));
                 System.Threading.Thread.Sleep(100);
                 PrimStruct currentPrim = prims[0];
-                prims.RemoveAt(0);
+                //prims.RemoveAt(0);
+                prims.Clear();
 
                 edges[numEdgesFound, 0] = currentPrim.Parent;
                 edges[numEdgesFound, 1] = currentPrim.vertex;
                 numEdgesFound++;
 
                 Vertex currentVertex = currentPrim.vertex;
+                /*if (!alreadyTraversed.ContainsKey(currentVertex))
+                {
+                    alreadyTraversed.Add(currentPrim.Parent, currentPrim.vertex);
+                }*/
 
                 foreach (Vertex node in currentVertex.Neighbors)
                 {
-                    PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(node));
-                    if (!neighborPrim.Equals(null))
+                    bool edgeExists = false;
+                    for (int i = 0; i < numEdgesFound; i++)
                     {
-                        if (graph.GetWeight(currentVertex, node) < neighborPrim.Cost)
+                        if (edges[i, 0].Equals(currentPrim.Parent) && edges[i, 1].Equals(node))
                         {
-                            neighborPrim.Cost = graph.GetWeight(currentVertex, node);
-                            neighborPrim.Parent = currentVertex;
+                            edgeExists = true;
+                            break;
                         }
                     }
-                    else
+                    if (!edgeExists)
                     {
-                        neighborPrim = new PrimStruct(node, graph.GetWeight(currentVertex, node), currentVertex);
-                        prims.Add(neighborPrim);
+                        prims.Add(new PrimStruct(node, graph.GetWeight(currentVertex, node), currentVertex));
                     }
                 }
             }

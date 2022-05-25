@@ -353,7 +353,7 @@ namespace GraphsClassProject
                             string showingOutput = "";
                             foreach (Vertex vertex in output)
                             {
-                                showingOutput += vertex + " ";
+                                showingOutput += vertex.Name + " ";
                             }
 
                             MessageBox.Show(showingOutput);
@@ -371,7 +371,7 @@ namespace GraphsClassProject
                             string showingOutput = "";
                             foreach (Vertex vertex in output)
                             {
-                                showingOutput += vertex + " ";
+                                showingOutput += vertex.Name + " ";
                             }
 
                             MessageBox.Show(showingOutput);

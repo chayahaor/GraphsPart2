@@ -55,7 +55,7 @@ namespace GraphsClassProject
                 List<Vertex> verticesToSubtract = adjacencyList[v];
                 foreach (Vertex neighbor in verticesToSubtract)
                 {
-                    indegreeList[neighbor] = indegreeList[neighbor]--;
+                    indegreeList[neighbor]--;
                     if (indegreeList[neighbor] == 0)
                     {
                         zeroes.Enqueue(neighbor);
@@ -65,7 +65,7 @@ namespace GraphsClassProject
             }
 
             // todo: if sorted is shorter than adjacency list, throw error - contains cycle
-            if (numVerticesAdded < graph.Vertices.Count)
+            if (numVerticesAdded > graph.Vertices.Count)
             {
                 throw new Exception("Graph contains cycle");
             }
