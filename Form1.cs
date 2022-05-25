@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Drawing.Drawing2D;
+using System.Text;
 
 namespace GraphsClassProject
 {
@@ -432,13 +433,13 @@ namespace GraphsClassProject
                 if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                 {
                     Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertex);
-                    string showingOutput = "";
+                    StringBuilder showingOutput = new StringBuilder(); 
                     foreach (Vertex vertex in output)
                     {
-                        showingOutput += vertex.Name + " ";
+                        showingOutput.Append(vertex.Name).Append(" ");
                     }
 
-                    MessageBox.Show(showingOutput);
+                    MessageBox.Show(showingOutput.ToString());
                     break;
                 }
             }

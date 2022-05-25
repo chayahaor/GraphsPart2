@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace GraphsClassProject
 {
@@ -28,6 +29,7 @@ namespace GraphsClassProject
             while (numEdgesFound < graph.Vertices.Count - 1)
             {
                 prims.Sort((x, y) => x.Cost.CompareTo(y.Cost));
+                System.Threading.Thread.Sleep(100);
                 PrimStruct currentPrim = prims[0];
                 prims.RemoveAt(0);
 
@@ -39,7 +41,7 @@ namespace GraphsClassProject
 
                 foreach (Vertex node in currentVertex.Neighbors)
                 {
-                    PrimStruct neighborPrim = prims.Find(p => p.vertex == node);
+                    PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(node));
                     if (!neighborPrim.Equals(null))
                     {
                         if (graph.GetWeight(currentVertex, node) < neighborPrim.Cost)
