@@ -18,21 +18,21 @@ namespace GraphsClassProject
             Vertex[] sorted = new Vertex[graph.Vertices.Count];
 
             // make adjacency list (use each vertex's neighbors list) - dictionary
-            Dictionary<Vertex, List<Vertex>> adjacencyList = new();
+            Dictionary<Vertex, List<Vertex>> adjacencyList = new Dictionary<Vertex, List<Vertex>>();
             foreach (Vertex vertex in graph.Vertices)
             {
                 adjacencyList.Add(vertex, vertex.Neighbors);
             }
 
             // make indegree list (use each vertex's indegree) - dictionary
-            Dictionary<Vertex, int> indegreeList = new();
+            Dictionary<Vertex, int> indegreeList = new Dictionary<Vertex, int>();
             foreach (Vertex vertex in graph.Vertices)
             {
                 indegreeList.Add(vertex, vertex.Indegree);
             }
 
             // make 0s queue
-            Queue<Vertex> zeroes = new();
+            Queue<Vertex> zeroes = new Queue<Vertex>();
 
             // enqueue all 0 indegrees
             foreach (KeyValuePair<Vertex, int> entry in indegreeList)

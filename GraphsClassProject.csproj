@@ -57,9 +57,12 @@
     </Compile>
     <Compile Include="Graph.cs" />
     <Compile Include="GraphType.cs" />
+    <Compile Include="Kruskal.cs" />
     <Compile Include="ParentGraph.cs" />
+    <Compile Include="Prim.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TopologicalSort.cs" />
     <Compile Include="Vertex.cs" />
     <Compile Include="WeightedDigraph.cs" />
     <Compile Include="WeightedGraph.cs" />
