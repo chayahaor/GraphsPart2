@@ -4,10 +4,19 @@
     <projectFile>GraphsClassProject.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="">
+    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="Fixed TopologicalSort.cs">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/GraphsClassProject/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/GraphsClassProject/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Digraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Digraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphsClassProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphsClassProject.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedDigraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedDigraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedGraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedGraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +24,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -73,6 +82,7 @@
       <workItem from="1653489496521" duration="654000" />
       <workItem from="1653490280048" duration="319000" />
       <workItem from="1653490758814" duration="25000" />
+      <workItem from="1653490855464" duration="4419000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>
@@ -95,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653490428598</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed TopologicalSort.cs">
+      <created>1653491164721</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1653491164721</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +136,7 @@
     <MESSAGE value="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI" />
     <MESSAGE value="Added parentGraph class..." />
     <MESSAGE value="Trying to merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trying to merge" />
+    <MESSAGE value="Fixed TopologicalSort.cs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed TopologicalSort.cs" />
   </component>
 </project>

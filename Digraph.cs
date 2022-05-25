@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace GraphsClassProject 
+namespace GraphsClassProject
 {
     class Digraph : ParentGraph
     {
+        private TopologicalSort topologicalSort;
+        
         public Digraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
             Vertices = new List<Vertex>();
             Type = GraphType.DIGRAPH;
+            topologicalSort = new TopologicalSort(this);
         }
-        
+
         public bool LoadGraph(String name, String server, String database)
         {
             bool retVal = true;
@@ -51,10 +54,12 @@ namespace GraphsClassProject
                     int initialIndex = Vertices.FindIndex(item => initialNode.Equals(item.Name));
                     int terminalIndex = Vertices.FindIndex(item => terminalNode.Equals(item.Name));
 
-                    Vertex initial = initialIndex < 0 ? new Vertex(initialNode)
-                                                    : Vertices[initialIndex];
-                    Vertex terminal = terminalIndex < 0 ? new Vertex(terminalNode)
-                                                    : Vertices[terminalIndex];
+                    Vertex initial = initialIndex < 0
+                        ? new Vertex(initialNode)
+                        : Vertices[initialIndex];
+                    Vertex terminal = terminalIndex < 0
+                        ? new Vertex(terminalNode)
+                        : Vertices[terminalIndex];
 
                     if (initialIndex < 0 && terminalIndex < 0)
                     {
@@ -72,6 +77,7 @@ namespace GraphsClassProject
                         // terminal doesn't exist, create and add edge between initial and it with weight = 1
                         Vertices.Add(terminal);
                     }
+
                     // if they both already exist, no need to add anything
                     initial.AddEdge(terminal, 1);
                 }
@@ -82,8 +88,14 @@ namespace GraphsClassProject
                 Console.WriteLine(e.StackTrace);
                 retVal = false;
             }
+
             return retVal;
         }
 
+        public Vertex[] DoTopologicalSort()
+        {
+           return topologicalSort.GetTopologicalSort();
+        }
+        
     }
 }

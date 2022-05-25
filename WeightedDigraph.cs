@@ -7,11 +7,14 @@ namespace GraphsClassProject
 {
     class WeightedDigraph : ParentGraph
     {
+        private TopologicalSort topologicalSort;
+
         public WeightedDigraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
             Vertices = new List<Vertex>();
             Type = GraphType.WEIGHTED_DIGRAPH;
+            topologicalSort = new TopologicalSort(this);
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -93,6 +96,11 @@ namespace GraphsClassProject
             }
 
             return retVal;
+        }
+
+        public Vertex[] DoTopologicalSort()
+        {
+            return topologicalSort.GetTopologicalSort();
         }
     }
 }

@@ -7,11 +7,13 @@ namespace GraphsClassProject
 {
     class WeightedGraph  : ParentGraph
     {
+        private Prim prim;
         public WeightedGraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
             Vertices = new List<Vertex>();
             Type = GraphType.WEIGHTED_GRAPH;
+            prim = new Prim(this);
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -95,6 +97,12 @@ namespace GraphsClassProject
         public int GetMaxWeight()
         {
             return MaxWeight;
+        }
+
+        //make red lines on top of edges that are in list
+        public Vertex[,] DoPrimAlgorithm(Vertex start)
+        {
+            return prim.PrimMinSpanningGraph(start);
         }
 
     }

@@ -17,11 +17,13 @@ namespace GraphsClassProject
         private List<WeightedDigraph> weightedDigraphs;
         private List<WeightedGraph> weightedGraphs;
 
+        private Vertex SelectedVertex;
+
         private Dictionary<String, String> graphNamesAndTypes;
 
-        public List<Button> GraphNameButtons { get; set; } 
+        public List<Button> GraphNameButtons { get; set; }
 
-        private readonly Font SMALL_FONT = new Font("Arial", 8);  
+        private readonly Font SMALL_FONT = new Font("Arial", 8);
 
         public readonly String SERVER;
         public readonly String DATABASE;
@@ -327,13 +329,49 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH || currentGraphShowing.Type == GraphType.GRAPH)
+            else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH ||
+                     currentGraphShowing.Type == GraphType.GRAPH)
             {
                 MessageBox.Show("Topological Sort is not available for selected graph.");
             }
             else
             {
-                // Topological Sort code
+                if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
+                {
+                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                    {
+                        if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
+                        {
+                            Vertex[] output = weightedDigraph.DoTopologicalSort();
+                            string showingOutput = "";
+                            foreach (Vertex vertex in output)
+                            {
+                                showingOutput += vertex + " ";
+                            }
+
+                            MessageBox.Show(showingOutput);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Digraph digraph in digraphs)
+                    {
+                        if (digraph.GraphName == currentGraphShowing.GraphName)
+                        {
+                            Vertex[] output = digraph.DoTopologicalSort();
+                            string showingOutput = "";
+                            foreach (Vertex vertex in output)
+                            {
+                                showingOutput += vertex + " ";
+                            }
+
+                            MessageBox.Show(showingOutput);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -349,8 +387,50 @@ namespace GraphsClassProject
             }
             else
             {
-                // Prim code
+                getInput(currentGraphShowing);
+                foreach (WeightedGraph weightedGraph in weightedGraphs)
+                {
+                    if (weightedGraph.GraphName == currentGraphShowing.GraphName)
+                    {
+                        Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertex);
+                        string showingOutput = "";
+                        foreach (Vertex vertex in output)
+                        {
+                            showingOutput += vertex + " ";
+                        }
+
+                        MessageBox.Show(showingOutput);
+                        break;
+                    }
+                }
             }
+        }
+
+
+        private void getInput(ParentGraph parentGraph)
+        {
+            ComboBox myBox = new ComboBox();
+            myBox.SelectionChangeCommitted += new EventHandler(selectionFromCombo);
+            foreach (Vertex vertex in parentGraph.Vertices)
+            {
+                myBox.Items.Add(vertex.Name);
+            }
+        }
+
+        private void selectionFromCombo(object sender, EventArgs e)
+        {
+            ComboBox senderComboBox = (ComboBox)sender;
+
+            if (senderComboBox.SelectionLength > 0)
+            {
+                SelectedVertex = currentGraphShowing.Vertices[senderComboBox.SelectedIndex];
+            }
+            else
+            {
+                SelectedVertex = currentGraphShowing.Vertices[0];
+            }
+
+            MessageBox.Show("You selected " + SelectedVertex.Name);
         }
     }
 }
