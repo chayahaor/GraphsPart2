@@ -5,10 +5,12 @@ using System.Data.SqlClient;
 
 namespace GraphsClassProject
 {
-    class WeightedGraph  : ParentGraph
+    class WeightedGraph : ParentGraph
     {
         private Prim prim;
         private DijkstrasAlgorithm dijkstra;
+        private Kruskal kruskal;
+
         public WeightedGraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
@@ -16,6 +18,7 @@ namespace GraphsClassProject
             Type = GraphType.WEIGHTED_GRAPH;
             prim = new Prim(this);
             dijkstra = new DijkstrasAlgorithm(this);
+            kruskal = new Kruskal(this);
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -60,10 +63,12 @@ namespace GraphsClassProject
                     int initialIndex = Vertices.FindIndex(item => initialNode.Equals(item.Name));
                     int terminalIndex = Vertices.FindIndex(item => terminalNode.Equals(item.Name));
 
-                    Vertex initial = initialIndex < 0 ? new Vertex(initialNode)
-                                                    : Vertices[initialIndex];
-                    Vertex terminal = terminalIndex < 0 ? new Vertex(terminalNode)
-                                                    : Vertices[terminalIndex];
+                    Vertex initial = initialIndex < 0
+                        ? new Vertex(initialNode)
+                        : Vertices[initialIndex];
+                    Vertex terminal = terminalIndex < 0
+                        ? new Vertex(terminalNode)
+                        : Vertices[terminalIndex];
 
                     if (initialIndex < 0 && terminalIndex < 0)
                     {
@@ -81,6 +86,7 @@ namespace GraphsClassProject
                         // terminal doesn't exist, create and add edge between initial and it with weight = 1
                         Vertices.Add(terminal);
                     }
+
                     // if they both already exist, no need to add anything
                     initial.AddEdge(terminal, weight);
                     terminal.AddEdge(initial, weight);
@@ -112,6 +118,11 @@ namespace GraphsClassProject
             dijkstra.DijskstrasShortestPath(start, end);
 
             return dijkstra.Path;
+        }
+
+        public Vertex[,] DoKruskalAlgorithm()
+        {
+            return kruskal.KruskalAlgorithm();
         }
     }
 }

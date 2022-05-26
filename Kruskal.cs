@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-    internal class Kruskal 
+    internal class Kruskal
     {
         private readonly ParentGraph graph;
         private List<Vertex> Vertices;
@@ -17,7 +17,7 @@ namespace GraphsClassProject
         {
             this.graph = graph;
             this.Vertices = graph.Vertices;
-            this.Edges = GetListOfEdges();
+            //this.Edges = GetListOfEdges();
         }
 
         private List<EdgeStruct> GetListOfEdges()
@@ -37,6 +37,7 @@ namespace GraphsClassProject
 
         public Vertex[,] KruskalAlgorithm()
         {
+            this.Edges = GetListOfEdges();
             Vertex[,] shortestPath = new Vertex[Vertices.Count - 1, 2];
             List<EdgeStruct> orderedEdges = SortEdges();
 
@@ -44,7 +45,8 @@ namespace GraphsClassProject
             List<List<Vertex>> visited = new List<List<Vertex>>();
             int indexToAddAt = 0;
 
-            while (shortestPath.Length > Vertices.Count - 1)
+            int temp = Vertices.Count - 2;
+            while (shortestPath[temp, 0] == null)
             {
                 EdgeStruct shortest = orderedEdges[0];
                 int foundSourceWhere = -1;
@@ -65,6 +67,7 @@ namespace GraphsClassProject
                         }
                     }
                 }
+
                 if (foundSourceWhere == -1)
                 {
                     if (foundDestinationWhere == -1)
@@ -100,21 +103,24 @@ namespace GraphsClassProject
                         {
                             visited[foundSourceWhere].Add(movingVertex);
                         }
+
                         visited.RemoveAt(foundDestinationWhere);
                         shortestPath[indexToAddAt, 0] = shortest.source;
                         shortestPath[indexToAddAt, 1] = shortest.Destination;
                         indexToAddAt++;
                     }
                 }
+
                 orderedEdges.RemoveAt(0);
             }
+
             return shortestPath;
         }
 
-        private List<EdgeStruct> SortEdges()
+        /*private List<EdgeStruct> SortEdges()
         {
             List<EdgeStruct> sorted = new List<EdgeStruct>();
-            foreach (EdgeStruct addingEdge in Edges)
+            /*foreach (EdgeStruct addingEdge in Edges)
             {
                 foreach (EdgeStruct sortedEdge in sorted)
                 {
@@ -123,11 +129,20 @@ namespace GraphsClassProject
                         sorted.Add(addingEdge);
                     }
                 }
-                if (!(sorted[sorted.Count - 1]).Equals(addingEdge))
+
+                if (!sorted.Contains(addingEdge))
                 {
                     sorted.Add(addingEdge);
                 }
-            }
+            }#1#
+             Edges.Sort((x, y) => x.Weight - y.Weight);
+            return sorted;
+        }*/
+
+        private List<EdgeStruct> SortEdges()
+        {
+            List<EdgeStruct> sorted = Edges;
+            sorted.Sort((x, y) => x.Weight - y.Weight);
             return sorted;
         }
 
@@ -147,4 +162,3 @@ namespace GraphsClassProject
         }
     }
 }
-
