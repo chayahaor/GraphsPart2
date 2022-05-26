@@ -351,6 +351,7 @@ namespace GraphsClassProject
             {
                 algorithmType = AlgorithmType.TOPOLOGICAL;
 
+                string showingOutput = "";
                 if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                 {
                     foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
@@ -358,13 +359,10 @@ namespace GraphsClassProject
                         if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
                         {
                             Vertex[] output = weightedDigraph.DoTopologicalSort();
-                            string showingOutput = "";
                             foreach (Vertex vertex in output)
                             {
                                 showingOutput += vertex.Name + " ";
                             }
-
-                            MessageBox.Show(showingOutput);
                             break;
                         }
                     }
@@ -376,17 +374,15 @@ namespace GraphsClassProject
                         if (digraph.GraphName == currentGraphShowing.GraphName)
                         {
                             Vertex[] output = digraph.DoTopologicalSort();
-                            string showingOutput = "";
                             foreach (Vertex vertex in output)
                             {
                                 showingOutput += vertex.Name + " ";
                             }
-
-                            MessageBox.Show(showingOutput);
                             break;
                         }
                     }
                 }
+                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
             }
         }
 
