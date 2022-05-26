@@ -17,7 +17,6 @@ namespace GraphsClassProject
         {
             this.graph = graph;
             this.Vertices = graph.Vertices;
-            //this.Edges = GetListOfEdges();
         }
 
         private List<EdgeStruct> GetListOfEdges()
@@ -59,10 +58,12 @@ namespace GraphsClassProject
                     {
                         if (currVertex == shortest.source)
                         {
+                            int indexSource = visited.IndexOf(connectedVertices);
                             foundSourceWhere = visited.IndexOf(connectedVertices);
                         }
                         else if (currVertex == shortest.Destination)
                         {
+                            int indexDestination = visited.IndexOf(connectedVertices);
                             foundDestinationWhere = visited.IndexOf(connectedVertices);
                         }
                     }
@@ -92,7 +93,7 @@ namespace GraphsClassProject
                 {
                     if (foundDestinationWhere == -1)
                     {
-                        visited[foundSourceWhere].Add(shortest.source);
+                        visited[foundSourceWhere].Add(shortest.Destination);
                         shortestPath[indexToAddAt, 0] = shortest.source;
                         shortestPath[indexToAddAt, 1] = shortest.Destination;
                         indexToAddAt++;

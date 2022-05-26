@@ -61,7 +61,7 @@ namespace GraphsClassProject
                 button.Location = new Point(x, y);
                 GraphNameButtons.Add(button);
 
-                y += 100;
+                y += 50;
 
                 panelGraphButtons.Controls.Add(button);
                 string errorMessage = "Something went wrong with loading the graph...";
