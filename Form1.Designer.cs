@@ -118,7 +118,7 @@
             this.btnNodeSelection.TabIndex = 4;
             this.btnNodeSelection.Text = "Ready?";
             this.btnNodeSelection.UseVisualStyleBackColor = true;
-            this.btnNodeSelection.Click += new System.EventHandler(this.button1_Click);
+            this.btnNodeSelection.Click += new System.EventHandler(this.readyNodes_Click);
             // 
             // destDropDown
             // 

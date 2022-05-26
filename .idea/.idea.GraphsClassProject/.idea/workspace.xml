@@ -4,17 +4,16 @@
     <projectFile>GraphsClassProject.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="Fixed TopologicalSort.cs">
+    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Digraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Digraph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphsClassProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphsClassProject.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WeightedDigraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedDigraph.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WeightedGraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedGraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GetData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GetData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kruskal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Kruskal.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" afterDir="false" />
     </list>
@@ -24,7 +23,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsClassProject/GetData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsClassProject/Kruskal.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -34,14 +35,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "full.screen.before.presentation.mode": "false",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="GraphsClassProject" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -83,6 +86,8 @@
       <workItem from="1653490280048" duration="319000" />
       <workItem from="1653490758814" duration="25000" />
       <workItem from="1653490855464" duration="4419000" />
+      <workItem from="1653582378380" duration="1567000" />
+      <workItem from="1653584012196" duration="1718000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>
@@ -138,5 +143,9 @@
     <MESSAGE value="Trying to merge" />
     <MESSAGE value="Fixed TopologicalSort.cs" />
     <option name="LAST_COMMIT_MESSAGE" value="Fixed TopologicalSort.cs" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

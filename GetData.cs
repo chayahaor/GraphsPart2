@@ -15,7 +15,7 @@ namespace GraphsClassProject
             LoadVerticesFromSQL(server, database);
         }
 
-        private Dictionary<String, String> LoadVerticesFromSQL(String server, String database)
+        private void LoadVerticesFromSQL(String server, String database)
         {
             // table contains graphName, graphType
             GraphTypes = new Dictionary<string, string>();
@@ -60,7 +60,6 @@ namespace GraphsClassProject
 
             }
 
-            return GraphTypes;
         }
     }
 }

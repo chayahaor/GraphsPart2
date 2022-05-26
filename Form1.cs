@@ -10,8 +10,8 @@ namespace GraphsClassProject
 {
     public partial class Form1 : Form
     {
-        public List<Label> LabelNodes { get; set; }
-        public List<Point> NodeCircleLocations { get; set; }
+        private List<Label> LabelNodes { get; set; }
+        private List<Point> NodeCircleLocations { get; set; }
 
         private List<Digraph> digraphs;
         private List<Graph> graphs;
@@ -20,19 +20,16 @@ namespace GraphsClassProject
 
         private Dictionary<String, String> graphNamesAndTypes;
 
-        public List<Button> GraphNameButtons { get; set; }
+        private List<Button> GraphNameButtons { get; set; }
 
-        private readonly Font SMALL_FONT = new Font("Arial", 8);
-
-        public readonly String SERVER;
-        public readonly String DATABASE;
+        private readonly Font smallFont = new Font("Arial", 8);
 
         private readonly int CENTER = 325;
 
         private ParentGraph currentGraphShowing;
-        private Vertex SelectedVertexA;
-        private Vertex SelectedVertexB;
-        private AlgorithmType? algorithmType = null;
+        private Vertex selectedVertexA;
+        private Vertex selectedVertexB;
+        private AlgorithmType? algorithmType;
 
         public Form1()
         {
@@ -47,15 +44,14 @@ namespace GraphsClassProject
 
             panelGraph.BackColor = Color.Gray;
 
-            SERVER = ConfigurationManager.AppSettings["SERVER"];
-            DATABASE = ConfigurationManager.AppSettings["DATABASE"];
-            GetData getData = new GetData(SERVER, DATABASE);
+            var server = ConfigurationManager.AppSettings["SERVER"];
+            var database = ConfigurationManager.AppSettings["DATABASE"];
+            GetData getData = new GetData(server, database);
 
             graphNamesAndTypes = getData.GraphTypes;
 
             int x = 0;
             int y = 0;
-            int currNumber = 0;
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
                 Button button = new Button();
@@ -65,31 +61,45 @@ namespace GraphsClassProject
                 button.Location = new Point(x, y);
                 GraphNameButtons.Add(button);
 
-                currNumber++;
                 y += 100;
 
                 panelGraphButtons.Controls.Add(button);
-
+                string errorMessage = "Something went wrong with loading the graph...";
                 switch (pair.Value)
                 {
                     case "Weighted_Directed":
                         WeightedDigraph weightedDigraph = new WeightedDigraph(pair.Key);
-                        weightedDigraph.LoadGraph(pair.Key, SERVER, DATABASE);
+                        if (!weightedDigraph.LoadGraph(pair.Key, server, database))
+                        {
+                            MessageBox.Show(errorMessage);
+                        }
+
                         weightedDigraphs.Add(weightedDigraph);
                         break;
                     case "Unweighted_Directed":
                         Digraph digraph = new Digraph(pair.Key);
-                        digraph.LoadGraph(pair.Key, SERVER, DATABASE);
+                        if (!digraph.LoadGraph(pair.Key, server, database))
+                        {
+                            MessageBox.Show(errorMessage);
+                        }
+
                         digraphs.Add(digraph);
                         break;
                     case "Weighted_Undirected":
                         WeightedGraph weightedGraph = new WeightedGraph(pair.Key);
-                        weightedGraph.LoadGraph(pair.Key, SERVER, DATABASE);
+                        if (!weightedGraph.LoadGraph(pair.Key, server, database))
+                        {
+                            MessageBox.Show(errorMessage);
+                        }
                         weightedGraphs.Add(weightedGraph);
                         break;
                     case "Unweighted_Undirected":
                         Graph graph = new Graph(pair.Key);
-                        graph.LoadGraph(pair.Key, SERVER, DATABASE);
+                        if (!graph.LoadGraph(pair.Key, server, database))
+                        {
+                            MessageBox.Show(errorMessage);
+                        }
+
                         graphs.Add(graph);
                         break;
                 }
@@ -153,7 +163,7 @@ namespace GraphsClassProject
             }
         }
 
-        public Point GetLocation(int nodeNumber, int numNodes)
+        private Point GetLocation(int nodeNumber, int numNodes)
         {
             // MAX NUMBER OF NODES: 26 
             // MAX INNER NUMBER OF NODES: 10
@@ -214,19 +224,21 @@ namespace GraphsClassProject
 
         private void FillPanel(ParentGraph graph)
         {
-            ClearPanel();
+            ResetPanels();
 
             CreateLabelNodes(graph);
 
             CreateGraphics(graph);
         }
 
-        private void ClearPanel()
+        private void ResetPanels()
         {
             LabelNodes = new List<Label>();
             NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
+            myBox.SelectedIndex = -1;
+            destDropDown.SelectedIndex = -1;
         }
 
         private void CreateLabelNodes(ParentGraph graph)
@@ -244,7 +256,7 @@ namespace GraphsClassProject
                 NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
-                label.Font = SMALL_FONT;
+                label.Font = smallFont;
                 label.Size = new Size(20, 15);
                 label.ForeColor = Color.White;
                 label.SendToBack();
@@ -291,7 +303,6 @@ namespace GraphsClassProject
                 }
             }
         }
-
 
         private void Dijkstra_Click(object sender, EventArgs e)
         {
@@ -352,37 +363,47 @@ namespace GraphsClassProject
                 algorithmType = AlgorithmType.TOPOLOGICAL;
 
                 string showingOutput = "";
-                if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
+                try
                 {
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                    if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                     {
-                        if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
+                        foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
                         {
-                            Vertex[] output = weightedDigraph.DoTopologicalSort();
-                            foreach (Vertex vertex in output)
+                            if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
                             {
-                                showingOutput += vertex.Name + " ";
+                                Vertex[] output = weightedDigraph.DoTopologicalSort();
+                                foreach (Vertex vertex in output)
+                                {
+                                    showingOutput += vertex.Name + " ";
+                                }
+
+                                break;
                             }
-                            break;
                         }
                     }
-                }
-                else
-                {
-                    foreach (Digraph digraph in digraphs)
+                    else
                     {
-                        if (digraph.GraphName == currentGraphShowing.GraphName)
+                        foreach (Digraph digraph in digraphs)
                         {
-                            Vertex[] output = digraph.DoTopologicalSort();
-                            foreach (Vertex vertex in output)
+                            if (digraph.GraphName == currentGraphShowing.GraphName)
                             {
-                                showingOutput += vertex.Name + " ";
+                                Vertex[] output = digraph.DoTopologicalSort();
+                                foreach (Vertex vertex in output)
+                                {
+                                    showingOutput += vertex.Name + " ";
+                                }
+
+                                break;
                             }
-                            break;
                         }
                     }
+
+                    MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
                 }
-                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
         }
 
@@ -410,12 +431,11 @@ namespace GraphsClassProject
 
         private void GetInput(ParentGraph parentGraph)
         {
-            //myBox.SelectedValue = parentGraph.Vertices[0]; // default value
-            //SelectedVertex = parentGraph.Vertices[0];
             foreach (Vertex vertex in parentGraph.Vertices)
             {
                 myBox.Items.Add(vertex.Name);
             }
+
             foreach (Vertex vertex in parentGraph.Vertices)
             {
                 destDropDown.Items.Add(vertex.Name);
@@ -428,7 +448,7 @@ namespace GraphsClassProject
             {
                 if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                 {
-                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertexA);
+                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
                     StringBuilder showingOutput = new StringBuilder();
                     for (int i = 0; i < output.GetLength(0); i++)
                     {
@@ -450,7 +470,7 @@ namespace GraphsClassProject
             {
                 if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                 {
-                    List<Vertex> output = weightedGraph.DoDijkstraAlgorithm(SelectedVertexA, SelectedVertexB);
+                    List<Vertex> output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
                     StringBuilder showingOutput = new StringBuilder();
                     foreach (Vertex vertex in output)
                     {
@@ -463,21 +483,28 @@ namespace GraphsClassProject
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void readyNodes_Click(object sender, EventArgs e)
         {
-            SelectedVertexA = currentGraphShowing.Vertices[myBox.SelectedIndex];
-
-            MessageBox.Show("You selected " + SelectedVertexA.Name);
-
-            if (destDropDown.SelectedIndex == -1)
+            if (myBox.SelectedIndex == -1)
             {
-                SelectedVertexB = currentGraphShowing.Vertices[0];
+                selectedVertexA = currentGraphShowing.Vertices[0];
+                MessageBox.Show("Default vertex selected");
             }
             else
             {
-                SelectedVertexB = currentGraphShowing.Vertices[destDropDown.SelectedIndex];
+                selectedVertexA = currentGraphShowing.Vertices[myBox.SelectedIndex];
+                MessageBox.Show("You selected " + selectedVertexA.Name);
+            }
 
-                MessageBox.Show("You selected " + SelectedVertexB.Name);
+            if (destDropDown.SelectedIndex == -1)
+            {
+                selectedVertexB = currentGraphShowing.Vertices[0];
+                MessageBox.Show("Default vertex selected");
+            }
+            else
+            {
+                selectedVertexB = currentGraphShowing.Vertices[destDropDown.SelectedIndex];
+                MessageBox.Show("You selected " + selectedVertexB.Name);
             }
 
             if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
@@ -487,6 +514,9 @@ namespace GraphsClassProject
             else if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
             {
                 DoDijkstra();
+            }
+            else if (algorithmType != null && algorithmType.Equals(AlgorithmType.KRUSKAL))
+            {
             }
         }
     }

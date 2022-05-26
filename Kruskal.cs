@@ -17,10 +17,10 @@ namespace GraphsClassProject
         {
             this.graph = graph;
             this.Vertices = graph.Vertices;
-            this.Edges = getListOfEdges();
+            this.Edges = GetListOfEdges();
         }
 
-        private List<EdgeStruct> getListOfEdges()
+        private List<EdgeStruct> GetListOfEdges()
         {
             List<EdgeStruct> edges = new List<EdgeStruct>();
 
@@ -35,18 +35,18 @@ namespace GraphsClassProject
             return edges;
         }
 
-        public Vertex[,] KruskalsAlgorithm()
+        public Vertex[,] KruskalAlgorithm()
         {
-            Vertex[,] ShortestPath = new Vertex[Vertices.Count - 1, 2];
-            List<EdgeStruct> OrderedEdges = SortEdges();
+            Vertex[,] shortestPath = new Vertex[Vertices.Count - 1, 2];
+            List<EdgeStruct> orderedEdges = SortEdges();
 
 
             List<List<Vertex>> visited = new List<List<Vertex>>();
             int indexToAddAt = 0;
 
-            while (ShortestPath.Length > Vertices.Count - 1)
+            while (shortestPath.Length > Vertices.Count - 1)
             {
-                EdgeStruct Shortest = OrderedEdges[0];
+                EdgeStruct shortest = orderedEdges[0];
                 int foundSourceWhere = -1;
                 int foundDestinationWhere = -1;
 
@@ -55,11 +55,11 @@ namespace GraphsClassProject
                 {
                     foreach (Vertex currVertex in connectedVertices)
                     {
-                        if (currVertex == Shortest.source)
+                        if (currVertex == shortest.source)
                         {
                             foundSourceWhere = visited.IndexOf(connectedVertices);
                         }
-                        else if (currVertex == Shortest.destination)
+                        else if (currVertex == shortest.Destination)
                         {
                             foundDestinationWhere = visited.IndexOf(connectedVertices);
                         }
@@ -70,18 +70,18 @@ namespace GraphsClassProject
                     if (foundDestinationWhere == -1)
                     {
                         List<Vertex> unconnected = new List<Vertex>();
-                        unconnected.Add(Shortest.source);
-                        unconnected.Add(Shortest.destination);
+                        unconnected.Add(shortest.source);
+                        unconnected.Add(shortest.Destination);
                         visited.Add(unconnected);
-                        ShortestPath[indexToAddAt, 0] = Shortest.source;
-                        ShortestPath[indexToAddAt, 1] = Shortest.destination;
+                        shortestPath[indexToAddAt, 0] = shortest.source;
+                        shortestPath[indexToAddAt, 1] = shortest.Destination;
                         indexToAddAt++;
                     }
                     else
                     {
-                        visited[foundDestinationWhere].Add(Shortest.source);
-                        ShortestPath[indexToAddAt, 0] = Shortest.source;
-                        ShortestPath[indexToAddAt, 1] = Shortest.destination;
+                        visited[foundDestinationWhere].Add(shortest.source);
+                        shortestPath[indexToAddAt, 0] = shortest.source;
+                        shortestPath[indexToAddAt, 1] = shortest.Destination;
                         indexToAddAt++;
                     }
                 }
@@ -89,9 +89,9 @@ namespace GraphsClassProject
                 {
                     if (foundDestinationWhere == -1)
                     {
-                        visited[foundSourceWhere].Add(Shortest.source);
-                        ShortestPath[indexToAddAt, 0] = Shortest.source;
-                        ShortestPath[indexToAddAt, 1] = Shortest.destination;
+                        visited[foundSourceWhere].Add(shortest.source);
+                        shortestPath[indexToAddAt, 0] = shortest.source;
+                        shortestPath[indexToAddAt, 1] = shortest.Destination;
                         indexToAddAt++;
                     }
                     else if (foundDestinationWhere != foundSourceWhere)
@@ -101,34 +101,34 @@ namespace GraphsClassProject
                             visited[foundSourceWhere].Add(movingVertex);
                         }
                         visited.RemoveAt(foundDestinationWhere);
-                        ShortestPath[indexToAddAt, 0] = Shortest.source;
-                        ShortestPath[indexToAddAt, 1] = Shortest.destination;
+                        shortestPath[indexToAddAt, 0] = shortest.source;
+                        shortestPath[indexToAddAt, 1] = shortest.Destination;
                         indexToAddAt++;
                     }
                 }
-                OrderedEdges.RemoveAt(0);
+                orderedEdges.RemoveAt(0);
             }
-            return ShortestPath;
+            return shortestPath;
         }
 
         private List<EdgeStruct> SortEdges()
         {
-            List<EdgeStruct> Sorted = new List<EdgeStruct>();
-            foreach (EdgeStruct AddingEdge in Edges)
+            List<EdgeStruct> sorted = new List<EdgeStruct>();
+            foreach (EdgeStruct addingEdge in Edges)
             {
-                foreach (EdgeStruct SortedEdge in Sorted)
+                foreach (EdgeStruct sortedEdge in sorted)
                 {
-                    if (AddingEdge.weight < SortedEdge.weight)
+                    if (addingEdge.Weight < sortedEdge.Weight)
                     {
-                        Sorted.Add(AddingEdge);
+                        sorted.Add(addingEdge);
                     }
                 }
-                if (!(Sorted[Sorted.Count - 1]).Equals(AddingEdge))
+                if (!(sorted[sorted.Count - 1]).Equals(addingEdge))
                 {
-                    Sorted.Add(AddingEdge);
+                    sorted.Add(addingEdge);
                 }
             }
-            return Sorted;
+            return sorted;
         }
 
         struct EdgeStruct
@@ -137,13 +137,13 @@ namespace GraphsClassProject
             public EdgeStruct(Vertex vertexA, int weight, Vertex vertexB)
             {
                 this.source = vertexA;
-                this.weight = weight;
-                this.destination = vertexB;
+                this.Weight = weight;
+                this.Destination = vertexB;
             }
 
             internal Vertex source;
-            internal int weight { get; set; }
-            internal Vertex destination { get; set; }
+            internal int Weight { get; set; }
+            internal Vertex Destination { get; set; }
         }
     }
 }
