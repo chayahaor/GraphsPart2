@@ -434,9 +434,12 @@ namespace GraphsClassProject
                 {
                     Vertex[,] output = weightedGraph.DoPrimAlgorithm(SelectedVertexA);
                     StringBuilder showingOutput = new StringBuilder();
-                    foreach (Vertex vertex in output)
+                    for (int i = 0; i < output.GetLength(0); i++)
                     {
-                        showingOutput.Append(vertex.Name).Append(" "); // 2D list
+                        for (int j = 0; j < output.GetLength(1); j++)
+                        {
+                            showingOutput.Append(output[i, j].Name).Append("\n");
+                        }
                     }
 
                     MessageBox.Show(showingOutput.ToString());

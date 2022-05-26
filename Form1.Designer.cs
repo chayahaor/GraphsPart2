@@ -35,11 +35,11 @@
             this.Topological = new System.Windows.Forms.Button();
             this.Prim = new System.Windows.Forms.Button();
             this.panelNodeSelection = new System.Windows.Forms.Panel();
+            this.btnNodeSelection = new System.Windows.Forms.Button();
             this.destDropDown = new System.Windows.Forms.ComboBox();
             this.anotherNode = new System.Windows.Forms.Label();
             this.myBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelNodeSelection.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,7 +99,7 @@
             // 
             // panelNodeSelection
             // 
-            this.panelNodeSelection.Controls.Add(this.button1);
+            this.panelNodeSelection.Controls.Add(this.btnNodeSelection);
             this.panelNodeSelection.Controls.Add(this.destDropDown);
             this.panelNodeSelection.Controls.Add(this.anotherNode);
             this.panelNodeSelection.Controls.Add(this.myBox);
@@ -109,6 +109,16 @@
             this.panelNodeSelection.Size = new System.Drawing.Size(165, 230);
             this.panelNodeSelection.TabIndex = 3;
             this.panelNodeSelection.Visible = false;
+            // 
+            // btnNodeSelection
+            // 
+            this.btnNodeSelection.Location = new System.Drawing.Point(44, 190);
+            this.btnNodeSelection.Name = "btnNodeSelection";
+            this.btnNodeSelection.Size = new System.Drawing.Size(76, 23);
+            this.btnNodeSelection.TabIndex = 4;
+            this.btnNodeSelection.Text = "Ready?";
+            this.btnNodeSelection.UseVisualStyleBackColor = true;
+            this.btnNodeSelection.Click += new System.EventHandler(this.button1_Click);
             // 
             // destDropDown
             // 
@@ -146,16 +156,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Please choose a Node";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(44, 190);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(76, 19);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,7 +190,7 @@
         private System.Windows.Forms.ComboBox myBox;
         private System.Windows.Forms.ComboBox destDropDown;
         private System.Windows.Forms.Label anotherNode;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnNodeSelection;
     }
 }
 
