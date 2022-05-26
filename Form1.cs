@@ -237,6 +237,7 @@ namespace GraphsClassProject
             NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
+            panelNodeSelection.Visible = false;
             myBox.SelectedIndex = -1;
             destDropDown.SelectedIndex = -1;
         }
@@ -342,6 +343,9 @@ namespace GraphsClassProject
             else
             {
                 algorithmType = AlgorithmType.KRUSKAL;
+
+                panelNodeSelection.Visible = false;
+
                 foreach (WeightedGraph weightedGraph in weightedGraphs)
                 {
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
@@ -379,6 +383,8 @@ namespace GraphsClassProject
             else
             {
                 algorithmType = AlgorithmType.TOPOLOGICAL;
+
+                panelNodeSelection.Visible = false;
 
                 string showingOutput = "";
                 try
@@ -514,7 +520,7 @@ namespace GraphsClassProject
                 MessageBox.Show("You selected " + selectedVertexA.Name);
             }
 
-            if (destDropDown.SelectedIndex == -1)
+            if (destDropDown.SelectedIndex == -1 && (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA)))
             {
                 selectedVertexB = currentGraphShowing.Vertices[0];
                 MessageBox.Show("Default vertex selected");
