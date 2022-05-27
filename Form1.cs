@@ -396,6 +396,9 @@ namespace GraphsClassProject
                             if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
                             {
                                 Vertex[] output = weightedDigraph.DoTopologicalSort();
+
+                                System.Threading.Thread.Sleep(1000);
+
                                 foreach (Vertex vertex in output)
                                 {
                                     showingOutput += vertex.Name + " ";
@@ -412,6 +415,9 @@ namespace GraphsClassProject
                             if (digraph.GraphName == currentGraphShowing.GraphName)
                             {
                                 Vertex[] output = digraph.DoTopologicalSort();
+
+                                System.Threading.Thread.Sleep(1000);
+
                                 foreach (Vertex vertex in output)
                                 {
                                     showingOutput += vertex.Name + " ";

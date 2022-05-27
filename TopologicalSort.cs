@@ -43,7 +43,12 @@ namespace GraphsClassProject
                 }
             }
 
+            if (zeroes.Count == 0)
+            {
+                throw new Exception("Graph contains cycle");
+            }
             int numVerticesAdded = 0;
+
             while (zeroes.Count > 0)
             {
                 // dequeue Vertex v, add to sorted
@@ -62,12 +67,11 @@ namespace GraphsClassProject
                     }
                 }
 
-            }
-
-            // todo: if sorted is shorter than adjacency list, throw error - contains cycle
-            if (numVerticesAdded > graph.Vertices.Count)
-            {
-                throw new Exception("Graph contains cycle");
+                // todo: if sorted is shorter than adjacency list, throw error - contains cycle
+                if (numVerticesAdded > graph.Vertices.Count)
+                {
+                    throw new Exception("Graph contains cycle");
+                }
             }
 
             return sorted;

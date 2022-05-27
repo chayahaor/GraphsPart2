@@ -8,7 +8,7 @@ namespace GraphsClassProject
     class Digraph : ParentGraph
     {
         private TopologicalSort topologicalSort;
-        
+
         public Digraph(String graphName) : base(graphName)
         {
             GraphName = graphName;
@@ -94,8 +94,9 @@ namespace GraphsClassProject
 
         public Vertex[] DoTopologicalSort()
         {
-           return topologicalSort.GetTopologicalSort();
+            Vertex[] retVal = topologicalSort.GetTopologicalSort();
+            return retVal;
         }
-        
+
     }
 }
