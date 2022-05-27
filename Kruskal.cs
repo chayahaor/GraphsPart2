@@ -58,12 +58,10 @@ namespace GraphsClassProject
                     {
                         if (currVertex == shortest.source)
                         {
-                            int indexSource = visited.IndexOf(connectedVertices);
                             foundSourceWhere = visited.IndexOf(connectedVertices);
                         }
                         else if (currVertex == shortest.Destination)
                         {
-                            int indexDestination = visited.IndexOf(connectedVertices);
                             foundDestinationWhere = visited.IndexOf(connectedVertices);
                         }
                     }

@@ -8,9 +8,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kruskal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Kruskal.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WeightedGraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedGraph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TopologicalSort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TopologicalSort.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" afterDir="false" />
     </list>
@@ -20,6 +21,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/03/f80aca8e/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/bc/e2962ae8/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -85,6 +87,7 @@
       <workItem from="1653582378380" duration="1567000" />
       <workItem from="1653584012196" duration="2643000" />
       <workItem from="1653591386430" duration="3050000" />
+      <workItem from="1653664582672" duration="3646000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>

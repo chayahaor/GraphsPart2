@@ -66,8 +66,7 @@ namespace GraphsClassProject
                         zeroes.Enqueue(neighbor);
                     }
                 }
-
-                // todo: if sorted is shorter than adjacency list, throw error - contains cycle
+                
                 if (numVerticesAdded > graph.Vertices.Count)
                 {
                     throw new Exception("Graph contains cycle");

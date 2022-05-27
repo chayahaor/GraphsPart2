@@ -91,6 +91,7 @@ namespace GraphsClassProject
                         {
                             MessageBox.Show(errorMessage);
                         }
+
                         weightedGraphs.Add(weightedGraph);
                         break;
                     case "Unweighted_Undirected":
@@ -226,7 +227,7 @@ namespace GraphsClassProject
         {
             ResetPanels();
 
-            CreateLabelType(graph); 
+            CreateLabelType(graph);
 
             CreateLabelNodes(graph);
 
@@ -248,7 +249,7 @@ namespace GraphsClassProject
         {
             Label labelGraphType = new Label();
             labelGraphType.Location = new Point(15, 20);
-            
+
             String type = "";
             switch (graph.Type)
             {
@@ -380,18 +381,20 @@ namespace GraphsClassProject
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                     {
                         Vertex[,] output = weightedGraph.DoKruskalAlgorithm();
+
                         StringBuilder showingOutput = new StringBuilder();
                         for (int i = 0; i < output.GetLength(0); i++)
                         {
                             for (int j = 0; j < output.GetLength(1); j++)
                             {
-                                showingOutput.Append(output[i, j].Name+ " =>");
+                                showingOutput.Append(output[i, j].Name + " =>");
                             }
 
                             showingOutput.Append(" \n");
                         }
 
                         MessageBox.Show(showingOutput.ToString());
+                        DrawRedLines(currentGraphShowing, output);
                         break;
                     }
                 }
@@ -555,7 +558,8 @@ namespace GraphsClassProject
                 MessageBox.Show("You selected " + selectedVertexA.Name);
             }
 
-            if (destDropDown.SelectedIndex == -1 && (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA)))
+            if (destDropDown.SelectedIndex == -1 &&
+                (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA)))
             {
                 selectedVertexB = currentGraphShowing.Vertices[0];
                 MessageBox.Show("Default vertex selected");
@@ -577,6 +581,70 @@ namespace GraphsClassProject
             else if (algorithmType != null && algorithmType.Equals(AlgorithmType.KRUSKAL))
             {
             }
+        }
+
+        private void DrawRedLines(ParentGraph graph, Vertex[,] input)
+        {
+            Graphics graphics = panelGraph.CreateGraphics();
+            Pen pen = new Pen(Color.Red);
+            Vertex startingVertex = new Vertex("start");
+            Vertex endingVertex = new Vertex("end");
+
+            for (int index = 0; index < input.GetLength(0); index++)
+            {
+                Vertex beginning = input[index, 0];
+
+                Vertex ending = input[index, 1];
+
+                AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
+                pen.CustomEndCap = adjustableArrowCap;
+
+                Point beginPoint = new Point(0, 0);
+                for (int i = 0; i < LabelNodes.Count; i++)
+                {
+                    if (LabelNodes[i].Text.Equals(beginning.Name))
+                    {
+                        beginPoint = NodeCircleLocations[i];
+                    }
+                }
+
+
+                for (int i = 0; i < graph.Vertices.Count; i++)
+                {
+                    if (graph.Vertices[i].Name.Equals(input[index, 0].Name))
+                    {
+                        startingVertex = graph.Vertices[i];
+                    }
+
+                    if (graph.Vertices[i].Name.Equals(input[index, 1].Name))
+                    {
+                        endingVertex = graph.Vertices[i];
+                    }
+                }
+
+                int penWidth = 13;
+                penWidth = graph.GetWeight(startingVertex, endingVertex);
+                if (graph.MaxWeight > 15)
+                {
+                    penWidth /= 10;
+                }
+
+                pen.Width = penWidth;
+
+                Point neighborLocation = GetNeighborLocation(ending);
+                graphics.DrawLine(pen, beginPoint, neighborLocation);
+            }
+
+
+            /*for (int i = 0; i < input.GetLength(0); i++)
+            {
+                for (int j = 0; j < input.GetLength(1); j++)
+                {
+                    showingOutput.Append(input[i, j].Name + " =>");
+                }
+
+                showingOutput.Append(" \n");
+            }*/
         }
     }
 }
