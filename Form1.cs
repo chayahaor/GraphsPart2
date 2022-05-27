@@ -381,19 +381,6 @@ namespace GraphsClassProject
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                     {
                         Vertex[,] output = weightedGraph.DoKruskalAlgorithm();
-
-                        StringBuilder showingOutput = new StringBuilder();
-                        for (int i = 0; i < output.GetLength(0); i++)
-                        {
-                            for (int j = 0; j < output.GetLength(1); j++)
-                            {
-                                showingOutput.Append(output[i, j].Name + " =>");
-                            }
-
-                            showingOutput.Append(" \n");
-                        }
-
-                        MessageBox.Show(showingOutput.ToString());
                         DrawRedLines(currentGraphShowing, output);
                         break;
                     }
