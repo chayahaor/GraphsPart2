@@ -283,7 +283,7 @@ namespace GraphsClassProject
                 Graphics graphics = panelGraph.CreateGraphics();
                 Pen pen = new Pen(Color.Black);
                 Point location = GetLocation(nodeNumber, graph.Vertices.Count);
-                graphics.DrawEllipse(pen, location.X, location.Y, 10, 10);
+                graphics.DrawEllipse(pen, location.X - 5, location.Y - 5, 10, 10);
                 NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
