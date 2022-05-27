@@ -50,7 +50,7 @@ namespace GraphsClassProject
 
             graphNamesAndTypes = getData.GraphTypes;
 
-            int x = 0;
+            int x = 30;
             int y = 0;
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
@@ -61,7 +61,7 @@ namespace GraphsClassProject
                 button.Location = new Point(x, y);
                 GraphNameButtons.Add(button);
 
-                y += 50;
+                y += 100;
 
                 panelGraphButtons.Controls.Add(button);
                 string errorMessage = "Something went wrong with loading the graph...";
@@ -226,6 +226,8 @@ namespace GraphsClassProject
         {
             ResetPanels();
 
+            CreateLabelType(graph); 
+
             CreateLabelNodes(graph);
 
             CreateGraphics(graph);
@@ -240,6 +242,33 @@ namespace GraphsClassProject
             panelNodeSelection.Visible = false;
             myBox.SelectedIndex = -1;
             destDropDown.SelectedIndex = -1;
+        }
+
+        private void CreateLabelType(ParentGraph graph)
+        {
+            Label labelGraphType = new Label();
+            labelGraphType.Location = new Point(15, 20);
+            
+            String type = "";
+            switch (graph.Type)
+            {
+                case GraphType.WEIGHTED_DIGRAPH:
+                    type = "Weighted Digraph";
+                    break;
+                case GraphType.DIGRAPH:
+                    type = "Digraph";
+                    break;
+                case GraphType.WEIGHTED_GRAPH:
+                    type = "Weighted Graph";
+                    break;
+                case GraphType.GRAPH:
+                    type = "Graph";
+                    break;
+            }
+
+            labelGraphType.Text = type;
+            labelGraphType.Refresh();
+            panelGraph.Controls.Add(labelGraphType);
         }
 
         private void CreateLabelNodes(ParentGraph graph)

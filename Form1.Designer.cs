@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelGraph = new System.Windows.Forms.Panel();
             this.panelGraphButtons = new System.Windows.Forms.Panel();
             this.Kruskal = new System.Windows.Forms.Button();
             this.Dijkstra = new System.Windows.Forms.Button();
@@ -40,21 +39,16 @@
             this.anotherNode = new System.Windows.Forms.Label();
             this.myBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.panelGraph = new System.Windows.Forms.Panel();
             this.panelNodeSelection.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelGraph
-            // 
-            this.panelGraph.Location = new System.Drawing.Point(12, 12);
-            this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(600, 600);
-            this.panelGraph.TabIndex = 0;
-            // 
             // panelGraphButtons
             // 
-            this.panelGraphButtons.Location = new System.Drawing.Point(678, 12);
+            this.panelGraphButtons.AutoScroll = true;
+            this.panelGraphButtons.Location = new System.Drawing.Point(634, 12);
             this.panelGraphButtons.Name = "panelGraphButtons";
-            this.panelGraphButtons.Size = new System.Drawing.Size(80, 339);
+            this.panelGraphButtons.Size = new System.Drawing.Size(160, 330);
             this.panelGraphButtons.TabIndex = 0;
             // 
             // Kruskal
@@ -156,6 +150,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Please choose a Node";
             // 
+            // panelGraph
+            // 
+            this.panelGraph.Location = new System.Drawing.Point(12, 12);
+            this.panelGraph.Name = "panelGraph";
+            this.panelGraph.Size = new System.Drawing.Size(600, 600);
+            this.panelGraph.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -178,8 +179,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelGraph;
         private System.Windows.Forms.Panel panelGraphButtons;
         private System.Windows.Forms.Button Kruskal;
         private System.Windows.Forms.Button Dijkstra;
@@ -191,6 +190,7 @@
         private System.Windows.Forms.ComboBox destDropDown;
         private System.Windows.Forms.Label anotherNode;
         private System.Windows.Forms.Button btnNodeSelection;
+        private System.Windows.Forms.Panel panelGraph;
     }
 }
 
