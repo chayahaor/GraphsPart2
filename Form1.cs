@@ -545,11 +545,13 @@ namespace GraphsClassProject
                 MessageBox.Show("You selected " + selectedVertexA.Name);
             }
 
-            if (destDropDown.SelectedIndex == -1 &&
-                (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA)))
+            if (destDropDown.SelectedIndex == -1)
             {
                 selectedVertexB = currentGraphShowing.Vertices[0];
-                MessageBox.Show("Default vertex selected");
+                if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
+                {
+                    MessageBox.Show("Default vertex selected");
+                }
             }
             else
             {
@@ -564,9 +566,6 @@ namespace GraphsClassProject
             else if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
             {
                 DoDijkstra();
-            }
-            else if (algorithmType != null && algorithmType.Equals(AlgorithmType.KRUSKAL))
-            {
             }
         }
 
@@ -621,17 +620,6 @@ namespace GraphsClassProject
                 Point neighborLocation = GetNeighborLocation(ending);
                 graphics.DrawLine(pen, beginPoint, neighborLocation);
             }
-
-
-            /*for (int i = 0; i < input.GetLength(0); i++)
-            {
-                for (int j = 0; j < input.GetLength(1); j++)
-                {
-                    showingOutput.Append(input[i, j].Name + " =>");
-                }
-
-                showingOutput.Append(" \n");
-            }*/
         }
     }
 }
