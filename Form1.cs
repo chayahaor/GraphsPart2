@@ -10,25 +10,35 @@ namespace GraphsClassProject
 {
     public partial class Form1 : Form
     {
-        private List<Label> LabelNodes { get; set; }
-        private List<Point> NodeCircleLocations { get; set; }
-
+        // lists containing each graph in the database based on its type
         private List<Digraph> digraphs;
         private List<Graph> graphs;
         private List<WeightedDigraph> weightedDigraphs;
         private List<WeightedGraph> weightedGraphs;
 
+        // contains all graph names and types (graph names must be unique in the database)
         private Dictionary<String, String> graphNamesAndTypes;
 
+        // List of all the buttons containing graph names
         private List<Button> GraphNameButtons { get; set; }
 
-        private readonly Font smallFont = new Font("Arial", 8);
+        // the center of the panelGraph panel (size 600 by 600)
+        private readonly int CENTER = 300;
 
-        private readonly int CENTER = 325;
-
+        // the current graph on display in the panelGraph panel 
         private ParentGraph currentGraphShowing;
+
+        // list of all labels representing nodes specific to each selected graph
+        private List<Label> LabelNodes { get; set; }
+
+        // list of all locations of circles where graphics are pointing to for each graph
+        private List<Point> NodeCircleLocations { get; set; }
+
+        // stores the two vertices coming from panelNodeSelection
         private Vertex selectedVertexA;
         private Vertex selectedVertexB;
+
+        // the algorithm type of the current algorithm selected
         private AlgorithmType? algorithmType;
 
         public Form1()
@@ -50,10 +60,10 @@ namespace GraphsClassProject
 
             graphNamesAndTypes = getData.GraphTypes;
 
-            CreateGraphNameButtons(server, database); 
+            SetUpGraphNameButtons(server, database); 
         }
 
-        private void CreateGraphNameButtons(string server, string database)
+        private void SetUpGraphNameButtons(string server, string database)
         {
             int x = 30;
             int y = 0;
@@ -69,46 +79,51 @@ namespace GraphsClassProject
                 y += 100;
 
                 panelGraphButtons.Controls.Add(button);
-                string errorMessage = "Something went wrong with loading the graph...";
-                switch (pair.Value)
-                {
-                    case "Weighted_Directed":
-                        WeightedDigraph weightedDigraph = new WeightedDigraph(pair.Key);
-                        if (!weightedDigraph.LoadGraph(pair.Key, server, database))
-                        {
-                            MessageBox.Show(errorMessage);
-                        }
+                LoadGraph(server, database, pair); 
+            } 
+        }
 
-                        weightedDigraphs.Add(weightedDigraph);
-                        break;
-                    case "Unweighted_Directed":
-                        Digraph digraph = new Digraph(pair.Key);
-                        if (!digraph.LoadGraph(pair.Key, server, database))
-                        {
-                            MessageBox.Show(errorMessage);
-                        }
+        private void LoadGraph(string server, string database, KeyValuePair<string, string> pair)
+        {
+            string errorMessage = "Something went wrong with loading the graph...";
+            switch (pair.Value)
+            {
+                case "Weighted_Directed":
+                    WeightedDigraph weightedDigraph = new WeightedDigraph(pair.Key);
+                    if (!weightedDigraph.LoadGraph(pair.Key, server, database))
+                    {
+                        MessageBox.Show(errorMessage);
+                    }
 
-                        digraphs.Add(digraph);
-                        break;
-                    case "Weighted_Undirected":
-                        WeightedGraph weightedGraph = new WeightedGraph(pair.Key);
-                        if (!weightedGraph.LoadGraph(pair.Key, server, database))
-                        {
-                            MessageBox.Show(errorMessage);
-                        }
+                    weightedDigraphs.Add(weightedDigraph);
+                    break;
+                case "Unweighted_Directed":
+                    Digraph digraph = new Digraph(pair.Key);
+                    if (!digraph.LoadGraph(pair.Key, server, database))
+                    {
+                        MessageBox.Show(errorMessage);
+                    }
 
-                        weightedGraphs.Add(weightedGraph);
-                        break;
-                    case "Unweighted_Undirected":
-                        Graph graph = new Graph(pair.Key);
-                        if (!graph.LoadGraph(pair.Key, server, database))
-                        {
-                            MessageBox.Show(errorMessage);
-                        }
+                    digraphs.Add(digraph);
+                    break;
+                case "Weighted_Undirected":
+                    WeightedGraph weightedGraph = new WeightedGraph(pair.Key);
+                    if (!weightedGraph.LoadGraph(pair.Key, server, database))
+                    {
+                        MessageBox.Show(errorMessage);
+                    }
 
-                        graphs.Add(graph);
-                        break;
-                }
+                    weightedGraphs.Add(weightedGraph);
+                    break;
+                case "Unweighted_Undirected":
+                    Graph graph = new Graph(pair.Key);
+                    if (!graph.LoadGraph(pair.Key, server, database))
+                    {
+                        MessageBox.Show(errorMessage);
+                    }
+
+                    graphs.Add(graph);
+                    break;
             }
         }
 
@@ -240,7 +255,7 @@ namespace GraphsClassProject
                 NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
-                label.Font = smallFont;
+                label.Font = new Font("Arial", 8);
                 label.Size = new Size(20, 15);
                 label.ForeColor = Color.White;
                 label.SendToBack();
@@ -392,48 +407,52 @@ namespace GraphsClassProject
                 algorithmType = AlgorithmType.TOPOLOGICAL;
 
                 panelNodeSelection.Visible = false;
+                DoTopological(); 
+            }
+        }
 
-                string showingOutput = "";
-                try
+        private void DoTopological()
+        {
+            string showingOutput = "";
+            try
+            {
+                Vertex[] output = new Vertex[0];
+                if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                 {
-                    Vertex[] output = new Vertex[0];
-                    if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
+                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
                     {
-                        foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                        if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
                         {
-                            if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
-                            {
-                                output = weightedDigraph.DoTopologicalSort();
-                                break;
-                            }
+                            output = weightedDigraph.DoTopologicalSort();
+                            break;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    foreach (Digraph digraph in digraphs)
                     {
-                        foreach (Digraph digraph in digraphs)
+                        if (digraph.GraphName == currentGraphShowing.GraphName)
                         {
-                            if (digraph.GraphName == currentGraphShowing.GraphName)
-                            {
-                                output = digraph.DoTopologicalSort();
-                                break;
-                            }
+                            output = digraph.DoTopologicalSort();
+                            break;
                         }
                     }
-
-                    System.Threading.Thread.Sleep(1000);
-
-
-                    foreach (Vertex vertex in output)
-                    {
-                        showingOutput += vertex.Name + " ";
-                    }
-
-                    MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
                 }
-                catch (Exception exception)
+
+                System.Threading.Thread.Sleep(1000);
+
+
+                foreach (Vertex vertex in output)
                 {
-                    MessageBox.Show(exception.Message);
+                    showingOutput += vertex.Name + " ";
                 }
+
+                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
             }
         }
 
@@ -450,11 +469,8 @@ namespace GraphsClassProject
             else
             {
                 algorithmType = AlgorithmType.PRIM;
-                panelNodeSelection.Visible = true;
-                destDropDown.Visible = false;
-                anotherNode.Visible = false;
-                panelNodeSelection.Refresh();
-                GetInput(currentGraphShowing);
+
+                ShowPanelNodeSelection(false);
             }
         }
 
@@ -496,14 +512,7 @@ namespace GraphsClassProject
             {
                 algorithmType = AlgorithmType.DIJKSTRA;
 
-                panelNodeSelection.Visible = true;
-                destDropDown.Visible = true;
-                anotherNode.Visible = true;
-                destDropDown.Enabled = true;
-                destDropDown.Refresh();
-                anotherNode.Refresh();
-                panelNodeSelection.Refresh();
-                GetInput(currentGraphShowing);
+                ShowPanelNodeSelection(true);
             }
         }
 
@@ -546,6 +555,18 @@ namespace GraphsClassProject
             MessageBox.Show(showingOutput.ToString());
 
             ResetNodeSelectionPanel();
+        }
+
+        private void ShowPanelNodeSelection(bool isDestDropDownEnabled)
+        {
+            panelNodeSelection.Visible = true;
+            destDropDown.Visible = isDestDropDownEnabled;
+            destDropDown.Enabled = isDestDropDownEnabled;
+            anotherNode.Visible = false;
+            destDropDown.Refresh();
+            anotherNode.Refresh();
+            panelNodeSelection.Refresh();
+            GetInput(currentGraphShowing);
         }
 
         private void GetInput(ParentGraph parentGraph)
