@@ -50,6 +50,11 @@ namespace GraphsClassProject
 
             graphNamesAndTypes = getData.GraphTypes;
 
+            CreateGraphNameButtons(server, database); 
+        }
+
+        private void CreateGraphNameButtons(string server, string database)
+        {
             int x = 30;
             int y = 0;
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
@@ -164,66 +169,6 @@ namespace GraphsClassProject
             }
         }
 
-        private Point GetLocation(int nodeNumber, int numNodes)
-        {
-            // MAX NUMBER OF NODES: 26 
-            // MAX INNER NUMBER OF NODES: 10
-
-            int xCoord;
-            int yCoord;
-
-            if (numNodes < 16 || nodeNumber < 16)
-            {
-                int DISTANCE_FROM_CENTER = 200;
-
-                double angle = 2.0 * Math.PI / (numNodes) * nodeNumber;
-
-                xCoord = (int)Math.Floor(CENTER + DISTANCE_FROM_CENTER * Math.Cos(angle));
-                yCoord = (int)Math.Floor(CENTER - DISTANCE_FROM_CENTER * Math.Sin(angle));
-            }
-            else
-            {
-                int DISTANCE_FROM_CENTER = 100;
-
-                double angle = 2.0 * Math.PI / numNodes - 17 * nodeNumber;
-
-                xCoord = (int)Math.Floor(CENTER + DISTANCE_FROM_CENTER * Math.Cos(angle));
-                yCoord = (int)Math.Floor(CENTER - DISTANCE_FROM_CENTER * Math.Sin(angle));
-            }
-
-            return new Point(xCoord, yCoord);
-        }
-
-        private Point GetNeighborLocation(Vertex neighbor)
-        {
-            Point neighborLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
-            for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
-            {
-                if (LabelNodes[labelIndex].Text == neighbor.Name)
-                {
-                    neighborLocation =  NodeCircleLocations[labelIndex];
-                }
-            }
-
-            return neighborLocation;
-        }
-
-        private Point GetNewXAndY(Point location)
-        {
-            int xCoord;
-            int yCoord;
-
-            if (location.X >= 200)
-                xCoord = location.X + 10;
-            else
-                xCoord = location.X - 15;
-            if (location.Y >= 200)
-                yCoord = location.Y + 15;
-            else
-                yCoord = location.Y - 15;
-            return new Point(xCoord, yCoord);
-        }
-
         private void FillPanel(ParentGraph graph)
         {
             ResetPanels();
@@ -336,29 +281,64 @@ namespace GraphsClassProject
             }
         }
 
-        private void Dijkstra_Click(object sender, EventArgs e)
+        private Point GetLocation(int nodeNumber, int numNodes)
         {
-            if (currentGraphShowing == null)
+            // MAX NUMBER OF NODES: 26 
+            // MAX INNER NUMBER OF NODES: 10
+
+            int xCoord;
+            int yCoord;
+
+            if (numNodes < 16 || nodeNumber < 16)
             {
-                MessageBox.Show("There is no graph showing yet.");
-            }
-            else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
-            {
-                MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
+                int DISTANCE_FROM_CENTER = 200;
+
+                double angle = 2.0 * Math.PI / (numNodes) * nodeNumber;
+
+                xCoord = (int)Math.Floor(CENTER + DISTANCE_FROM_CENTER * Math.Cos(angle));
+                yCoord = (int)Math.Floor(CENTER - DISTANCE_FROM_CENTER * Math.Sin(angle));
             }
             else
             {
-                algorithmType = AlgorithmType.DIJKSTRA;
+                int DISTANCE_FROM_CENTER = 100;
 
-                panelNodeSelection.Visible = true;
-                destDropDown.Visible = true;
-                anotherNode.Visible = true;
-                destDropDown.Enabled = true;
-                destDropDown.Refresh();
-                anotherNode.Refresh();
-                panelNodeSelection.Refresh();
-                GetInput(currentGraphShowing);
+                double angle = 2.0 * Math.PI / numNodes - 17 * nodeNumber;
+
+                xCoord = (int)Math.Floor(CENTER + DISTANCE_FROM_CENTER * Math.Cos(angle));
+                yCoord = (int)Math.Floor(CENTER - DISTANCE_FROM_CENTER * Math.Sin(angle));
             }
+
+            return new Point(xCoord, yCoord);
+        }
+
+        private Point GetNewXAndY(Point location)
+        {
+            int xCoord;
+            int yCoord;
+
+            if (location.X >= 200)
+                xCoord = location.X + 10;
+            else
+                xCoord = location.X - 15;
+            if (location.Y >= 200)
+                yCoord = location.Y + 15;
+            else
+                yCoord = location.Y - 15;
+            return new Point(xCoord, yCoord);
+        }
+
+        private Point GetNeighborLocation(Vertex neighbor)
+        {
+            Point neighborLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
+            for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
+            {
+                if (LabelNodes[labelIndex].Text == neighbor.Name)
+                {
+                    neighborLocation = NodeCircleLocations[labelIndex];
+                }
+            }
+
+            return neighborLocation;
         }
 
         private void Kruskal_Click(object sender, EventArgs e)
@@ -471,20 +451,6 @@ namespace GraphsClassProject
             }
         }
 
-
-        private void GetInput(ParentGraph parentGraph)
-        {
-            foreach (Vertex vertex in parentGraph.Vertices)
-            {
-                myBox.Items.Add(vertex.Name);
-            }
-
-            foreach (Vertex vertex in parentGraph.Vertices)
-            {
-                destDropDown.Items.Add(vertex.Name);
-            }
-        }
-
         private void DoPrim()
         {
             foreach (WeightedGraph weightedGraph in weightedGraphs)
@@ -507,6 +473,32 @@ namespace GraphsClassProject
             }
         }
 
+        private void Dijkstra_Click(object sender, EventArgs e)
+        {
+            if (currentGraphShowing == null)
+            {
+                MessageBox.Show("There is no graph showing yet.");
+            }
+            //TODO: account for weighted digraphs 
+            else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
+            {
+                MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
+            }
+            else
+            {
+                algorithmType = AlgorithmType.DIJKSTRA;
+
+                panelNodeSelection.Visible = true;
+                destDropDown.Visible = true;
+                anotherNode.Visible = true;
+                destDropDown.Enabled = true;
+                destDropDown.Refresh();
+                anotherNode.Refresh();
+                panelNodeSelection.Refresh();
+                GetInput(currentGraphShowing);
+            }
+        }
+
         private void DoDijkstra()
         {
             foreach (WeightedGraph weightedGraph in weightedGraphs)
@@ -523,6 +515,19 @@ namespace GraphsClassProject
                     MessageBox.Show(showingOutput.ToString());
                     break;
                 }
+            }
+        }
+
+        private void GetInput(ParentGraph parentGraph)
+        {
+            foreach (Vertex vertex in parentGraph.Vertices)
+            {
+                myBox.Items.Add(vertex.Name);
+            }
+
+            foreach (Vertex vertex in parentGraph.Vertices)
+            {
+                destDropDown.Items.Add(vertex.Name);
             }
         }
 
