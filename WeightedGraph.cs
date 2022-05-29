@@ -110,7 +110,8 @@ namespace GraphsClassProject
         //make red lines on top of edges that are in list
         public Vertex[,] DoPrimAlgorithm(Vertex start)
         {
-            return prim.PrimMinSpanningGraph(start);
+            return prim.Prim2(start);
+            //return prim.PrimMinSpanningGraph(start);
         }
 
         public List<Vertex> DoDijkstraAlgorithm(Vertex start, Vertex end)

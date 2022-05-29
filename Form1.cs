@@ -55,7 +55,7 @@ namespace GraphsClassProject
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
                 Button button = new Button();
-                button.Name = pair.Key;
+                button.Name = pair.Key; // All button names should be unique becuase in the SQL code, graph names are unique
                 button.Text = pair.Key;
                 button.Click += new EventHandler(btn_Click);
                 button.Location = new Point(x, y);
@@ -621,5 +621,12 @@ namespace GraphsClassProject
                 graphics.DrawLine(pen, beginPoint, neighborLocation);
             }
         }
+
+        private void DrawRedLines(ParentGraph graph, List<Vertex> input)
+        {
+           
+            
+        }
+
     }
 }
