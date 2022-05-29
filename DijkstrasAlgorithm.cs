@@ -23,17 +23,14 @@ namespace GraphsClassProject
             Path = new List<Vertex>();
         }
 
-
-
-        public double DijskstrasShortestPath(Vertex source, Vertex target)
+        public void ClearPath()
         {
+            Path.Clear();
+        }
 
-            /*
-            * how to determine if there is a cycle and target node cannot be reached
-            */
-
-
-
+        public double DijskstrasShortestPath(Vertex source, Vertex target)  //TODO C and R - return this value in a message box
+        {
+            ClearPath();
             //return -1 if no path exists
             double shortestDist = -1.0;
 
@@ -42,7 +39,7 @@ namespace GraphsClassProject
                 new Dictionary<Vertex, Dijkstra>();
 
 
-            Dijkstra currNode = new Dijkstra(true, 0, source, source);  //intialize currNode to the source node
+            Dijkstra currNode = new Dijkstra(true, 0, source, source);  //initialize currNode to the source node
             Dijkstra targetNode = new Dijkstra(false, MaxVal, null, target);  //keep track of targetNode being false
 
 

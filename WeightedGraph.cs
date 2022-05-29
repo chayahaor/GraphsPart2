@@ -116,6 +116,7 @@ namespace GraphsClassProject
 
         public List<Vertex> DoDijkstraAlgorithm(Vertex start, Vertex end)
         {
+
             dijkstra.DijskstrasShortestPath(start, end);
 
             return dijkstra.Path;
