@@ -527,37 +527,45 @@ namespace GraphsClassProject
 
             StringBuilder showingOutput = new StringBuilder();
 
-            if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
+            try
             {
-                foreach (WeightedGraph weightedGraph in weightedGraphs)
+                if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
                 {
-                    if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                    foreach (WeightedGraph weightedGraph in weightedGraphs)
                     {
-                        output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+                        if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                        {
+                            output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
 
-                        break;
+                            break;
+                        }
                     }
                 }
-            }
-            else
-            {
-                foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                else
                 {
-                    if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
+                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
                     {
-                        output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+                        if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
+                        {
+                            output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
 
-                        break;
+                            break;
+                        }
                     }
                 }
-            }
 
-            foreach (Vertex vertex in output)
+
+                foreach (Vertex vertex in output)
+                {
+                    showingOutput.Append(vertex.Name).Append(" ");
+                }
+
+                MessageBox.Show(showingOutput.ToString());
+            }
+            catch (Exception ex)
             {
-                showingOutput.Append(vertex.Name).Append(" ");
+                MessageBox.Show(ex.Message);
             }
-
-            MessageBox.Show(showingOutput.ToString());
 
             ResetNodeSelectionPanel();
         }

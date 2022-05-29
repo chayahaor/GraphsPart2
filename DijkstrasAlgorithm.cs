@@ -117,11 +117,12 @@ namespace GraphsClassProject
                         currNode = d.Value;
                         shortestFalse = d.Value.distanceFromStart;
                     }
+                }
 
-                    if (shortestFalse == int.MaxValue)
-                    {
-                        //all shortest paths have been found
-                    }
+                if (shortestFalse == int.MaxValue)
+                {
+                    //all shortest paths have been found
+                    throw new Exception("Selected vertices do not have a connection between them");
                 }
 
                 Console.WriteLine("shortest false is " + shortestFalse);
