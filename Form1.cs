@@ -503,6 +503,8 @@ namespace GraphsClassProject
                     }
 
                     MessageBox.Show(showingOutput.ToString());
+                    DrawRedLines(currentGraphShowing, output);
+
                     break;
                 }
             }
