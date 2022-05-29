@@ -152,6 +152,8 @@ namespace GraphsClassProject
                     parent = vertexStructs[parent].Parent;
                     Path.Insert(0, parent);
                 }
+
+                Path.Add(currNode.Vertex);
                 
                 PrintVertexSequence(Path);
             }
