@@ -409,21 +409,14 @@ namespace GraphsClassProject
                 string showingOutput = "";
                 try
                 {
+                    Vertex[] output = new Vertex[0];
                     if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                     {
                         foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
                         {
                             if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
                             {
-                                Vertex[] output = weightedDigraph.DoTopologicalSort();
-
-                                System.Threading.Thread.Sleep(1000);
-
-                                foreach (Vertex vertex in output)
-                                {
-                                    showingOutput += vertex.Name + " ";
-                                }
-
+                                output = weightedDigraph.DoTopologicalSort();
                                 break;
                             }
                         }
@@ -434,18 +427,18 @@ namespace GraphsClassProject
                         {
                             if (digraph.GraphName == currentGraphShowing.GraphName)
                             {
-                                Vertex[] output = digraph.DoTopologicalSort();
-
-                                System.Threading.Thread.Sleep(1000);
-
-                                foreach (Vertex vertex in output)
-                                {
-                                    showingOutput += vertex.Name + " ";
-                                }
-
+                                output = digraph.DoTopologicalSort();
                                 break;
                             }
                         }
+                    }
+
+                    System.Threading.Thread.Sleep(1000);
+
+
+                    foreach (Vertex vertex in output)
+                    {
+                        showingOutput += vertex.Name + " ";
                     }
 
                     MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
