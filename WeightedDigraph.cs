@@ -8,6 +8,7 @@ namespace GraphsClassProject
     class WeightedDigraph : ParentGraph
     {
         private TopologicalSort topologicalSort;
+        private DijkstrasAlgorithm dijkstra;
 
         public WeightedDigraph(String graphName) : base(graphName)
         {
@@ -15,6 +16,7 @@ namespace GraphsClassProject
             Vertices = new List<Vertex>();
             Type = GraphType.WEIGHTED_DIGRAPH;
             topologicalSort = new TopologicalSort(this);
+            dijkstra = new DijkstrasAlgorithm(this);
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -101,6 +103,13 @@ namespace GraphsClassProject
         public Vertex[] DoTopologicalSort()
         {
             return topologicalSort.GetTopologicalSort();
+        }
+
+        public List<Vertex> DoDijkstraAlgorithm(Vertex start, Vertex end)
+        {
+            dijkstra.DijskstrasShortestPath(start, end);
+
+            return dijkstra.Path;
         }
     }
 }

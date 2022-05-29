@@ -74,22 +74,7 @@ namespace GraphsClassProject
 
                     int newDistance = 0;
 
-
-                    //Vertex parent = currNode.Vertex;
-
-                    //while (parent != source)
-                    //{
-
-                    //Console.WriteLine("parent is" + parent.Name);
-
                     newDistance += vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetWeight(currNode.Vertex, v);   //   not accessing parent here
-
-                   // newDistance += vertexStructs[parent].DistanceFromStart;    //   not accessing parent here
-
-                            //parent = vertexStructs[parent].Parent;
-
-                        //}
-                    //    newDistance += graph.GetWeight(currNode.Vertex, v);
 
                     Console.WriteLine(newDistance);
                     
@@ -120,13 +105,12 @@ namespace GraphsClassProject
                         currNode = d.Value;
                         shortestFalse = d.Value.DistanceFromStart;
                     }
-
-                    
                 }
 
                 if (shortestFalse == MaxVal)
                 {
                     //all shortest paths have been found
+                    throw new Exception("Selected vertices do not have a connection between them");
                 }
 
                 Console.WriteLine("shortest false is " + shortestFalse);
