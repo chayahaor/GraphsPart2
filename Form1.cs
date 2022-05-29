@@ -60,7 +60,7 @@ namespace GraphsClassProject
 
             graphNamesAndTypes = getData.GraphTypes;
 
-            SetUpGraphNameButtons(server, database); 
+            SetUpGraphNameButtons(server, database);
         }
 
         private void SetUpGraphNameButtons(string server, string database)
@@ -70,7 +70,8 @@ namespace GraphsClassProject
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
                 Button button = new Button();
-                button.Name = pair.Key; // All button names should be unique becuase in the SQL code, graph names are unique
+                button.Name =
+                    pair.Key; // All button names should be unique becuase in the SQL code, graph names are unique
                 button.Text = pair.Key;
                 button.Click += new EventHandler(btn_Click);
                 button.Location = new Point(x, y);
@@ -79,8 +80,8 @@ namespace GraphsClassProject
                 y += 100;
 
                 panelGraphButtons.Controls.Add(button);
-                LoadGraph(server, database, pair); 
-            } 
+                LoadGraph(server, database, pair);
+            }
         }
 
         private void LoadGraph(string server, string database, KeyValuePair<string, string> pair)
@@ -201,7 +202,7 @@ namespace GraphsClassProject
             NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
-            ResetNodeSelectionPanel(); 
+            ResetNodeSelectionPanel();
         }
 
         private void ResetNodeSelectionPanel()
@@ -211,6 +212,8 @@ namespace GraphsClassProject
             destDropDown.SelectedIndex = -1;
             myBox.Items.Clear();
             destDropDown.Items.Clear();
+            myBox.ResetText();
+            destDropDown.ResetText();
         }
 
         private void CreateLabelType(ParentGraph graph)
@@ -375,6 +378,8 @@ namespace GraphsClassProject
             }
             else
             {
+                CreateGraphics(currentGraphShowing);
+
                 algorithmType = AlgorithmType.KRUSKAL;
 
                 panelNodeSelection.Visible = false;
@@ -386,9 +391,7 @@ namespace GraphsClassProject
                         Vertex[,] output = weightedGraph.DoKruskalAlgorithm();
 
                         // draw minimum spanning graph edges in red, give users time to admire the red lines, and then redraw in black
-                        DrawLines(currentGraphShowing, output, Color.Red); 
-                        System.Threading.Thread.Sleep(currentGraphShowing.Vertices.Count * 1000); 
-                        DrawLines(currentGraphShowing, output, Color.Black);
+                        DrawRedLines(currentGraphShowing, output);
 
                         break;
                     }
@@ -409,10 +412,12 @@ namespace GraphsClassProject
             }
             else
             {
+                CreateGraphics(currentGraphShowing);
+
                 algorithmType = AlgorithmType.TOPOLOGICAL;
 
                 panelNodeSelection.Visible = false;
-                DoTopological(); 
+                DoTopological();
             }
         }
 
@@ -473,6 +478,8 @@ namespace GraphsClassProject
             }
             else
             {
+                CreateGraphics(currentGraphShowing);
+
                 algorithmType = AlgorithmType.PRIM;
 
                 ShowPanelNodeSelection(false);
@@ -515,6 +522,8 @@ namespace GraphsClassProject
             }
             else
             {
+                CreateGraphics(currentGraphShowing);
+
                 algorithmType = AlgorithmType.DIJKSTRA;
 
                 ShowPanelNodeSelection(true);
@@ -561,6 +570,7 @@ namespace GraphsClassProject
                 }
 
                 MessageBox.Show(showingOutput.ToString());
+                DrawRedLines(currentGraphShowing, output, selectedVertexB);
             }
             catch (Exception ex)
             {
@@ -632,10 +642,10 @@ namespace GraphsClassProject
             }
         }
 
-        private void DrawLines(ParentGraph graph, Vertex[,] input, Color color)
+        private void DrawRedLines(ParentGraph graph, Vertex[,] input)
         {
             Graphics graphics = panelGraph.CreateGraphics();
-            Pen pen = new Pen(color);
+            Pen pen = new Pen(Color.Red);
             Vertex startingVertex = new Vertex("start");
             Vertex endingVertex = new Vertex("end");
 
@@ -685,11 +695,33 @@ namespace GraphsClassProject
             }
         }
 
-        private void DrawLines(ParentGraph graph, List<Vertex> input, Color color)
+        private void DrawRedLines(ParentGraph graph, List<Vertex> input, Vertex selectedVertexB)
         {
-           
-            
-        }
+            Graphics graphics = panelGraph.CreateGraphics();
+            Pen pen = new Pen(Color.Red);
+            Vertex startingVertex = new Vertex("start");
+            Vertex endingVertex = new Vertex("end");
+            int penWidth = 13;
 
+            for (int i = 0; i < input.Count - 1; i++)
+            {
+                startingVertex = input[i];
+                endingVertex = input[i + 1];
+                penWidth = graph.GetWeight(startingVertex, endingVertex);
+                if (graph.MaxWeight > 15)
+                {
+                    penWidth /= 10;
+                }
+
+                pen.Width = penWidth;
+
+                Point startingPoint = GetNeighborLocation(startingVertex);
+                Point neighborLocation = GetNeighborLocation(endingVertex);
+                graphics.DrawLine(pen, startingPoint, neighborLocation);
+            }
+            Point secondToLast = GetNeighborLocation(input[input.Count-1]);
+            Point last = GetNeighborLocation(selectedVertexB);
+            graphics.DrawLine(pen, secondToLast, last);
+        }
     }
 }
