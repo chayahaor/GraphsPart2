@@ -48,10 +48,10 @@ namespace GraphsClassProject
 
             vertexStructs.Add(source, currNode); //add to dictionary
 
-            while (currNode.vertex != target) //!vertexStructs[target].sdFound
+            while (currNode.Vertex != target) //!vertexStructs[target].sdFound
             {
                 
-                foreach (Vertex v in currNode.vertex.Neighbors)
+                foreach (Vertex v in currNode.Vertex.Neighbors)
                 {
                     Console.WriteLine("neighbor is " + v.Name);
                     //if newNode from this vertex doesn't exist
@@ -75,26 +75,26 @@ namespace GraphsClassProject
                     int newDistance = 0;
                    
                     
-                        Vertex parent = currNode.vertex;
+                        Vertex parent = currNode.Vertex;
 
                         while (parent != source)
                         {
 
                             //Console.WriteLine("parent is" + parent.Name);
-                            newDistance += vertexStructs[parent].distanceFromStart;    //   not accessing parent here
+                            newDistance += vertexStructs[parent].DistanceFromStart;    //   not accessing parent here
 
-                            parent = vertexStructs[parent].parent;
+                            parent = vertexStructs[parent].Parent;
 
                         }
-                        newDistance += graph.GetWeight(currNode.vertex, v);
+                        newDistance += graph.GetWeight(currNode.Vertex, v);
 
                     Console.WriteLine(newDistance);
                     
-                    if (newDistance < currStruct.distanceFromStart)
+                    if (newDistance < currStruct.DistanceFromStart)
                     {
                         //update parent and shortest dist of v
-                        currStruct.parent = currNode.vertex;
-                        currStruct.distanceFromStart = newDistance;
+                        currStruct.Parent = currNode.Vertex;
+                        currStruct.DistanceFromStart = newDistance;
                         vertexStructs.Remove(v);
                         vertexStructs.Add(v, currStruct);
                         
@@ -111,11 +111,11 @@ namespace GraphsClassProject
                 foreach (KeyValuePair<Vertex, Dijkstra> d in vertexStructs)
                 {
              
-                    if (!d.Value.sdFound && d.Value.distanceFromStart < shortestFalse)
+                    if (!d.Value.SdFound && d.Value.DistanceFromStart < shortestFalse)
                     {
                         
                         currNode = d.Value;
-                        shortestFalse = d.Value.distanceFromStart;
+                        shortestFalse = d.Value.DistanceFromStart;
                     }
                 }
 
@@ -127,14 +127,14 @@ namespace GraphsClassProject
 
                 Console.WriteLine("shortest false is " + shortestFalse);
 
-                currNode.sdFound = true;
-                vertexStructs.Remove(currNode.vertex);
-                vertexStructs.Add(currNode.vertex, currNode);
-                Console.WriteLine("currNode is " + currNode.vertex.Name);
+                currNode.SdFound = true;
+                vertexStructs.Remove(currNode.Vertex);
+                vertexStructs.Add(currNode.Vertex, currNode);
+                Console.WriteLine("currNode is " + currNode.Vertex.Name);
 
             }
 
-            shortestDist = currNode.distanceFromStart;
+            shortestDist = currNode.DistanceFromStart;
 
             Console.WriteLine("Shortest distance is" + shortestDist);
 
@@ -142,15 +142,15 @@ namespace GraphsClassProject
 
             if (shortestDist != -1)
             {
-                Vertex parent = currNode.parent;
+                Vertex parent = currNode.Parent;
                 Path.Add(parent);
-                Console.WriteLine(currNode.vertex.Name);
+                Console.WriteLine(currNode.Vertex.Name);
                 Console.WriteLine(parent.Name);
 
                 //create path - add parent vertex of node until reach node with source vertex
                 while (parent != source)
                 {
-                    parent = vertexStructs[parent].parent;
+                    parent = vertexStructs[parent].Parent;
                     Path.Insert(0, parent);
                 }
                 
@@ -172,17 +172,17 @@ namespace GraphsClassProject
 
         struct Dijkstra
         {
-            internal bool sdFound { get; set; }
-            internal int distanceFromStart { get; set; }
-            internal Vertex parent { get; set; }
-            internal Vertex vertex { get; set; }
+            internal bool SdFound { get; set; }
+            internal int DistanceFromStart { get; set; }
+            internal Vertex Parent { get; set; }
+            internal Vertex Vertex { get; set; }
 
             public Dijkstra(bool sdFound, int distanceFromStart, Vertex parent, Vertex vertex)
             {
-                this.sdFound = sdFound;
-                this.distanceFromStart = distanceFromStart;
-                this.parent = parent;
-                this.vertex = vertex;
+                this.SdFound = sdFound;
+                this.DistanceFromStart = distanceFromStart;
+                this.Parent = parent;
+                this.Vertex = vertex;
             }
 
         }
