@@ -196,15 +196,16 @@ namespace GraphsClassProject
 
         private Point GetNeighborLocation(Vertex neighbor)
         {
+            Point neighborLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
             for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
             {
                 if (LabelNodes[labelIndex].Text == neighbor.Name)
                 {
-                    return NodeCircleLocations[labelIndex];
+                    neighborLocation =  NodeCircleLocations[labelIndex];
                 }
             }
 
-            return new Point(200, 200);
+            return neighborLocation;
         }
 
         private Point GetNewXAndY(Point location)
