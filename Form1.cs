@@ -186,9 +186,16 @@ namespace GraphsClassProject
             NodeCircleLocations = new List<Point>();
             panelGraph.Controls.Clear();
             panelGraph.Refresh();
+            ResetNodeSelectionPanel(); 
+        }
+
+        private void ResetNodeSelectionPanel()
+        {
             panelNodeSelection.Visible = false;
             myBox.SelectedIndex = -1;
             destDropDown.SelectedIndex = -1;
+            myBox.Items.Clear();
+            destDropDown.Items.Clear();
         }
 
         private void CreateLabelType(ParentGraph graph)
@@ -471,6 +478,8 @@ namespace GraphsClassProject
                     break;
                 }
             }
+
+            ResetNodeSelectionPanel();
         }
 
         private void Dijkstra_Click(object sender, EventArgs e)
@@ -479,7 +488,6 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            //TODO: account for weighted digraphs 
             else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
             {
                 MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
@@ -501,21 +509,43 @@ namespace GraphsClassProject
 
         private void DoDijkstra()
         {
-            foreach (WeightedGraph weightedGraph in weightedGraphs)
-            {
-                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                {
-                    List<Vertex> output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-                    StringBuilder showingOutput = new StringBuilder();
-                    foreach (Vertex vertex in output)
-                    {
-                        showingOutput.Append(vertex.Name).Append(" ");
-                    }
+            List<Vertex> output = new List<Vertex>();
 
-                    MessageBox.Show(showingOutput.ToString());
-                    break;
+            StringBuilder showingOutput = new StringBuilder();
+
+            if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
+            {
+                foreach (WeightedGraph weightedGraph in weightedGraphs)
+                {
+                    if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                    {
+                        output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                        break;
+                    }
                 }
             }
+            else
+            {
+                foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                {
+                    if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
+                    {
+                        output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                        break;
+                    }
+                }
+            }
+
+            foreach (Vertex vertex in output)
+            {
+                showingOutput.Append(vertex.Name).Append(" ");
+            }
+
+            MessageBox.Show(showingOutput.ToString());
+
+            ResetNodeSelectionPanel();
         }
 
         private void GetInput(ParentGraph parentGraph)
