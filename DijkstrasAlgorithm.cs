@@ -10,9 +10,9 @@ namespace GraphsClassProject
     internal class DijkstrasAlgorithm
     {
 
-        //only relevant to weighted graphs
         private readonly ParentGraph graph;
         public List<Vertex> Path { get; set; }
+        private const int MaxVal = int.MaxValue;
 
 
         public DijkstrasAlgorithm(ParentGraph graph)
@@ -43,7 +43,7 @@ namespace GraphsClassProject
 
 
             Dijkstra currNode = new Dijkstra(true, 0, source, source);  //intialize currNode to the source node
-            Dijkstra targetNode = new Dijkstra(false, int.MaxValue, null, target);  //keep track of targetNode being false
+            Dijkstra targetNode = new Dijkstra(false, MaxVal, null, target);  //keep track of targetNode being false
 
 
             vertexStructs.Add(source, currNode); //add to dictionary
@@ -64,7 +64,7 @@ namespace GraphsClassProject
                         }
                         else
                         {
-                            Dijkstra newNode = new Dijkstra(false, int.MaxValue, null, v);
+                            Dijkstra newNode = new Dijkstra(false, MaxVal, null, v);
                             vertexStructs.Add(v, newNode);
                         }
                         
@@ -73,20 +73,23 @@ namespace GraphsClassProject
                     Dijkstra currStruct = vertexStructs[v];
 
                     int newDistance = 0;
-                   
-                    
-                        Vertex parent = currNode.Vertex;
 
-                        while (parent != source)
-                        {
 
-                            //Console.WriteLine("parent is" + parent.Name);
-                            newDistance += vertexStructs[parent].DistanceFromStart;    //   not accessing parent here
+                    //Vertex parent = currNode.Vertex;
 
-                            parent = vertexStructs[parent].Parent;
+                    //while (parent != source)
+                    //{
 
-                        }
-                        newDistance += graph.GetWeight(currNode.Vertex, v);
+                    //Console.WriteLine("parent is" + parent.Name);
+
+                    newDistance += vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetWeight(currNode.Vertex, v);   //   not accessing parent here
+
+                   // newDistance += vertexStructs[parent].DistanceFromStart;    //   not accessing parent here
+
+                            //parent = vertexStructs[parent].Parent;
+
+                        //}
+                    //    newDistance += graph.GetWeight(currNode.Vertex, v);
 
                     Console.WriteLine(newDistance);
                     
@@ -107,7 +110,7 @@ namespace GraphsClassProject
                 
 
                 //find shortest false node and set to currNode and true
-                int shortestFalse = int.MaxValue;
+                int shortestFalse = MaxVal;
                 foreach (KeyValuePair<Vertex, Dijkstra> d in vertexStructs)
                 {
              
@@ -118,10 +121,12 @@ namespace GraphsClassProject
                         shortestFalse = d.Value.DistanceFromStart;
                     }
 
-                    if (shortestFalse == int.MaxValue)
-                    {
-                        //all shortest paths have been found
-                    }
+                    
+                }
+
+                if (shortestFalse == MaxVal)
+                {
+                    //all shortest paths have been found
                 }
 
                 Console.WriteLine("shortest false is " + shortestFalse);
