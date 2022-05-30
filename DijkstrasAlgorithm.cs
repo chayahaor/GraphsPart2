@@ -118,7 +118,7 @@ namespace GraphsClassProject
             
         }
 
-        public void ClearPath()
+        private void ClearPath()
         {
             Path.Clear();
         }
