@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Drawing.Drawing2D;
 using System.Text;
+using System.Threading;
 
 namespace GraphsClassProject
 {
@@ -71,7 +72,7 @@ namespace GraphsClassProject
             {
                 Button button = new Button();
                 button.Name =
-                    pair.Key; // All button names should be unique becuase in the SQL code, graph names are unique
+                    pair.Key; // All button names are unique because in the SQL code, graph names are unique
                 button.Text = pair.Key;
                 button.Click += new EventHandler(btn_Click);
                 button.Location = new Point(x, y);
@@ -389,8 +390,8 @@ namespace GraphsClassProject
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                     {
                         Vertex[,] output = weightedGraph.DoKruskalAlgorithm();
-
-                        // draw minimum spanning graph edges in red, give users time to admire the red lines, and then redraw in black
+                        
+                        // draw minimum spanning graph edges in red
                         DrawRedLines(currentGraphShowing, output);
 
                         break;
@@ -669,17 +670,17 @@ namespace GraphsClassProject
                     }
                 }
 
-
-                for (int i = 0; i < graph.Vertices.Count; i++)
+                
+                foreach (var vertex in graph.Vertices)
                 {
-                    if (graph.Vertices[i].Name.Equals(input[index, 0].Name))
+                    if (vertex.Name.Equals(input[index, 0].Name))
                     {
-                        startingVertex = graph.Vertices[i];
+                        startingVertex = vertex;
                     }
 
-                    if (graph.Vertices[i].Name.Equals(input[index, 1].Name))
+                    if (vertex.Name.Equals(input[index, 1].Name))
                     {
-                        endingVertex = graph.Vertices[i];
+                        endingVertex = vertex;
                     }
                 }
 
@@ -701,9 +702,10 @@ namespace GraphsClassProject
         {
             Graphics graphics = panelGraph.CreateGraphics();
             Pen pen = new Pen(Color.Red);
-            Vertex startingVertex = new Vertex("start");
-            Vertex endingVertex = new Vertex("end");
-            int penWidth = 13;
+
+            Vertex startingVertex;
+            Vertex endingVertex;
+            int penWidth;
 
             for (int i = 0; i < input.Count - 1; i++)
             {
@@ -720,8 +722,11 @@ namespace GraphsClassProject
                 Point startingPoint = GetNeighborLocation(startingVertex);
                 Point neighborLocation = GetNeighborLocation(endingVertex);
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
+
+                System.Threading.Thread.Sleep(500);
             }
-            Point secondToLast = GetNeighborLocation(input[input.Count-1]);
+
+            Point secondToLast = GetNeighborLocation(input[input.Count - 1]);
             Point last = GetNeighborLocation(selectedVertexB);
             graphics.DrawLine(pen, secondToLast, last);
         }
