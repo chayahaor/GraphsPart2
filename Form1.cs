@@ -299,7 +299,7 @@ namespace GraphsClassProject
                         pen.Color = Color.Black;
 
                         Point originalLocation = NodeCircleLocations[nodeNumber];
-                        Point neighborLocation = GetNeighborLocation(neighbor);
+                        Point neighborLocation = GetVertexLocation(neighbor);
                         graphics.DrawLine(pen, originalLocation, neighborLocation);
                     }
                 }
@@ -352,7 +352,7 @@ namespace GraphsClassProject
             return new Point(xCoord, yCoord);
         }
 
-        private Point GetNeighborLocation(Vertex neighbor)
+        private Point GetVertexLocation(Vertex neighbor)
         {
             Point neighborLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
             for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
@@ -568,12 +568,6 @@ namespace GraphsClassProject
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-
-                if (ex.Message.Equals("Source and target are the same"))
-                {
-                    MessageBox.Show("Shortest distance: 0.0");
-                }
-
             }
 
             ResetNodeSelectionPanel();
@@ -645,6 +639,9 @@ namespace GraphsClassProject
         {
             Graphics graphics = panelGraph.CreateGraphics();
             Pen pen = new Pen(Color.Red);
+            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
+            pen.CustomEndCap = adjustableArrowCap;
+
             Vertex startingVertex = new Vertex("start");
             Vertex endingVertex = new Vertex("end");
 
@@ -654,27 +651,14 @@ namespace GraphsClassProject
 
                 Vertex ending = input[index, 1];
 
-                AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-                pen.CustomEndCap = adjustableArrowCap;
-
-                Point beginPoint = new Point(0, 0);
-                for (int i = 0; i < LabelNodes.Count; i++)
-                {
-                    if (LabelNodes[i].Text.Equals(beginning.Name))
-                    {
-                        beginPoint = NodeCircleLocations[i];
-                    }
-                }
-
-                
                 foreach (var vertex in graph.Vertices)
                 {
-                    if (vertex.Name.Equals(input[index, 0].Name))
+                    if (vertex.Name.Equals(beginning.Name))
                     {
                         startingVertex = vertex;
                     }
 
-                    if (vertex.Name.Equals(input[index, 1].Name))
+                    if (vertex.Name.Equals(ending.Name))
                     {
                         endingVertex = vertex;
                     }
@@ -689,8 +673,9 @@ namespace GraphsClassProject
 
                 pen.Width = penWidth;
 
-                Point neighborLocation = GetNeighborLocation(ending);
-                graphics.DrawLine(pen, beginPoint, neighborLocation);
+                Point beginLocation = GetVertexLocation(beginning); 
+                Point neighborLocation = GetVertexLocation(ending);
+                graphics.DrawLine(pen, beginLocation, neighborLocation);
             }
         }
 
@@ -698,13 +683,15 @@ namespace GraphsClassProject
         {
             Graphics graphics = panelGraph.CreateGraphics();
             Pen pen = new Pen(Color.Red);
+            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
+            pen.CustomEndCap = adjustableArrowCap;
 
             Vertex startingVertex;
             Vertex endingVertex;
             int penWidth;
 
-            for (int i = 0; i < input.Count - 1; i++)
-            {
+           for (int i = 0; i < input.Count - 1; i++)
+           { 
                 startingVertex = input[i];
                 endingVertex = input[i + 1];
                 penWidth = graph.GetWeight(startingVertex, endingVertex);
@@ -715,16 +702,12 @@ namespace GraphsClassProject
 
                 pen.Width = penWidth;
 
-                Point startingPoint = GetNeighborLocation(startingVertex);
-                Point neighborLocation = GetNeighborLocation(endingVertex);
+                Point startingPoint = GetVertexLocation(startingVertex);
+                Point neighborLocation = GetVertexLocation(endingVertex);
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
 
                 System.Threading.Thread.Sleep(500);
-            }
-
-            Point secondToLast = GetNeighborLocation(input[input.Count - 1]);
-            Point last = GetNeighborLocation(selectedVertexB);
-            graphics.DrawLine(pen, secondToLast, last);
+           }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace GraphsClassProject
 
             if (source.Equals(target))
             {
-                throw new Exception("Source and target are the same");
+                throw new Exception("Source and target are the same. Shortest distance: 0.0");
             }
 
             Dictionary<Vertex, Dijkstra> vertexStructs =
