@@ -14,6 +14,8 @@ namespace GraphsClassProject
         public List<Vertex> Path { get; set; }
         private const int MaxVal = int.MaxValue;
 
+        public double ShortestDist { get; set; }
+
 
         public DijkstrasAlgorithm(ParentGraph graph)
         {
@@ -21,7 +23,7 @@ namespace GraphsClassProject
             Path = new List<Vertex>();
         }
 
-        public double DijskstrasShortestPath(Vertex source, Vertex target)  //TODO C and R - return this value in a message box
+        public void DijskstrasShortestPath(Vertex source, Vertex target)
         {
             ClearPath();
 
@@ -50,7 +52,7 @@ namespace GraphsClassProject
 
             CreatePath(source, vertexStructs, currNode);
 
-            return currNode.DistanceFromStart;
+            ShortestDist = currNode.DistanceFromStart;
         }
 
         private static Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)

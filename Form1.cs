@@ -527,6 +527,7 @@ namespace GraphsClassProject
         private void DoDijkstra()
         {
             List<Vertex> output = new List<Vertex>();
+            double shortestDist = 0.0;
 
             try
             {
@@ -537,6 +538,8 @@ namespace GraphsClassProject
                         if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                         {
                             output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                            shortestDist = weightedGraph.GetDijkstraShortestDistance();
 
                             break;
                         }
@@ -550,6 +553,8 @@ namespace GraphsClassProject
                         {
                             output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
 
+                            shortestDist = weightedDigraph.GetDijkstraShortestDistance();
+
                             break;
                         }
                     }
@@ -557,10 +562,18 @@ namespace GraphsClassProject
                 
                 // Draw path one by one using red lines
                 DrawRedLines(currentGraphShowing, output);
+
+                MessageBox.Show("Shortest distance: " + shortestDist);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+
+                if (ex.Message.Equals("Source and target are the same"))
+                {
+                    MessageBox.Show("Shortest distance: 0.0");
+                }
+
             }
 
             ResetNodeSelectionPanel();

@@ -122,6 +122,11 @@ namespace GraphsClassProject
             return dijkstra.Path;
         }
 
+        public Double GetDijkstraShortestDistance()
+        {
+            return dijkstra.ShortestDist;
+        }
+
         public Vertex[,] DoKruskalAlgorithm()
         {
             return kruskal.KruskalAlgorithm();

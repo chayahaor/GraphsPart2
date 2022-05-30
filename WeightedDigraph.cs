@@ -110,5 +110,10 @@ namespace GraphsClassProject
 
             return dijkstra.Path;
         }
+
+        public Double GetDijkstraShortestDistance()
+        {
+            return dijkstra.ShortestDist;
+        }
     }
 }
