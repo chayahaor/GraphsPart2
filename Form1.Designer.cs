@@ -37,7 +37,7 @@
             this.btnNodeSelection = new System.Windows.Forms.Button();
             this.destDropDown = new System.Windows.Forms.ComboBox();
             this.anotherNode = new System.Windows.Forms.Label();
-            this.myBox = new System.Windows.Forms.ComboBox();
+            this.originDropDown = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panelGraph = new System.Windows.Forms.Panel();
             this.panelNodeSelection.SuspendLayout();
@@ -96,7 +96,7 @@
             this.panelNodeSelection.Controls.Add(this.btnNodeSelection);
             this.panelNodeSelection.Controls.Add(this.destDropDown);
             this.panelNodeSelection.Controls.Add(this.anotherNode);
-            this.panelNodeSelection.Controls.Add(this.myBox);
+            this.panelNodeSelection.Controls.Add(this.originDropDown);
             this.panelNodeSelection.Controls.Add(this.label1);
             this.panelNodeSelection.Location = new System.Drawing.Point(634, 382);
             this.panelNodeSelection.Name = "panelNodeSelection";
@@ -133,13 +133,13 @@
             this.anotherNode.Text = "Please choose another Node";
             this.anotherNode.Visible = false;
             // 
-            // myBox
+            // originDropDown
             // 
-            this.myBox.FormattingEnabled = true;
-            this.myBox.Location = new System.Drawing.Point(22, 50);
-            this.myBox.Name = "myBox";
-            this.myBox.Size = new System.Drawing.Size(121, 21);
-            this.myBox.TabIndex = 1;
+            this.originDropDown.FormattingEnabled = true;
+            this.originDropDown.Location = new System.Drawing.Point(22, 50);
+            this.originDropDown.Name = "originDropDown";
+            this.originDropDown.Size = new System.Drawing.Size(121, 21);
+            this.originDropDown.TabIndex = 1;
             // 
             // label1
             // 
@@ -161,6 +161,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(811, 660);
             this.Controls.Add(this.panelNodeSelection);
@@ -186,7 +187,7 @@
         private System.Windows.Forms.Button Prim;
         private System.Windows.Forms.Panel panelNodeSelection;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox myBox;
+        private System.Windows.Forms.ComboBox originDropDown;
         private System.Windows.Forms.ComboBox destDropDown;
         private System.Windows.Forms.Label anotherNode;
         private System.Windows.Forms.Button btnNodeSelection;

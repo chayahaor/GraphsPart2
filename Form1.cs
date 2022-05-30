@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Drawing.Drawing2D;
 using System.Text;
-using System.Threading;
 
 namespace GraphsClassProject
 {
@@ -209,11 +208,11 @@ namespace GraphsClassProject
         private void ResetNodeSelectionPanel()
         {
             panelNodeSelection.Visible = false;
-            myBox.SelectedIndex = -1;
+            originDropDown.SelectedIndex = -1;
             destDropDown.SelectedIndex = -1;
-            myBox.Items.Clear();
+            originDropDown.Items.Clear();
             destDropDown.Items.Clear();
-            myBox.ResetText();
+            originDropDown.ResetText();
             destDropDown.ResetText();
         }
 
@@ -494,16 +493,8 @@ namespace GraphsClassProject
                 if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                 {
                     Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
-                    StringBuilder showingOutput = new StringBuilder();
-                    for (int i = 0; i < output.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < output.GetLength(1); j++)
-                        {
-                            showingOutput.Append(output[i, j].Name).Append("\n");
-                        }
-                    }
 
-                    MessageBox.Show(showingOutput.ToString());
+                    // draw minimum spanning graph edges in red
                     DrawRedLines(currentGraphShowing, output);
 
                     break;
@@ -537,8 +528,6 @@ namespace GraphsClassProject
         {
             List<Vertex> output = new List<Vertex>();
 
-            StringBuilder showingOutput = new StringBuilder();
-
             try
             {
                 if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
@@ -565,15 +554,9 @@ namespace GraphsClassProject
                         }
                     }
                 }
-
-
-                foreach (Vertex vertex in output)
-                {
-                    showingOutput.Append(vertex.Name).Append(" ");
-                }
-
-                MessageBox.Show(showingOutput.ToString());
-                DrawRedLines(currentGraphShowing, output, selectedVertexB);
+                
+                // Draw path one by one using red lines
+                DrawRedLines(currentGraphShowing, output);
             }
             catch (Exception ex)
             {
@@ -599,7 +582,7 @@ namespace GraphsClassProject
         {
             foreach (Vertex vertex in parentGraph.Vertices)
             {
-                myBox.Items.Add(vertex.Name);
+                originDropDown.Items.Add(vertex.Name);
             }
 
             foreach (Vertex vertex in parentGraph.Vertices)
@@ -610,14 +593,14 @@ namespace GraphsClassProject
 
         private void readyNodes_Click(object sender, EventArgs e)
         {
-            if (myBox.SelectedIndex == -1)
+            if (originDropDown.SelectedIndex == -1)
             {
                 selectedVertexA = currentGraphShowing.Vertices[0];
                 MessageBox.Show("Default vertex selected");
             }
             else
             {
-                selectedVertexA = currentGraphShowing.Vertices[myBox.SelectedIndex];
+                selectedVertexA = currentGraphShowing.Vertices[originDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + selectedVertexA.Name);
             }
 
@@ -684,7 +667,7 @@ namespace GraphsClassProject
                     }
                 }
 
-                int penWidth = 13;
+                int penWidth;
                 penWidth = graph.GetWeight(startingVertex, endingVertex);
                 if (graph.MaxWeight > 15)
                 {
@@ -698,7 +681,7 @@ namespace GraphsClassProject
             }
         }
 
-        private void DrawRedLines(ParentGraph graph, List<Vertex> input, Vertex selectedVertexB)
+        private void DrawRedLines(ParentGraph graph, List<Vertex> input)
         {
             Graphics graphics = panelGraph.CreateGraphics();
             Pen pen = new Pen(Color.Red);
