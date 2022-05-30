@@ -27,6 +27,11 @@ namespace GraphsClassProject
         {
             ClearPath();
 
+            if (source.Equals(target))
+            {
+                throw new Exception("Source and target are the same");
+            }
+
             Dictionary<Vertex, Dijkstra> vertexStructs =
                 new Dictionary<Vertex, Dijkstra>();
 
