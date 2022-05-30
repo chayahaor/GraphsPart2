@@ -1,0 +1,31 @@
+---returns graph name and graph type
+CREATE PROC spGetGraphNames
+AS
+SELECT graphs.Name AS Name, GraphTypes.Name AS Type
+FROM Graphs
+JOIN GraphTypes 
+ON Graphs.GraphType_ID = GraphTypes.GraphType_ID
+
+
+--exec spGetGraphNames
+
+
+---returns initialnodename terminalnodename weight
+--Declare @GraphName varchar(50)
+--Set @GraphName = 'Grp_A'
+
+ALTER PROC spGetEdges @GraphName varchar(50)
+AS
+SELECT ini.ShortName AS [Initial Node Name], ter.ShortName AS [Terminal Node Name],  [Weight]
+FROM Edges
+JOIN Graphs
+on Edges.Graph_ID = Graphs.Graph_ID
+JOIN Nodes ini
+ON ini.Node_ID = Edges.InitialNode_ID 
+JOIN Nodes ter
+ON ter.Node_ID = Edges.TerminalNode_ID 
+WHERE Graphs.name = @GraphName
+Order by ini.Node_ID
+
+exec spGetEdges @GraphName = 'Grp_A'
+
