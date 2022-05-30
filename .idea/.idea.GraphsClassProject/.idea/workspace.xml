@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DijkstrasAlgorithm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DijkstrasAlgorithm.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kruskal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Kruskal.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TopologicalSort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TopologicalSort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/GraphsClassProject.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.csproj.GenerateResource.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GraphsClassProject.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedDigraph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightedDigraph.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +19,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/03/f80aca8e/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/bc/e2962ae8/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsClassProject/Form1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -33,16 +30,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "full.screen.before.presentation.mode": "false",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="GraphsClassProject" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />

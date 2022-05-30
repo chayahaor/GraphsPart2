@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-
     internal class DijkstrasAlgorithm
     {
-
         //only relevant to weighted graphs
         private readonly ParentGraph graph;
         public List<Vertex> Path { get; set; }
@@ -24,16 +22,8 @@ namespace GraphsClassProject
         }
 
 
-
         public double DijskstrasShortestPath(Vertex source, Vertex target)
         {
-
-            /*
-            * how to determine if there is a cycle and target node cannot be reached
-            */
-
-
-
             //return -1 if no path exists
             double shortestDist = -1.0;
 
@@ -42,22 +32,20 @@ namespace GraphsClassProject
                 new Dictionary<Vertex, Dijkstra>();
 
 
-            Dijkstra currNode = new Dijkstra(true, 0, source, source);  //intialize currNode to the source node
-            Dijkstra targetNode = new Dijkstra(false, int.MaxValue, null, target);  //keep track of targetNode being false
+            Dijkstra currNode = new Dijkstra(true, 0, source, source); //initialize currNode to the source node
+            Dijkstra targetNode =
+                new Dijkstra(false, int.MaxValue, null, target); //keep track of targetNode being false
 
 
             vertexStructs.Add(source, currNode); //add to dictionary
 
             while (currNode.Vertex != target) //!vertexStructs[target].sdFound
             {
-                
                 foreach (Vertex v in currNode.Vertex.Neighbors)
                 {
-                    Console.WriteLine("neighbor is " + v.Name);
                     //if newNode from this vertex doesn't exist
                     if (!vertexStructs.ContainsKey(v))
                     {
-                        
                         if (v == target)
                         {
                             vertexStructs.Add(v, targetNode);
@@ -67,28 +55,22 @@ namespace GraphsClassProject
                             Dijkstra newNode = new Dijkstra(false, int.MaxValue, null, v);
                             vertexStructs.Add(v, newNode);
                         }
-                        
                     }
 
                     Dijkstra currStruct = vertexStructs[v];
 
                     int newDistance = 0;
-                   
-                    
-                        Vertex parent = currNode.Vertex;
 
-                        while (parent != source)
-                        {
+                    Vertex parent = currNode.Vertex;
 
-                            //Console.WriteLine("parent is" + parent.Name);
-                            newDistance += vertexStructs[parent].DistanceFromStart;    //   not accessing parent here
+                    while (parent != source)
+                    {
+                        newDistance += vertexStructs[parent].DistanceFromStart; //   not accessing parent here
 
-                            parent = vertexStructs[parent].Parent;
+                        parent = vertexStructs[parent].Parent;
+                    }
 
-                        }
-                        newDistance += graph.GetWeight(currNode.Vertex, v);
-
-                    Console.WriteLine(newDistance);
+                    newDistance += graph.GetWeight(currNode.Vertex, v);
                     
                     if (newDistance < currStruct.DistanceFromStart)
                     {
@@ -97,23 +79,16 @@ namespace GraphsClassProject
                         currStruct.DistanceFromStart = newDistance;
                         vertexStructs.Remove(v);
                         vertexStructs.Add(v, currStruct);
-                        
-                        
                     }
-
-                
                 }
 
-                
 
                 //find shortest false node and set to currNode and true
                 int shortestFalse = int.MaxValue;
                 foreach (KeyValuePair<Vertex, Dijkstra> d in vertexStructs)
                 {
-             
                     if (!d.Value.SdFound && d.Value.DistanceFromStart < shortestFalse)
                     {
-                        
                         currNode = d.Value;
                         shortestFalse = d.Value.DistanceFromStart;
                     }
@@ -124,51 +99,31 @@ namespace GraphsClassProject
                     //all shortest paths have been found
                     throw new Exception("Selected vertices do not have a connection between them");
                 }
-
-                Console.WriteLine("shortest false is " + shortestFalse);
-
+                
                 currNode.SdFound = true;
                 vertexStructs.Remove(currNode.Vertex);
                 vertexStructs.Add(currNode.Vertex, currNode);
-                Console.WriteLine("currNode is " + currNode.Vertex.Name);
-
             }
 
             shortestDist = currNode.DistanceFromStart;
+            
 
-            Console.WriteLine("Shortest distance is" + shortestDist);
-
-
-
-            if (shortestDist != -1)
+            if (shortestDist != -1) //TODO: Why are we comparing a double to an int?
             {
                 Vertex parent = currNode.Parent;
                 Path.Add(parent);
-                Console.WriteLine(currNode.Vertex.Name);
-                Console.WriteLine(parent.Name);
-
+               
                 //create path - add parent vertex of node until reach node with source vertex
                 while (parent != source)
                 {
                     parent = vertexStructs[parent].Parent;
                     Path.Insert(0, parent);
                 }
-                
-                PrintVertexSequence(Path);
             }
 
             return shortestDist;
         }
 
-        
-        private void PrintVertexSequence(List<Vertex> path)
-        {
-            Console.WriteLine(path.Count);
-            for (int i = 0; i < path.Count; i++)
-            {
-                Console.Write(path[i].Name);
-            }
-        }
 
         struct Dijkstra
         {
@@ -184,7 +139,6 @@ namespace GraphsClassProject
                 this.Parent = parent;
                 this.Vertex = vertex;
             }
-
         }
     }
 }

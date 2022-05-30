@@ -115,28 +115,7 @@ namespace GraphsClassProject
 
             return shortestPath;
         }
-
-        /*private List<EdgeStruct> SortEdges()
-        {
-            List<EdgeStruct> sorted = new List<EdgeStruct>();
-            /*foreach (EdgeStruct addingEdge in Edges)
-            {
-                foreach (EdgeStruct sortedEdge in sorted)
-                {
-                    if (addingEdge.Weight < sortedEdge.Weight)
-                    {
-                        sorted.Add(addingEdge);
-                    }
-                }
-
-                if (!sorted.Contains(addingEdge))
-                {
-                    sorted.Add(addingEdge);
-                }
-            }#1#
-             Edges.Sort((x, y) => x.Weight - y.Weight);
-            return sorted;
-        }*/
+        
 
         private List<EdgeStruct> SortEdges()
         {
