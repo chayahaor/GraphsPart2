@@ -29,8 +29,8 @@ namespace GraphsClassProject
 
             Dictionary<Vertex, Dijkstra> vertexStructs =
                 new Dictionary<Vertex, Dijkstra>();
-
             Dijkstra currNode = new Dijkstra(true, 0, source, source);
+            
             vertexStructs.Add(source, currNode);
 
 
@@ -78,24 +78,24 @@ namespace GraphsClassProject
             return currNode;
         }
 
-        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode, out Dijkstra currStruct, out int newDistance, Vertex v)
+        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode, out Dijkstra currStruct, out int newDistance, Vertex neighbor)
         {
-            if (!vertexStructs.ContainsKey(v))
+            if (!vertexStructs.ContainsKey(neighbor))
             {
-                Dijkstra newNode = new Dijkstra(false, MaxVal, null, v);
-                vertexStructs.Add(v, newNode);
+                Dijkstra newNode = new Dijkstra(false, MaxVal, null, neighbor);
+                vertexStructs.Add(neighbor, newNode);
             }
 
-            currStruct = vertexStructs[v];
-            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetWeight(currNode.Vertex, v);
+            currStruct = vertexStructs[neighbor];
+            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetWeight(currNode.Vertex, neighbor);
 
             if (newDistance < currStruct.DistanceFromStart)
             {
                 //update parent and shortest dist of v
                 currStruct.Parent = currNode.Vertex;
                 currStruct.DistanceFromStart = newDistance;
-                vertexStructs.Remove(v);
-                vertexStructs.Add(v, currStruct);
+                vertexStructs.Remove(neighbor);
+                vertexStructs.Add(neighbor, currStruct);
 
 
             }
