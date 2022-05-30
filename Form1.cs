@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -390,9 +390,8 @@ namespace GraphsClassProject
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
                     {
                         Vertex[,] output = weightedGraph.DoKruskalAlgorithm();
-
-                        // draw minimum spanning graph edges in red,
-                        // gives users time to admire the red lines
+                        
+                        // draw minimum spanning graph edges in red
                         DrawRedLines(currentGraphShowing, output);
 
                         break;
@@ -505,6 +504,8 @@ namespace GraphsClassProject
                     }
 
                     MessageBox.Show(showingOutput.ToString());
+                    DrawRedLines(currentGraphShowing, output);
+
                     break;
                 }
             }
@@ -701,6 +702,7 @@ namespace GraphsClassProject
         {
             Graphics graphics = panelGraph.CreateGraphics();
             Pen pen = new Pen(Color.Red);
+
             Vertex startingVertex;
             Vertex endingVertex;
             int penWidth;
@@ -720,6 +722,7 @@ namespace GraphsClassProject
                 Point startingPoint = GetNeighborLocation(startingVertex);
                 Point neighborLocation = GetNeighborLocation(endingVertex);
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
+
                 System.Threading.Thread.Sleep(500);
             }
 

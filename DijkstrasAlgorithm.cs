@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,122 +8,120 @@ namespace GraphsClassProject
 {
     internal class DijkstrasAlgorithm
     {
-        //only relevant to weighted graphs
+        //relevant to weighted graphs and weighted digraphs
+  
         private readonly ParentGraph graph;
         public List<Vertex> Path { get; set; }
+        private const int MaxVal = int.MaxValue;
 
 
         public DijkstrasAlgorithm(ParentGraph graph)
         {
             this.graph = graph;
-
-            //path of nodes
             Path = new List<Vertex>();
         }
 
-
-        public double DijskstrasShortestPath(Vertex source, Vertex target)
+        public double DijskstrasShortestPath(Vertex source, Vertex target)  //TODO C and R - return this value in a message box
         {
-            //return -1 if no path exists
-            double shortestDist = -1.0;
+            ClearPath();
 
-            //vertex->corresponding structure
+            if (source.Equals(target))
+            {
+                throw new Exception("Source and target are the same");
+            }
+
             Dictionary<Vertex, Dijkstra> vertexStructs =
                 new Dictionary<Vertex, Dijkstra>();
 
+            Dijkstra currNode = new Dijkstra(true, 0, source, source);
+            vertexStructs.Add(source, currNode);
 
-            Dijkstra currNode = new Dijkstra(true, 0, source, source); //initialize currNode to the source node
-            Dijkstra targetNode =
-                new Dijkstra(false, int.MaxValue, null, target); //keep track of targetNode being false
-
-
-            vertexStructs.Add(source, currNode); //add to dictionary
-
-            while (currNode.Vertex != target) //!vertexStructs[target].sdFound
+            while (currNode.Vertex != target)
             {
                 foreach (Vertex v in currNode.Vertex.Neighbors)
                 {
-                    //if newNode from this vertex doesn't exist
-                    if (!vertexStructs.ContainsKey(v))
-                    {
-                        if (v == target)
-                        {
-                            vertexStructs.Add(v, targetNode);
-                        }
-                        else
-                        {
-                            Dijkstra newNode = new Dijkstra(false, int.MaxValue, null, v);
-                            vertexStructs.Add(v, newNode);
-                        }
-                    }
+                    currNode = UpdateStructs(vertexStructs, currNode, out Dijkstra currStruct, out int newDistance, v);
 
-                    Dijkstra currStruct = vertexStructs[v];
-
-                    int newDistance = 0;
-
-                    Vertex parent = currNode.Vertex;
-
-                    while (parent != source)
-                    {
-                        newDistance += vertexStructs[parent].DistanceFromStart; //   not accessing parent here
-
-                        parent = vertexStructs[parent].Parent;
-                    }
-
-                    newDistance += graph.GetWeight(currNode.Vertex, v);
-                    
-                    if (newDistance < currStruct.DistanceFromStart)
-                    {
-                        //update parent and shortest dist of v
-                        currStruct.Parent = currNode.Vertex;
-                        currStruct.DistanceFromStart = newDistance;
-                        vertexStructs.Remove(v);
-                        vertexStructs.Add(v, currStruct);
-                    }
                 }
 
+                currNode = GetNewCurrNode(vertexStructs, currNode);
 
-                //find shortest false node and set to currNode and true
-                int shortestFalse = int.MaxValue;
-                foreach (KeyValuePair<Vertex, Dijkstra> d in vertexStructs)
-                {
-                    if (!d.Value.SdFound && d.Value.DistanceFromStart < shortestFalse)
-                    {
-                        currNode = d.Value;
-                        shortestFalse = d.Value.DistanceFromStart;
-                    }
-                }
-
-                if (shortestFalse == int.MaxValue)
-                {
-                    //all shortest paths have been found
-                    throw new Exception("Selected vertices do not have a connection between them");
-                }
-                
-                currNode.SdFound = true;
-                vertexStructs.Remove(currNode.Vertex);
-                vertexStructs.Add(currNode.Vertex, currNode);
             }
 
-            shortestDist = currNode.DistanceFromStart;
-            
+            CreatePath(source, vertexStructs, currNode);
 
-            if (shortestDist != -1) //TODO: Why are we comparing a double to an int?
-            {
-                Vertex parent = currNode.Parent;
-                Path.Add(parent);
-               
-                //create path - add parent vertex of node until reach node with source vertex
-                while (parent != source)
-                {
-                    parent = vertexStructs[parent].Parent;
-                    Path.Insert(0, parent);
-                }
-            }
-
-            return shortestDist;
+            return currNode.DistanceFromStart;
         }
 
+        private static Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
+        {
+            //find shortest false node and set to currNode and true
+            int shortestFalse = MaxVal;
+            foreach (KeyValuePair<Vertex, Dijkstra> d in vertexStructs)
+            {
+
+                if (!d.Value.SdFound && d.Value.DistanceFromStart < shortestFalse)
+                {
+                    currNode = d.Value;
+                    shortestFalse = d.Value.DistanceFromStart;
+                }
+            }
+
+            if (shortestFalse == MaxVal)
+            {
+                //all shortest paths have been found
+                throw new Exception("No path exists");
+            }
+
+
+            currNode.SdFound = true;
+            vertexStructs.Remove(currNode.Vertex);
+            vertexStructs.Add(currNode.Vertex, currNode);
+            return currNode;
+        }
+
+        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode, out Dijkstra currStruct, out int newDistance, Vertex v)
+        {
+            if (!vertexStructs.ContainsKey(v))
+            {
+                Dijkstra newNode = new Dijkstra(false, MaxVal, null, v);
+                vertexStructs.Add(v, newNode);
+            }
+
+            currStruct = vertexStructs[v];
+            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetWeight(currNode.Vertex, v);
+
+            if (newDistance < currStruct.DistanceFromStart)
+            {
+                //update parent and shortest dist of v
+                currStruct.Parent = currNode.Vertex;
+                currStruct.DistanceFromStart = newDistance;
+                vertexStructs.Remove(v);
+                vertexStructs.Add(v, currStruct);
+            }
+
+            return currNode;
+        }
+
+        private void CreatePath(Vertex source, Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
+        {
+            Vertex parent = currNode.Parent;
+            Path.Add(parent);
+
+            while (parent != source)
+            {
+                parent = vertexStructs[parent].Parent;
+                Path.Insert(0, parent);
+            }
+
+            Path.Add(currNode.Vertex);
+            
+        }
+
+        public void ClearPath()
+        {
+            Path.Clear();
+        }
 
         struct Dijkstra
         {
