@@ -423,7 +423,7 @@ namespace GraphsClassProject
 
         private void DoTopological()
         {
-            string showingOutput = "";
+            string topologicalOutput = ""; 
             try
             {
                 Vertex[] output = new Vertex[0];
@@ -455,10 +455,10 @@ namespace GraphsClassProject
 
                 foreach (Vertex vertex in output)
                 {
-                    showingOutput += vertex.Name + " ";
+                    topologicalOutput += vertex.Name + " ";
                 }
 
-                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + showingOutput);
+                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + topologicalOutput);
             }
             catch (Exception exception)
             {
