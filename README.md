@@ -1,7 +1,8 @@
-# GraphsClassProject
+# Graphs SQL/C# Group Project
 
 Merging what we learned in C# and SQL, we created this final project as a class.
 We took the data from a database, containing graphs, nodes, and edges, and made a visualization using a C# Windows Form.
+We also implemented graph algorithms (Dijkstra's Algorithm, Topological Sort, Prim's and Kruskal's MST), and displayed them using the GUI.
 
 Contributors: 
 - [Chana Levy (Rosenbluth)](https://github.com/clrosenbluth)
