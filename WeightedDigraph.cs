@@ -92,7 +92,6 @@ namespace GraphsClassProject
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.GetBaseException());
                 Console.WriteLine(e.StackTrace);
                 retVal = false;
             }

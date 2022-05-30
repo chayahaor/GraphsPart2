@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-
     internal class DijkstrasAlgorithm
     {
-
+        //relevant to weighted graphs and weighted digraphs
+  
         private readonly ParentGraph graph;
         public List<Vertex> Path { get; set; }
         private const int MaxVal = int.MaxValue;
@@ -21,18 +21,20 @@ namespace GraphsClassProject
             Path = new List<Vertex>();
         }
 
-
-
         public double DijskstrasShortestPath(Vertex source, Vertex target)  //TODO C and R - return this value in a message box
         {
             ClearPath();
+
+            if (source.Equals(target))
+            {
+                throw new Exception("Source and target are the same");
+            }
 
             Dictionary<Vertex, Dijkstra> vertexStructs =
                 new Dictionary<Vertex, Dijkstra>();
             Dijkstra currNode = new Dijkstra(true, 0, source, source);
             
             vertexStructs.Add(source, currNode);
-
 
             while (currNode.Vertex != target)
             {
@@ -103,7 +105,6 @@ namespace GraphsClassProject
             return currNode;
         }
 
-
         private void CreatePath(Vertex source, Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
         {
             Vertex parent = currNode.Parent;
@@ -119,7 +120,7 @@ namespace GraphsClassProject
             
         }
 
-        public void ClearPath()
+        private void ClearPath()
         {
             Path.Clear();
         }
@@ -138,7 +139,6 @@ namespace GraphsClassProject
                 this.Parent = parent;
                 this.Vertex = vertex;
             }
-
         }
     }
 }
