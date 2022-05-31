@@ -8,18 +8,13 @@ namespace GraphsClassProject
     {
         //only relevant to weighted graphs
         private readonly ParentGraph graph;
-
-        private List<String> edgesNames = new List<String>();
-
-        //private Dictionary<Vertex, Vertex> alreadyTraversed;
+        
 
         public Prim(ParentGraph graph)
         {
             this.graph = graph;
-            //alreadyTraversed = new Dictionary<Vertex, Vertex>();
         }
-
-        //TODO: Fix for graph A
+        
         public Vertex[,] PrimMinSpanningGraph(Vertex start)
         {
             Vertex[,] edges = new Vertex[graph.Vertices.Count - 1, 2];
@@ -58,7 +53,7 @@ namespace GraphsClassProject
                 {
                     if (!foundVertices.Contains(neighbor))
                     {
-                        PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(currentPrim.vertex));
+                        PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(neighbor));
                         if (neighborPrim.vertex != null)
                         {
                             if (graph.GetWeight(currentPrim.vertex, neighbor) < neighborPrim.Cost)
@@ -83,7 +78,6 @@ namespace GraphsClassProject
 
         struct PrimStruct
         {
-            // constructor
             public PrimStruct(Vertex vertex, int cost, Vertex parent)
             {
                 this.vertex = vertex;

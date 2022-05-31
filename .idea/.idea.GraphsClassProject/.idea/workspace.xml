@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Prim.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +89,8 @@
       <workItem from="1653584012196" duration="2643000" />
       <workItem from="1653591386430" duration="3050000" />
       <workItem from="1653664582672" duration="3646000" />
-      <workItem from="1653956030287" duration="321000" />
+      <workItem from="1653956030287" duration="364000" />
+      <workItem from="1654018834916" duration="651000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>
@@ -126,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653585942670</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".">
+      <created>1653956387192</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1653956387192</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,7 +160,8 @@
     <MESSAGE value="Trying to merge" />
     <MESSAGE value="Fixed TopologicalSort.cs" />
     <MESSAGE value="Cleanup - variable names same syntax" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleanup - variable names same syntax" />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
