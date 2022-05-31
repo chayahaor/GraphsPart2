@@ -276,6 +276,8 @@ namespace GraphsClassProject
 
         private void CreateGraphics(ParentGraph graph)
         {
+            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Black);
+
             for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++)
             {
                 Vertex currNode = graph.Vertices[nodeNumber];
@@ -283,19 +285,7 @@ namespace GraphsClassProject
                 {
                     if (currNode.Neighbors.Contains(neighbor))
                     {
-                        Graphics graphics = panelGraph.CreateGraphics();
-                        Pen pen = new Pen(Color.Black);
-
-                        AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-                        pen.CustomEndCap = adjustableArrowCap;
-
-                        int penWidth = graph.GetWeight(graph.Vertices[nodeNumber], neighbor);
-                        if (graph.MaxWeight > 15)
-                        {
-                            penWidth /= 10;
-                        }
-
-                        pen.Width = penWidth;
+                        pen.Width = GetPenWidth(graph, graph.Vertices[nodeNumber], neighbor);
                         pen.Color = Color.Black;
 
                         Point originalLocation = NodeCircleLocations[nodeNumber];
@@ -304,6 +294,14 @@ namespace GraphsClassProject
                     }
                 }
             }
+        }
+
+        private void SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color penColor)
+        {
+            graphics = panelGraph.CreateGraphics();
+            pen = new Pen(penColor);
+            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
+            pen.CustomEndCap = adjustableArrowCap;
         }
 
         private Point GetLocation(int nodeNumber, int numNodes)
@@ -365,6 +363,18 @@ namespace GraphsClassProject
 
             return vertexLocation;
         }
+
+        private int GetPenWidth(ParentGraph graph, Vertex start, Vertex end)
+        {
+            int penWidth = graph.GetWeight(start, end);
+            if (graph.MaxWeight > 15)
+            {
+                penWidth /= 10;
+            }
+
+            return penWidth;
+        }
+
 
         private void Kruskal_Click(object sender, EventArgs e)
         {
@@ -637,10 +647,7 @@ namespace GraphsClassProject
 
         private void DrawRedLines(ParentGraph graph, Vertex[,] input)
         {
-            Graphics graphics = panelGraph.CreateGraphics();
-            Pen pen = new Pen(Color.Red);
-            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-            pen.CustomEndCap = adjustableArrowCap;
+            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
 
             Vertex startingVertex = new Vertex("start");
             Vertex endingVertex = new Vertex("end");
@@ -664,14 +671,7 @@ namespace GraphsClassProject
                     }
                 }
 
-                int penWidth;
-                penWidth = graph.GetWeight(startingVertex, endingVertex);
-                if (graph.MaxWeight > 15)
-                {
-                    penWidth /= 10;
-                }
-
-                pen.Width = penWidth;
+                pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
 
                 Point beginLocation = GetVertexLocation(beginning); 
                 Point neighborLocation = GetVertexLocation(ending);
@@ -681,26 +681,17 @@ namespace GraphsClassProject
 
         private void DrawRedLines(ParentGraph graph, List<Vertex> input)
         {
-            Graphics graphics = panelGraph.CreateGraphics();
-            Pen pen = new Pen(Color.Red);
-            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-            pen.CustomEndCap = adjustableArrowCap;
+            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
 
             Vertex startingVertex;
             Vertex endingVertex;
-            int penWidth;
 
            for (int i = 0; i < input.Count - 1; i++)
            { 
                 startingVertex = input[i];
                 endingVertex = input[i + 1];
-                penWidth = graph.GetWeight(startingVertex, endingVertex);
-                if (graph.MaxWeight > 15)
-                {
-                    penWidth /= 10;
-                }
 
-                pen.Width = penWidth;
+                pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
 
                 Point startingPoint = GetVertexLocation(startingVertex);
                 Point neighborLocation = GetVertexLocation(endingVertex);

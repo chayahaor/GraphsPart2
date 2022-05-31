@@ -19,15 +19,13 @@ namespace GraphsClassProject
 
             // make adjacency list (use each vertex's neighbors list) - dictionary
             Dictionary<Vertex, List<Vertex>> adjacencyList = new Dictionary<Vertex, List<Vertex>>();
-            foreach (Vertex vertex in graph.Vertices)
-            {
-                adjacencyList.Add(vertex, vertex.Neighbors);
-            }
 
             // make indegree list (use each vertex's indegree) - dictionary
             Dictionary<Vertex, int> indegreeList = new Dictionary<Vertex, int>();
+
             foreach (Vertex vertex in graph.Vertices)
             {
+                adjacencyList.Add(vertex, vertex.Neighbors);
                 indegreeList.Add(vertex, vertex.Indegree);
             }
 
@@ -47,6 +45,7 @@ namespace GraphsClassProject
             {
                 throw new Exception("Graph contains cycle");
             }
+
             int numVerticesAdded = 0;
 
             while (zeroes.Count > 0)
