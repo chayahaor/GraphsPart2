@@ -12,7 +12,6 @@ namespace GraphsClassProject
         private List<Vertex> Vertices;
         private List<EdgeStruct> Edges;
 
-
         public Kruskal(ParentGraph graph)
         {
             this.graph = graph;

@@ -8,6 +8,7 @@ namespace GraphsClassProject
     class Digraph : ParentGraph
     {
         private TopologicalSort topologicalSort;
+        public Vertex[] topologicalOutput { get; set; } // topologicalSort will always return the same output, so store it the first time it is calculated
 
         public Digraph(String graphName) : base(graphName)
         {
@@ -15,6 +16,7 @@ namespace GraphsClassProject
             Vertices = new List<Vertex>();
             Type = GraphType.DIGRAPH;
             topologicalSort = new TopologicalSort(this);
+            topologicalOutput = null;
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -94,8 +96,8 @@ namespace GraphsClassProject
 
         public Vertex[] DoTopologicalSort()
         {
-            Vertex[] retVal = topologicalSort.GetTopologicalSort();
-            return retVal;
+            this.topologicalOutput = topologicalSort.GetTopologicalSort();
+            return this.topologicalOutput;
         }
 
     }

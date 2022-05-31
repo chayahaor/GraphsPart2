@@ -8,6 +8,8 @@ namespace GraphsClassProject
     class WeightedDigraph : ParentGraph
     {
         private TopologicalSort topologicalSort;
+        public Vertex[] topologicalOutput { get; set; } // topologicalSort will always return the same output, so store it the first time it is calculated
+
         private DijkstrasAlgorithm dijkstra;
 
         public WeightedDigraph(String graphName) : base(graphName)
@@ -16,6 +18,7 @@ namespace GraphsClassProject
             Vertices = new List<Vertex>();
             Type = GraphType.WEIGHTED_DIGRAPH;
             topologicalSort = new TopologicalSort(this);
+            topologicalOutput = null;
             dijkstra = new DijkstrasAlgorithm(this);
         }
 
@@ -101,7 +104,8 @@ namespace GraphsClassProject
 
         public Vertex[] DoTopologicalSort()
         {
-            return topologicalSort.GetTopologicalSort();
+            this.topologicalOutput = topologicalSort.GetTopologicalSort();
+            return this.topologicalOutput;
         }
 
         public List<Vertex> DoDijkstraAlgorithm(Vertex start, Vertex end)

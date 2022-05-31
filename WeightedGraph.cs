@@ -10,6 +10,7 @@ namespace GraphsClassProject
         private Prim prim;
         private DijkstrasAlgorithm dijkstra;
         private Kruskal kruskal;
+        public Vertex[,] kruskalOutput { get; set; } // kruskal will always return the same output, so store it the first time it is calculated
 
         public WeightedGraph(String graphName) : base(graphName)
         {
@@ -19,6 +20,7 @@ namespace GraphsClassProject
             prim = new Prim(this);
             dijkstra = new DijkstrasAlgorithm(this);
             kruskal = new Kruskal(this);
+            kruskalOutput = null;
         }
 
         public bool LoadGraph(String name, String server, String database)
@@ -129,7 +131,8 @@ namespace GraphsClassProject
 
         public Vertex[,] DoKruskalAlgorithm()
         {
-            return kruskal.KruskalAlgorithm();
+            this.kruskalOutput = kruskal.KruskalAlgorithm();
+            return this.kruskalOutput;
         }
     }
 }

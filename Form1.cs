@@ -394,11 +394,20 @@ namespace GraphsClassProject
 
                 panelNodeSelection.Visible = false;
 
+                Vertex[,] output;
+
                 foreach (WeightedGraph weightedGraph in weightedGraphs)
                 {
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                    {
-                        Vertex[,] output = weightedGraph.DoKruskalAlgorithm();
+                    { 
+                        if (weightedGraph.kruskalOutput == null)
+                        {
+                            output = weightedGraph.DoKruskalAlgorithm();
+                        }
+                        else
+                        {
+                            output = weightedGraph.kruskalOutput;
+                        }
                         
                         // draw minimum spanning graph edges in red
                         DrawRedLines(currentGraphShowing, output);
@@ -443,7 +452,14 @@ namespace GraphsClassProject
                     {
                         if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
                         {
-                            output = weightedDigraph.DoTopologicalSort();
+                            if (weightedDigraph.topologicalOutput == null)
+                            {
+                                output = weightedDigraph.DoTopologicalSort();
+                            }
+                            else
+                            {
+                                output = weightedDigraph.topologicalOutput;
+                            }
                             break;
                         }
                     }
@@ -454,14 +470,18 @@ namespace GraphsClassProject
                     {
                         if (digraph.GraphName == currentGraphShowing.GraphName)
                         {
-                            output = digraph.DoTopologicalSort();
+                            if (digraph.topologicalOutput == null)
+                            {
+                                output = digraph.DoTopologicalSort();
+                            }
+                            else
+                            {
+                                output = digraph.topologicalOutput;
+                            }
                             break;
                         }
                     }
                 }
-
-                System.Threading.Thread.Sleep(1000);
-
 
                 foreach (Vertex vertex in output)
                 {
