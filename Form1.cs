@@ -354,16 +354,16 @@ namespace GraphsClassProject
 
         private Point GetVertexLocation(Vertex neighbor)
         {
-            Point neighborLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
+            Point vertexLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
             for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
             {
                 if (LabelNodes[labelIndex].Text == neighbor.Name)
                 {
-                    neighborLocation = NodeCircleLocations[labelIndex];
+                    vertexLocation = NodeCircleLocations[labelIndex];
                 }
             }
 
-            return neighborLocation;
+            return vertexLocation;
         }
 
         private void Kruskal_Click(object sender, EventArgs e)

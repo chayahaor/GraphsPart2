@@ -4,20 +4,22 @@
     <projectFile>GraphsClassProject.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="Cleaned up some code - removed Console.WriteLine and extra comments">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DijkstrasAlgorithm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DijkstrasAlgorithm.cs" afterDir="false" />
-    </list>
+    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="cleanup" />
+      </map>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/03/f80aca8e/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/bc/e2962ae8/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsClassProject/DijkstrasAlgorithm.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsClassProject/Form1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
