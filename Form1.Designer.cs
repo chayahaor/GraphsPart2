@@ -116,6 +116,7 @@
             // 
             // destDropDown
             // 
+            this.destDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.destDropDown.FormattingEnabled = true;
             this.destDropDown.Location = new System.Drawing.Point(22, 142);
             this.destDropDown.Name = "destDropDown";
@@ -135,6 +136,7 @@
             // 
             // originDropDown
             // 
+            this.originDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.originDropDown.FormattingEnabled = true;
             this.originDropDown.Location = new System.Drawing.Point(22, 50);
             this.originDropDown.Name = "originDropDown";
