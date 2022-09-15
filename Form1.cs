@@ -157,6 +157,7 @@ namespace GraphsClassProject
                         }
                     }
 
+                    Dijkstra.Enabled = false;
                     break;
                 case "Weighted_Undirected":
                     foreach (WeightedGraph weightedGraph in weightedGraphs)
@@ -169,6 +170,9 @@ namespace GraphsClassProject
                         }
                     }
 
+                    Prim.Enabled = false;
+                    Topological.Enabled = false;
+                    Kruskal.Enabled = false;
                     break;
                 case "Unweighted_Undirected":
                     foreach (Graph graph in graphs)
@@ -181,6 +185,8 @@ namespace GraphsClassProject
                         }
                     }
 
+                    Dijkstra.Enabled = false;
+                    Topological.Enabled = false;
                     break;
             }
         }
@@ -382,10 +388,10 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
+            /*else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
             {
                 MessageBox.Show("Kruskal's Algorithm is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -399,7 +405,7 @@ namespace GraphsClassProject
                 foreach (WeightedGraph weightedGraph in weightedGraphs)
                 {
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                    { 
+                    {
                         if (weightedGraph.kruskalOutput == null)
                         {
                             output = weightedGraph.DoKruskalAlgorithm();
@@ -408,7 +414,7 @@ namespace GraphsClassProject
                         {
                             output = weightedGraph.kruskalOutput;
                         }
-                        
+
                         // draw minimum spanning graph edges in red
                         DrawRedLines(currentGraphShowing, output);
 
@@ -442,7 +448,7 @@ namespace GraphsClassProject
 
         private void DoTopological()
         {
-            string topologicalOutput = ""; 
+            string topologicalOutput = "";
             try
             {
                 Vertex[] output = new Vertex[0];
@@ -460,6 +466,7 @@ namespace GraphsClassProject
                             {
                                 output = weightedDigraph.topologicalOutput;
                             }
+
                             break;
                         }
                     }
@@ -478,6 +485,7 @@ namespace GraphsClassProject
                             {
                                 output = digraph.topologicalOutput;
                             }
+
                             break;
                         }
                     }
@@ -589,7 +597,7 @@ namespace GraphsClassProject
                         }
                     }
                 }
-                
+
                 // Draw path one by one using red lines
                 DrawRedLines(currentGraphShowing, output);
 
@@ -693,7 +701,7 @@ namespace GraphsClassProject
 
                 pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
 
-                Point beginLocation = GetVertexLocation(beginning); 
+                Point beginLocation = GetVertexLocation(beginning);
                 Point neighborLocation = GetVertexLocation(ending);
                 graphics.DrawLine(pen, beginLocation, neighborLocation);
             }
@@ -706,8 +714,8 @@ namespace GraphsClassProject
             Vertex startingVertex;
             Vertex endingVertex;
 
-           for (int i = 0; i < input.Count - 1; i++)
-           { 
+            for (int i = 0; i < input.Count - 1; i++)
+            {
                 startingVertex = input[i];
                 endingVertex = input[i + 1];
 
@@ -718,7 +726,7 @@ namespace GraphsClassProject
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
 
                 System.Threading.Thread.Sleep(500);
-           }
+            }
         }
     }
 }
