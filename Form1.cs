@@ -131,7 +131,12 @@ namespace GraphsClassProject
         private void btn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-
+            
+            Prim.Enabled = true;
+            Dijkstra.Enabled = true;
+            Topological.Enabled = true;
+            Kruskal.Enabled = true;
+            
             switch (graphNamesAndTypes[button.Name])
             {
                 case "Weighted_Directed":
