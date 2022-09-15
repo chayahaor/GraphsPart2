@@ -430,11 +430,11 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH ||
+            /*else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH ||
                      currentGraphShowing.Type == GraphType.GRAPH)
             {
                 MessageBox.Show("Topological Sort is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -510,10 +510,10 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
+            /*else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
             {
                 MessageBox.Show("Prim's Algorithm is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -548,10 +548,10 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
+            /*else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
             {
                 MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
