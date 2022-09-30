@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Drawing.Drawing2D;
-using System.Text;
 
 namespace GraphsClassProject
 {
@@ -19,11 +18,8 @@ namespace GraphsClassProject
         // contains all graph names and types (graph names must be unique in the database)
         private Dictionary<String, String> graphNamesAndTypes;
 
-        // List of all the buttons containing graph names
-        private List<Button> GraphNameButtons { get; set; }
-
         // the center of the panelGraph panel (size 600 by 600)
-        private readonly int CENTER = 300;
+        private const int CENTER = 300;
 
         // the current graph on display in the panelGraph panel 
         private ParentGraph currentGraphShowing;
@@ -50,8 +46,6 @@ namespace GraphsClassProject
             weightedDigraphs = new List<WeightedDigraph>();
             weightedGraphs = new List<WeightedGraph>();
 
-            GraphNameButtons = new List<Button>();
-
             panelGraph.BackColor = Color.Gray;
 
             var server = ConfigurationManager.AppSettings["SERVER"];
@@ -67,15 +61,23 @@ namespace GraphsClassProject
         {
             int x = 30;
             int y = 0;
+            Button showGraph = new Button();
+            showGraph.Name = "btnShowGraph";
+            showGraph.Text = "Show Weights";
+            showGraph.Height += showGraph.Height;
+            showGraph.Location = new Point(x, y);
+            showGraph.Click += ShowWeights;
+            
+            y += 100;
+            panelGraphButtons.Controls.Add(showGraph);    
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
                 Button button = new Button();
-                button.Name =
-                    pair.Key; // All button names are unique because in the SQL code, graph names are unique
+                // All button names are unique because in the SQL code, graph names are unique
+                button.Name = pair.Key;
                 button.Text = pair.Key;
-                button.Click += new EventHandler(btn_Click);
+                button.Click += btn_Click;
                 button.Location = new Point(x, y);
-                GraphNameButtons.Add(button);
 
                 y += 100;
 
@@ -399,7 +401,7 @@ namespace GraphsClassProject
                 foreach (WeightedGraph weightedGraph in weightedGraphs)
                 {
                     if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                    { 
+                    {
                         if (weightedGraph.kruskalOutput == null)
                         {
                             output = weightedGraph.DoKruskalAlgorithm();
@@ -408,7 +410,7 @@ namespace GraphsClassProject
                         {
                             output = weightedGraph.kruskalOutput;
                         }
-                        
+
                         // draw minimum spanning graph edges in red
                         DrawRedLines(currentGraphShowing, output);
 
@@ -442,10 +444,10 @@ namespace GraphsClassProject
 
         private void DoTopological()
         {
-            string topologicalOutput = ""; 
+            string topologicalOutput = "";
             try
             {
-                Vertex[] output = new Vertex[0];
+                Vertex[] output = Array.Empty<Vertex>();
                 if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                 {
                     foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
@@ -460,6 +462,7 @@ namespace GraphsClassProject
                             {
                                 output = weightedDigraph.topologicalOutput;
                             }
+
                             break;
                         }
                     }
@@ -478,6 +481,7 @@ namespace GraphsClassProject
                             {
                                 output = digraph.topologicalOutput;
                             }
+
                             break;
                         }
                     }
@@ -589,7 +593,7 @@ namespace GraphsClassProject
                         }
                     }
                 }
-                
+
                 // Draw path one by one using red lines
                 DrawRedLines(currentGraphShowing, output);
 
@@ -693,7 +697,7 @@ namespace GraphsClassProject
 
                 pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
 
-                Point beginLocation = GetVertexLocation(beginning); 
+                Point beginLocation = GetVertexLocation(beginning);
                 Point neighborLocation = GetVertexLocation(ending);
                 graphics.DrawLine(pen, beginLocation, neighborLocation);
             }
@@ -706,8 +710,8 @@ namespace GraphsClassProject
             Vertex startingVertex;
             Vertex endingVertex;
 
-           for (int i = 0; i < input.Count - 1; i++)
-           { 
+            for (int i = 0; i < input.Count - 1; i++)
+            {
                 startingVertex = input[i];
                 endingVertex = input[i + 1];
 
@@ -718,7 +722,13 @@ namespace GraphsClassProject
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
 
                 System.Threading.Thread.Sleep(500);
-           }
+            }
+        }
+
+        private void ShowWeights(Object o, EventArgs e)
+        {
+            WeightsChart chart = new WeightsChart(currentGraphShowing);
+            chart.Show();
         }
     }
 }
