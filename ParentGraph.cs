@@ -28,12 +28,5 @@ namespace GraphsClassProject
             int weight = Vertices[vertexIndex].Weights[neighborIndex];
             return weight;
         }
-
-        internal int GetWeight(int initial, Vertex end)
-        {
-            int neighborIndex = Vertices[initial].Neighbors.IndexOf(end);
-            int weight = Vertices[initial].Weights[neighborIndex];
-            return weight;
-        }
     }
 }
