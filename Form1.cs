@@ -685,7 +685,7 @@ namespace GraphsClassProject
                     }
                 }
 
-                pen.Width = 2;
+                pen.Width = 2; 
 
                 Point beginLocation = GetVertexLocation(beginning);
                 Point neighborLocation = GetVertexLocation(ending);
