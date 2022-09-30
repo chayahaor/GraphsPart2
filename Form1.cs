@@ -67,9 +67,9 @@ namespace GraphsClassProject
             showGraph.Height += showGraph.Height;
             showGraph.Location = new Point(x, y);
             showGraph.Click += ShowWeights;
-            
+
             y += 100;
-            panelGraphButtons.Controls.Add(showGraph);    
+            panelGraphButtons.Controls.Add(showGraph);
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
                 Button button = new Button();
@@ -365,7 +365,7 @@ namespace GraphsClassProject
 
             return vertexLocation;
         }
-        
+
 
         private void Kruskal_Click(object sender, EventArgs e)
         {
@@ -716,8 +716,11 @@ namespace GraphsClassProject
 
         private void ShowWeights(Object o, EventArgs e)
         {
-            WeightsChart chart = new WeightsChart(currentGraphShowing);
-            chart.Show();
+            if (currentGraphShowing != null)
+            {
+                WeightsChart chart = new WeightsChart(currentGraphShowing);
+                chart.Show();
+            }
         }
     }
 }
