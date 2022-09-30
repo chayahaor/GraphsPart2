@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace GraphsClassProject
 {
     public class ParentGraph
     {
-        public int MaxWeight { get; set; } 
+        public int MaxWeight { get; set; }
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
 
         public GraphType Type { get; set; }
+
         public ParentGraph(String graphName)
         {
             this.GraphName = graphName;
@@ -18,11 +20,19 @@ namespace GraphsClassProject
 
             MaxWeight = 1;
         }
+
         internal int GetWeight(Vertex initial, Vertex terminal)
         {
             int vertexIndex = Vertices.IndexOf(initial);
             int neighborIndex = Vertices[vertexIndex].Neighbors.IndexOf(terminal);
             int weight = Vertices[vertexIndex].Weights[neighborIndex];
+            return weight;
+        }
+
+        internal int GetWeight(int initial, Vertex end)
+        {
+            int neighborIndex = Vertices[initial].Neighbors.IndexOf(end);
+            int weight = Vertices[initial].Weights[neighborIndex];
             return weight;
         }
     }
