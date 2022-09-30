@@ -256,7 +256,7 @@ namespace GraphsClassProject
                 Pen pen = new Pen(Color.Black);
                 Point location = GetLocation(nodeNumber, graph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X - 5, location.Y - 5, 10, 10);
-                
+
                 NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
@@ -367,22 +367,6 @@ namespace GraphsClassProject
 
             return vertexLocation;
         }
-
-<<<<<<< HEAD
-=======
-        private int GetPenWidth(ParentGraph graph, Vertex start, Vertex end)
-        {
-            //TODO: Change pen width to be a constant
-            int penWidth = graph.GetWeight(start, end);
-            if (graph.MaxWeight > 15)
-            {
-                penWidth /= 10;
-            }
-
-            //int penWidth = 2;
-            return penWidth;
-        }
->>>>>>> b490c68ae4d6c3003dc6293fb8d31c8d0dd007ef
 
         private void Kruskal_Click(object sender, EventArgs e)
         {
@@ -731,7 +715,6 @@ namespace GraphsClassProject
             }
         }
 
-<<<<<<< HEAD
         private void ShowWeights(Object o, EventArgs e)
         {
             if (currentGraphShowing != null)
@@ -739,11 +722,6 @@ namespace GraphsClassProject
                 WeightsChart chart = new WeightsChart(currentGraphShowing);
                 chart.Show();
             }
-=======
-        public void PopUpWeights()
-        {
-            //TODO: create window with table of weights
->>>>>>> b490c68ae4d6c3003dc6293fb8d31c8d0dd007ef
         }
     }
 }
