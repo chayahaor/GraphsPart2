@@ -287,7 +287,7 @@ namespace GraphsClassProject
                 {
                     if (currNode.Neighbors.Contains(neighbor))
                     {
-                        pen.Width = GetPenWidth(graph, graph.Vertices[nodeNumber], neighbor);
+                        pen.Width = 2;
                         pen.Color = Color.Black;
 
                         Point originalLocation = NodeCircleLocations[nodeNumber];
@@ -365,18 +365,7 @@ namespace GraphsClassProject
 
             return vertexLocation;
         }
-
-        private int GetPenWidth(ParentGraph graph, Vertex start, Vertex end)
-        {
-            int penWidth = graph.GetWeight(start, end);
-            if (graph.MaxWeight > 15)
-            {
-                penWidth /= 10;
-            }
-
-            return penWidth;
-        }
-
+        
 
         private void Kruskal_Click(object sender, EventArgs e)
         {
@@ -695,7 +684,7 @@ namespace GraphsClassProject
                     }
                 }
 
-                pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
+                pen.Width = 2;
 
                 Point beginLocation = GetVertexLocation(beginning);
                 Point neighborLocation = GetVertexLocation(ending);
@@ -715,7 +704,7 @@ namespace GraphsClassProject
                 startingVertex = input[i];
                 endingVertex = input[i + 1];
 
-                pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
+                pen.Width = 2;
 
                 Point startingPoint = GetVertexLocation(startingVertex);
                 Point neighborLocation = GetVertexLocation(endingVertex);
