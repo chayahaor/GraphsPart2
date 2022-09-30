@@ -47,7 +47,6 @@ namespace GraphsClassProject
             weightedGraphs = new List<WeightedGraph>();
 
             panelGraph.BackColor = Color.Gray;
-
             var server = ConfigurationManager.AppSettings["SERVER"];
             var database = ConfigurationManager.AppSettings["DATABASE"];
             GetData getData = new GetData(server, database);
@@ -257,6 +256,7 @@ namespace GraphsClassProject
                 Pen pen = new Pen(Color.Black);
                 Point location = GetLocation(nodeNumber, graph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X - 5, location.Y - 5, 10, 10);
+                
                 NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
@@ -308,12 +308,12 @@ namespace GraphsClassProject
 
         private Point GetLocation(int nodeNumber, int numNodes)
         {
+            //TODO: Move this to a SP in DB
             // MAX NUMBER OF NODES: 26 
             // MAX INNER NUMBER OF NODES: 10
 
             int xCoord;
             int yCoord;
-
             if (numNodes < 16 || nodeNumber < 16)
             {
                 int DISTANCE_FROM_CENTER = 200;
@@ -338,6 +338,7 @@ namespace GraphsClassProject
 
         private Point GetNewXAndY(Point location)
         {
+            //TODO: is this needed?
             int xCoord;
             int yCoord;
 
@@ -354,7 +355,8 @@ namespace GraphsClassProject
 
         private Point GetVertexLocation(Vertex neighbor)
         {
-            Point vertexLocation = new Point(CENTER, CENTER); // default location points to the center of the panel
+            // default location points to the center of the panel
+            Point vertexLocation = new Point(CENTER, CENTER);
             for (int labelIndex = 0; labelIndex < LabelNodes.Count; labelIndex++)
             {
                 if (LabelNodes[labelIndex].Text == neighbor.Name)
@@ -366,6 +368,21 @@ namespace GraphsClassProject
             return vertexLocation;
         }
 
+<<<<<<< HEAD
+=======
+        private int GetPenWidth(ParentGraph graph, Vertex start, Vertex end)
+        {
+            //TODO: Change pen width to be a constant
+            int penWidth = graph.GetWeight(start, end);
+            if (graph.MaxWeight > 15)
+            {
+                penWidth /= 10;
+            }
+
+            //int penWidth = 2;
+            return penWidth;
+        }
+>>>>>>> b490c68ae4d6c3003dc6293fb8d31c8d0dd007ef
 
         private void Kruskal_Click(object sender, EventArgs e)
         {
@@ -714,6 +731,7 @@ namespace GraphsClassProject
             }
         }
 
+<<<<<<< HEAD
         private void ShowWeights(Object o, EventArgs e)
         {
             if (currentGraphShowing != null)
@@ -721,6 +739,11 @@ namespace GraphsClassProject
                 WeightsChart chart = new WeightsChart(currentGraphShowing);
                 chart.Show();
             }
+=======
+        public void PopUpWeights()
+        {
+            //TODO: create window with table of weights
+>>>>>>> b490c68ae4d6c3003dc6293fb8d31c8d0dd007ef
         }
     }
 }
