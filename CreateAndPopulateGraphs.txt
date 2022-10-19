@@ -22,18 +22,10 @@ CREATE TABLE [dbo].[Nodes]
 (
 [Node_ID][int] IDENTITY(1,1) NOT NULL,
 [ShortName][varchar](50) NOT NULL,
+[X_Coord][DECIMAL] NOT NULL,
+[Y_Coord][DECIMAL] NOT NULL,
 [Info_ID] [int] NULL FOREIGN KEY REFERENCES [Info](Info_ID)
 CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED ([Node_ID]),
-)
-GO
-------------------------------------------------------------------------------
-/****** Object:  Table [dbo].[GraphType] ******/
-CREATE TABLE [dbo].[GraphTypes]
-(
-[GraphType_ID][int]IDENTITY(1,1) NOT NULL,
-[Name][varchar](100) NOT NULL,
-[ShortName][varchar](50) NULL,
-CONSTRAINT [PK_GraphType] PRIMARY KEY CLUSTERED ([GraphType_ID]),
 )
 GO
 ------------------------------------------------------------------------------
@@ -42,7 +34,8 @@ CREATE TABLE [dbo].[Graphs]
 (
 [Graph_ID][int]IDENTITY(1,1) NOT NULL,
 [Name][varchar](50) NOT NULL UNIQUE,
-[GraphType_ID] [int] NULL FOREIGN KEY REFERENCES [GraphTypes](GraphType_ID),
+[Weighted][bit] NOT NULL,
+[Directed][bit] NOT NULL,
 CONSTRAINT [PK_Graphs] PRIMARY KEY CLUSTERED ( [Graph_ID] ),
 )
 GO
