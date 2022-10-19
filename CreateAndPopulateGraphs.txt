@@ -81,19 +81,12 @@ INSERT INTO nodes (shortname)
   ('Y'),
   ('Z');
 
-INSERT INTO graphtypes (NAME,
-shortname)
-  VALUES ('Weighted_Undirected', 'W_UD'),
-  ('Unweighted_Directed', 'UW_D'),
-  ('Weighted_Directed', 'W_D'),
-  ('Unweighted_Undirected', 'UW_UD')
-
 INSERT INTO graphs (NAME,
-graphtype_id)
-  VALUES ('Grp_A', 1),
-  ('Grp_B', 2),
-  ('Grp_C', 3),
-  ('Grp_D', 4);
+Weighted, Directed)
+  VALUES ('Grp_A', 1, 0),
+  ('Grp_B', 0, 1),
+  ('Grp_C', 1, 1),
+  ('Grp_D', 0, 0);
 
 INSERT INTO edges (graph_id,
 initialnode_id,
