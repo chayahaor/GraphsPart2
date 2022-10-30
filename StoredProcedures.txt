@@ -1,10 +1,8 @@
 ---returns graph name and graph type
 CREATE PROC spGetGraphNames
 AS
-SELECT graphs.Name AS Name, GraphTypes.Name AS Type
+SELECT graphs.Name AS Name, graphs.Directed AS Directed, graphs.Weighted AS Weighted
 FROM Graphs
-JOIN GraphTypes 
-ON Graphs.GraphType_ID = GraphTypes.GraphType_ID
 
 
 --exec spGetGraphNames
