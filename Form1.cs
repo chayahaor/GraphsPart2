@@ -276,6 +276,7 @@ namespace GraphsClassProject
             CreateGraphics();
             panelNodeSelection.Visible = false;
 
+
             var output = newGraph.KruskalAlgorithm();
             DrawRedLines(output);
         }
@@ -352,7 +353,6 @@ namespace GraphsClassProject
             CreateGraphics();
             ShowPanelNodeSelection(false);
             Vertex[,] output = newGraph.PrimAlgorithm(selectedVertexA);
-
             // draw minimum spanning graph edges in red
             DrawRedLines(output);
 
