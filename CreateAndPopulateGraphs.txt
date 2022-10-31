@@ -22,27 +22,21 @@ CREATE TABLE [dbo].[Nodes]
 (
 [Node_ID][int] IDENTITY(1,1) NOT NULL,
 [ShortName][varchar](50) NOT NULL,
+[X_Coord][DECIMAL] NULL,
+[Y_Coord][DECIMAL] NULL,
 [Info_ID] [int] NULL FOREIGN KEY REFERENCES [Info](Info_ID)
 CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED ([Node_ID]),
 )
 GO
 ------------------------------------------------------------------------------
-/****** Object:  Table [dbo].[GraphType] ******/
-CREATE TABLE [dbo].[GraphTypes]
-(
-[GraphType_ID][int]IDENTITY(1,1) NOT NULL,
-[Name][varchar](100) NOT NULL,
-[ShortName][varchar](50) NULL,
-CONSTRAINT [PK_GraphType] PRIMARY KEY CLUSTERED ([GraphType_ID]),
-)
-GO
-------------------------------------------------------------------------------
+
 /****** Object:  Table [dbo].[Graphs]*/
 CREATE TABLE [dbo].[Graphs]
 (
 [Graph_ID][int]IDENTITY(1,1) NOT NULL,
 [Name][varchar](50) NOT NULL UNIQUE,
-[GraphType_ID] [int] NULL FOREIGN KEY REFERENCES [GraphTypes](GraphType_ID),
+[Weighted][bit] NOT NULL,
+[Directed][bit] NOT NULL,
 CONSTRAINT [PK_Graphs] PRIMARY KEY CLUSTERED ( [Graph_ID] ),
 )
 GO
@@ -88,19 +82,12 @@ INSERT INTO nodes (shortname)
   ('Y'),
   ('Z');
 
-INSERT INTO graphtypes (NAME,
-shortname)
-  VALUES ('Weighted_Undirected', 'W_UD'),
-  ('Unweighted_Directed', 'UW_D'),
-  ('Weighted_Directed', 'W_D'),
-  ('Unweighted_Undirected', 'UW_UD')
-
 INSERT INTO graphs (NAME,
-graphtype_id)
-  VALUES ('Grp_A', 1),
-  ('Grp_B', 2),
-  ('Grp_C', 3),
-  ('Grp_D', 4);
+Weighted, Directed)
+  VALUES ('Grp_A', 1, 0),
+  ('Grp_B', 0, 1),
+  ('Grp_C', 1, 1),
+  ('Grp_D', 0, 0);
 
 INSERT INTO edges (graph_id,
 initialnode_id,

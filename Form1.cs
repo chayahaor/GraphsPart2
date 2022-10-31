@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -25,7 +26,7 @@ namespace GraphsClassProject
 
         // the center of the panelGraph panel (size 600 by 600)
         private readonly int CENTER = 300;
-
+        
         // list of all labels representing nodes specific to each selected graph
         private List<Label> LabelNodes { get; set; }
 
@@ -42,7 +43,7 @@ namespace GraphsClassProject
         public Form1()
         {
             InitializeComponent();
-
+            
             GraphNameButtons = new List<Button>();
 
             panelGraph.BackColor = Color.Gray;
