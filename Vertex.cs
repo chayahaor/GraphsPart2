@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    class Vertex
+    public class Vertex
     {
         public String Name { get; set; }
         public List<Vertex> Neighbors = new List<Vertex>();

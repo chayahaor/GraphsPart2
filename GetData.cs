@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Data;
@@ -8,8 +9,8 @@ namespace GraphsClassProject
 {
     public class GetData
     {
-        public Dictionary<String, String> GraphTypes { get; set; } 
-
+        //public Dictionary<String, String> GraphTypes { get; set; } 
+        public ArrayList GraphNames { get; set; }
         public GetData(String server, String database)
         {
             LoadVerticesFromSQL(server, database);
@@ -18,8 +19,8 @@ namespace GraphsClassProject
         private void LoadVerticesFromSQL(String server, String database)
         {
             // table contains graphName, graphType
-            GraphTypes = new Dictionary<string, string>();
-
+            //GraphTypes = new Dictionary<string, string>();
+            GraphNames = new ArrayList();
             SqlConnection sqlCon = null;
             try
             {
@@ -39,8 +40,12 @@ namespace GraphsClassProject
                 for (int row = 0; row < nrGraphs; ++row)
                 {
                     String name = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[0];
-                    String type = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
-                    GraphTypes.Add(name, type);
+                    bool weight = (bool)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
+                    bool direct = (bool)dataset1.Tables["Graphs"].Rows[row].ItemArray[2];
+
+                    //String type = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
+                    GraphNames.Add(name);
+                    //TODO: edit graphNames to include weight and direct
                 }    
             }
             catch (Exception ex)
