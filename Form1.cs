@@ -18,11 +18,8 @@ namespace GraphsClassProject
         // contains all graph names and types (graph names must be unique in the database)
         private Dictionary<String, String> graphNamesAndTypes;
 
-        // List of all the buttons containing graph names
-        private List<Button> GraphNameButtons { get; set; }
-
         // the center of the panelGraph panel (size 600 by 600)
-        private readonly int CENTER = 300;
+        private const int CENTER = 300;
 
         // the current graph on display in the panelGraph panel 
         private ParentGraph currentGraphShowing;
@@ -49,8 +46,6 @@ namespace GraphsClassProject
             weightedDigraphs = new List<WeightedDigraph>();
             weightedGraphs = new List<WeightedGraph>();
 
-            GraphNameButtons = new List<Button>();
-
             panelGraph.BackColor = Color.Gray;
             var server = ConfigurationManager.AppSettings["SERVER"];
             var database = ConfigurationManager.AppSettings["DATABASE"];
@@ -65,15 +60,23 @@ namespace GraphsClassProject
         {
             int x = 30;
             int y = 0;
+            Button showGraph = new Button();
+            showGraph.Name = "btnShowGraph";
+            showGraph.Text = "Show Weights";
+            showGraph.Height += showGraph.Height;
+            showGraph.Location = new Point(x, y);
+            showGraph.Click += ShowWeights;
+
+            y += 100;
+            panelGraphButtons.Controls.Add(showGraph);
             foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
             {
                 Button button = new Button();
-                button.Name =
-                    pair.Key; // All button names are unique because in the SQL code, graph names are unique
+                // All button names are unique because in the SQL code, graph names are unique
+                button.Name = pair.Key;
                 button.Text = pair.Key;
                 button.Click += btn_Click;
                 button.Location = new Point(x, y);
-                GraphNameButtons.Add(button);
 
                 y += 100;
 
@@ -264,7 +267,7 @@ namespace GraphsClassProject
                 Pen pen = new Pen(Color.Black);
                 Point location = GetLocation(nodeNumber, graph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X - 5, location.Y - 5, 10, 10);
-                
+
                 NodeCircleLocations.Add(location);
 
                 label.Location = GetNewXAndY(location);
@@ -295,7 +298,7 @@ namespace GraphsClassProject
                 {
                     if (currNode.Neighbors.Contains(neighbor))
                     {
-                        pen.Width = GetPenWidth(graph, graph.Vertices[nodeNumber], neighbor);
+                        pen.Width = 2;
                         pen.Color = Color.Black;
 
                         Point originalLocation = NodeCircleLocations[nodeNumber];
@@ -376,19 +379,6 @@ namespace GraphsClassProject
             return vertexLocation;
         }
 
-        private int GetPenWidth(ParentGraph graph, Vertex start, Vertex end)
-        {
-            //TODO: Change pen width to be a constant
-            int penWidth = graph.GetWeight(start, end);
-            if (graph.MaxWeight > 15)
-            {
-                penWidth /= 10;
-            }
-
-            //int penWidth = 2;
-            return penWidth;
-        }
-
         private void Kruskal_Click(object sender, EventArgs e)
         {
             if (currentGraphShowing == null)
@@ -458,7 +448,7 @@ namespace GraphsClassProject
             string topologicalOutput = "";
             try
             {
-                Vertex[] output = new Vertex[0];
+                Vertex[] output = Array.Empty<Vertex>();
                 if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                 {
                     foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
@@ -706,7 +696,7 @@ namespace GraphsClassProject
                     }
                 }
 
-                pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
+                pen.Width = 2; 
 
                 Point beginLocation = GetVertexLocation(beginning);
                 Point neighborLocation = GetVertexLocation(ending);
@@ -726,13 +716,21 @@ namespace GraphsClassProject
                 startingVertex = input[i];
                 endingVertex = input[i + 1];
 
-                pen.Width = GetPenWidth(graph, startingVertex, endingVertex);
+                pen.Width = 2;
 
                 Point startingPoint = GetVertexLocation(startingVertex);
                 Point neighborLocation = GetVertexLocation(endingVertex);
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
 
                 System.Threading.Thread.Sleep(500);
+            }      
+
+        private void ShowWeights(Object o, EventArgs e)
+        {
+            if (currentGraphShowing != null)
+            {
+                WeightsChart chart = new WeightsChart(currentGraphShowing);
+                chart.Show();
             }
         }
     }
