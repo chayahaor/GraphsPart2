@@ -13,7 +13,7 @@ namespace GraphsClassProject
         //DB Connection
         private String server;
         private String database;
-        
+
         // One graph that contains all of its information
         private GraphNew newGraph;
 
@@ -22,13 +22,13 @@ namespace GraphsClassProject
         private ArrayList informationGraphs;
 
         private GraphInfo associatedInfo;
-        
+
         // List of all the buttons containing graph names
         private List<Button> GraphNameButtons { get; }
 
         // the center of the panelGraph panel (size 600 by 600)
         private readonly int CENTER = 300;
-        
+
         // list of all labels representing nodes specific to each selected graph
         private List<Label> LabelNodes { get; set; }
 
@@ -45,13 +45,11 @@ namespace GraphsClassProject
         public Form1()
         {
             InitializeComponent();
-            
             GraphNameButtons = new List<Button>();
-
             panelGraph.BackColor = Color.Gray;
             server = ConfigurationManager.AppSettings["SERVER"];
             database = ConfigurationManager.AppSettings["DATABASE"];
-            
+
             GetData getData = new GetData(server, database);
             informationGraphs = getData.GraphInfos;
 
@@ -62,6 +60,7 @@ namespace GraphsClassProject
         {
             int x = 30;
             int y = 0;
+
             foreach (GraphInfo info in informationGraphs)
             {
                 Button button = new Button();
@@ -69,12 +68,19 @@ namespace GraphsClassProject
                 button.Text = info.name;
                 button.Click += btn_Click;
                 button.Location = new Point(x, y);
-                GraphNameButtons.Add(button);
-
                 y += 100;
-
                 panelGraphButtons.Controls.Add(button);
             }
+
+            Button showGraph = new Button();
+            showGraph.Name = "btnShowGraph";
+            showGraph.Text = "Show Weights";
+            showGraph.Height += showGraph.Height;
+            showGraph.Location = new Point(x, y);
+            showGraph.Click += ShowWeights;
+
+            y += 100;
+            panelGraphButtons.Controls.Add(showGraph);
         }
 
 
@@ -91,7 +97,7 @@ namespace GraphsClassProject
         private void FillPanel()
         {
             ResetPanels();
-            
+
             CreateLabelType();
 
             CreateLabelNodes();
@@ -125,7 +131,7 @@ namespace GraphsClassProject
             labelGraphType.Location = new Point(15, 20);
 
             String type = "";
-            
+
             //TODO: Replace with based on bool values of graph name and enable/disable buttons accordingly
             //TODO: Why does Graph A not show label correctly?
             foreach (GraphInfo info in informationGraphs)
@@ -153,6 +159,7 @@ namespace GraphsClassProject
             {
                 type += "Graph";
             }
+
             //TODO: confirm types done correctly
             switch (type)
             {
@@ -181,8 +188,8 @@ namespace GraphsClassProject
                     Kruskal.Enabled = false;
                     break;
             }
-            
-            
+
+
             labelGraphType.Text = type;
             labelGraphType.Refresh();
             panelGraph.Controls.Add(labelGraphType);
@@ -249,14 +256,12 @@ namespace GraphsClassProject
             if (associatedInfo.direct)
             {
                 AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-                pen.CustomEndCap = adjustableArrowCap;    
+                pen.CustomEndCap = adjustableArrowCap;
             }
             else
             {
                 pen.EndCap = LineCap.Round;
             }
-
-            
         }
 
         private Point GetLocation(int nodeNumber, int numNodes)
@@ -344,7 +349,7 @@ namespace GraphsClassProject
             /*string topologicalOutput = "";
             try
             {
-                Vertex[] output = new Vertex[0];
+                Vertex[] output = Array.Empty<Vertex>();
                 if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
                 {
                     foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
@@ -435,7 +440,7 @@ namespace GraphsClassProject
             ShowPanelNodeSelection(true);
             List<Vertex> output = new List<Vertex>();
             double shortestDist = 0.0;
-            
+
             newGraph.DijkstraAlgorithm();
             DrawRedLines(output);
             MessageBox.Show("Shortest distance: " + shortestDist);
@@ -611,10 +616,18 @@ namespace GraphsClassProject
             }
         }
 
+        private void ShowWeights(Object o, EventArgs e)
+        {
+            if (newGraph != null)
+            {
+                WeightsChart chart = new WeightsChart(newGraph);
+                chart.Show();
+            }
+        }
+
         public void PopUpWeights()
         {
             //TODO: create window with table of weights
         }
-
     }
 }
