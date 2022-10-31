@@ -27,5 +27,61 @@ ON ter.Node_ID = Edges.TerminalNode_ID
 WHERE Graphs.name = @GraphName
 Order by ini.Node_ID
 
-exec spGetEdges @GraphName = 'Grp_A'
+---exec spGetEdges @GraphName = 'Grp_A'
+
+
+---calculates and populates x, y coordinates in database
+CREATE PROC spCalculateCoordinates @Graph_ID int
+AS
+
+DECLARE @Cursor cursor;
+SET @Cursor = CURSOR 
+FOR select * from Nodes
+where Node_ID IN
+	(select distinct Node_ID
+	from Nodes join Edges 
+	on Nodes.Node_ID = Edges.InitialNode_ID
+	join Graphs 
+	on Graphs.Graph_ID = Edges.Graph_ID
+	WHERE Graphs.Graph_ID = @Graph_ID)
+---FOR UPDATE OF X_Coord, Y_Coord
+
+DECLARE @rows int;
+SET @rows = 3;
+
+DECLARE @columns int;
+DECLARE @currRow int;
+DECLARE @currColumn int;
+SET @currColumn = 1;
+SET @currRow = 1;
+SET @columns = @rows - 1;
+
+
+
+OPEN @Cursor
+FETCH NEXT from @Cursor
+---WHILE @@FETCH_STATUS = 0
+
+	while @currRow <= @rows
+		BEGIN
+			while @currColumn <= @columns
+				BEGIN
+					UPDATE Nodes
+					SET X_Coord = round((1/@rows) * (@currRow - 1) , 2), Y_Coord = round((1/@columns) * (@currColumn - 1) , 2)
+					WHERE CURRENT OF @Cursor
+					FETCH next from @Cursor
+					SET @currColumn = @currColumn + 1
+				END
+			SET @currRow = @currRow + 1
+		END
+CLOSE @Cursor
+		 
+
+
+
+
+
+
+
+
 
