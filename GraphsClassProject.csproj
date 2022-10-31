@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Graph.cs" />
     <Compile Include="AlgorithmType.cs" />
+    <Compile Include="GraphInfo.cs" />
     <Compile Include="GraphNew.cs" />
     <Compile Include="GraphType.cs" />
     <Compile Include="Kruskal.cs" />

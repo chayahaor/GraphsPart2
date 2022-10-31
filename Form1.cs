@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -19,8 +18,11 @@ namespace GraphsClassProject
         private GraphNew newGraph;
 
         // contains all graph names (graph names must be unique in the database)
-        private ArrayList graphNames;
+        //private ArrayList graphNames;
+        private ArrayList informationGraphs;
 
+        private GraphInfo associatedInfo;
+        
         // List of all the buttons containing graph names
         private List<Button> GraphNameButtons { get; }
 
@@ -51,7 +53,7 @@ namespace GraphsClassProject
             database = ConfigurationManager.AppSettings["DATABASE"];
             
             GetData getData = new GetData(server, database);
-            graphNames = getData.GraphNames;
+            informationGraphs = getData.GraphInfos;
 
             SetUpGraphNameButtons();
         }
@@ -60,11 +62,11 @@ namespace GraphsClassProject
         {
             int x = 30;
             int y = 0;
-            foreach (String name in graphNames)
+            foreach (GraphInfo info in informationGraphs)
             {
                 Button button = new Button();
-                button.Name = name; // All button names are unique because in the SQL code, graph names are unique
-                button.Text = name;
+                button.Name = info.name; // All button names are unique because in the SQL code, graph names are unique
+                button.Text = info.name;
                 button.Click += btn_Click;
                 button.Location = new Point(x, y);
                 GraphNameButtons.Add(button);
@@ -123,25 +125,64 @@ namespace GraphsClassProject
             labelGraphType.Location = new Point(15, 20);
 
             String type = "";
-            /*
-            switch (graph.Type)
+            
+            //TODO: Replace with based on bool values of graph name and enable/disable buttons accordingly
+            //TODO: Why does Graph A not show label correctly?
+            foreach (GraphInfo info in informationGraphs)
             {
-                case GraphType.WEIGHTED_DIGRAPH:
-                    type = "Weighted Digraph";
+                if (info.name == newGraph.GraphName)
+                {
+                    associatedInfo = info;
+                }
+            }
+
+            if (associatedInfo.weight)
+            {
+                type += "Weighted ";
+            }
+            else
+            {
+                type += "Unweighted ";
+            }
+
+            if (associatedInfo.direct)
+            {
+                type += "Digraph";
+            }
+            else
+            {
+                type += "Graph";
+            }
+            //TODO: confirm types done correctly
+            switch (type)
+            {
+                case "Weighted Digraph":
+                    Topological.Enabled = true;
+                    Dijkstra.Enabled = true;
+                    Prim.Enabled = false;
+                    Kruskal.Enabled = false;
                     break;
-                case GraphType.DIGRAPH:
-                    type = "Digraph";
+                case "Weighted Graph":
+                    Dijkstra.Enabled = true;
+                    Prim.Enabled = true;
+                    Kruskal.Enabled = true;
+                    Topological.Enabled = false;
                     break;
-                case GraphType.WEIGHTED_GRAPH:
-                    type = "Weighted Graph";
+                case "Unweighted Digraph":
+                    Topological.Enabled = true;
+                    Dijkstra.Enabled = false;
+                    Prim.Enabled = false;
+                    Kruskal.Enabled = false;
                     break;
-                case GraphType.GRAPH:
-                    type = "Graph";
+                case "Unweighted Graph":
+                    Topological.Enabled = false;
+                    Dijkstra.Enabled = false;
+                    Prim.Enabled = false;
+                    Kruskal.Enabled = false;
                     break;
             }
-            */ //TODO: Replace with based on bool values of graph name and enable/disable buttons accordingly
-
-
+            
+            
             labelGraphType.Text = type;
             labelGraphType.Refresh();
             panelGraph.Controls.Add(labelGraphType);
@@ -205,8 +246,17 @@ namespace GraphsClassProject
         {
             graphics = panelGraph.CreateGraphics();
             pen = new Pen(penColor);
-            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-            pen.CustomEndCap = adjustableArrowCap;
+            if (associatedInfo.direct)
+            {
+                AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
+                pen.CustomEndCap = adjustableArrowCap;    
+            }
+            else
+            {
+                pen.EndCap = LineCap.Round;
+            }
+
+            
         }
 
         private Point GetLocation(int nodeNumber, int numNodes)
