@@ -49,7 +49,7 @@
             this.panelGraphButtons.Location = new System.Drawing.Point(2008, 34);
             this.panelGraphButtons.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.panelGraphButtons.Name = "panelGraphButtons";
-            this.panelGraphButtons.Size = new System.Drawing.Size(507, 939);
+            this.panelGraphButtons.Size = new System.Drawing.Size(507, 1035);
             this.panelGraphButtons.TabIndex = 0;
             // 
             // Kruskal

@@ -14,11 +14,10 @@ namespace GraphsClassProject
         private String server;
         private String database;
 
-        // One graph that contains all of its information
+        // Graph Showing
         private GraphNew newGraph;
 
         // contains all graph names (graph names must be unique in the database)
-        //private ArrayList graphNames;
         private ArrayList informationGraphs;
 
         private GraphInfo associatedInfo;
@@ -40,7 +39,7 @@ namespace GraphsClassProject
         private Vertex selectedVertexB;
 
         // the algorithm type of the current algorithm selected
-        private AlgorithmType? algorithmType = AlgorithmType.DIJKSTRA;
+        //private AlgorithmType? algorithmType = AlgorithmType.DIJKSTRA;
 
         public Form1()
         {
@@ -51,7 +50,7 @@ namespace GraphsClassProject
             database = ConfigurationManager.AppSettings["DATABASE"];
 
             GetData getData = new GetData(server, database);
-            informationGraphs = getData.GraphInfos;
+            informationGraphs = getData.AssociatedInfo;
 
             SetUpGraphNameButtons();
         }
@@ -78,8 +77,7 @@ namespace GraphsClassProject
             showGraph.Height += showGraph.Height;
             showGraph.Location = new Point(x, y);
             showGraph.Click += ShowWeights;
-
-            y += 100;
+            
             panelGraphButtons.Controls.Add(showGraph);
         }
 
@@ -97,11 +95,8 @@ namespace GraphsClassProject
         private void FillPanel()
         {
             ResetPanels();
-
             CreateLabelType();
-
             CreateLabelNodes();
-
             CreateGraphics();
         }
 
@@ -188,8 +183,7 @@ namespace GraphsClassProject
                     Kruskal.Enabled = false;
                     break;
             }
-
-
+            
             labelGraphType.Text = type;
             labelGraphType.Refresh();
             panelGraph.Controls.Add(labelGraphType);
@@ -538,10 +532,10 @@ namespace GraphsClassProject
             if (destDropDown.SelectedIndex == -1)
             {
                 selectedVertexB = newGraph.Vertices[0];
-                if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
+                /*if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
                 {
                     MessageBox.Show("Default vertex selected");
-                }
+                }*/
             }
             else
             {
@@ -564,8 +558,9 @@ namespace GraphsClassProject
         {
             SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
 
-            Vertex startingVertex = new Vertex("start");
+            /*Vertex startingVertex = new Vertex("start");
             Vertex endingVertex = new Vertex("end");
+            */
 
             for (int index = 0; index < input.GetLength(0); index++)
             {
@@ -573,7 +568,7 @@ namespace GraphsClassProject
 
                 Vertex ending = input[index, 1];
 
-                foreach (var vertex in newGraph.Vertices)
+                /*foreach (var vertex in newGraph.Vertices)
                 {
                     if (vertex.Name.Equals(beginning.Name))
                     {
@@ -585,6 +580,7 @@ namespace GraphsClassProject
                         endingVertex = vertex;
                     }
                 }
+                */
 
                 pen.Width = 2;
 
@@ -598,13 +594,10 @@ namespace GraphsClassProject
         {
             SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
 
-            Vertex startingVertex;
-            Vertex endingVertex;
-
             for (int i = 0; i < input.Count - 1; i++)
             {
-                startingVertex = input[i];
-                endingVertex = input[i + 1];
+                var startingVertex = input[i];
+                var endingVertex = input[i + 1];
 
                 pen.Width = 2;
 
