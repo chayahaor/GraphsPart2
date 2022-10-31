@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
@@ -30,7 +28,7 @@ namespace GraphsClassProject
                 if (!foundVertices.Contains(neighbor))
                 {
                     prims.Add(new PrimStruct(neighbor,
-                        graph.GetWeight(start, neighbor),
+                        graph.GetEdgeWeight(start, neighbor),
                         start));
                 }
             }
@@ -56,16 +54,16 @@ namespace GraphsClassProject
                         PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(neighbor));
                         if (neighborPrim.vertex != null)
                         {
-                            if (graph.GetWeight(currentPrim.vertex, neighbor) < neighborPrim.Cost)
+                            if (graph.GetEdgeWeight(currentPrim.vertex, neighbor) < neighborPrim.Cost)
                             {
-                                neighborPrim.Cost = graph.GetWeight(currentPrim.vertex, neighbor);
+                                neighborPrim.Cost = graph.GetEdgeWeight(currentPrim.vertex, neighbor);
                                 neighborPrim.Parent = currentPrim.vertex;
                             }
                         }
                         else
                         {
                             prims.Add(new PrimStruct(neighbor,
-                            graph.GetWeight(currentPrim.vertex, neighbor),
+                            graph.GetEdgeWeight(currentPrim.vertex, neighbor),
                             currentPrim.vertex));
                         }
                     }
@@ -78,7 +76,7 @@ namespace GraphsClassProject
 
         struct PrimStruct
         {
-            public PrimStruct(Vertex vertex, int cost, Vertex parent)
+            public PrimStruct(Vertex vertex, double cost, Vertex parent)
             {
                 this.vertex = vertex;
                 this.Cost = cost;
@@ -86,7 +84,7 @@ namespace GraphsClassProject
             }
 
             internal Vertex vertex;
-            internal int Cost { get; set; }
+            internal double Cost { get; set; }
             internal Vertex Parent { get; set; }
         }
     }

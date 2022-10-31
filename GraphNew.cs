@@ -7,7 +7,7 @@ namespace GraphsClassProject
 {
     public class GraphNew
     {
-        public int MaxWeight { get; set; }
+        //public int MaxWeight { get; set; }
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
 
@@ -20,7 +20,7 @@ namespace GraphsClassProject
             this.server = server;
             this.database = database;
             Vertices = new List<Vertex>();
-            MaxWeight = 1;
+            //MaxWeight = 1;
             LoadGraph(graphName);
         }
         
@@ -96,11 +96,11 @@ namespace GraphsClassProject
         }
 
         
-        internal int GetWeight(Vertex initial, Vertex terminal)
+        internal double GetEdgeWeight(Vertex initial, Vertex terminal)
         {
             int vertexIndex = Vertices.IndexOf(initial);
             int neighborIndex = Vertices[vertexIndex].Neighbors.IndexOf(terminal);
-            int weight = Vertices[vertexIndex].Weights[neighborIndex];
+            double weight = Vertices[vertexIndex].Weights[neighborIndex];
             return weight;
         }
         
