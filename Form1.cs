@@ -132,7 +132,12 @@ namespace GraphsClassProject
         private void btn_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-
+            
+            Prim.Enabled = true;
+            Dijkstra.Enabled = true;
+            Topological.Enabled = true;
+            Kruskal.Enabled = true;
+            
             switch (graphNamesAndTypes[button.Name])
             {
                 case "Weighted_Directed":
@@ -158,6 +163,7 @@ namespace GraphsClassProject
                         }
                     }
 
+                    Dijkstra.Enabled = false;
                     break;
                 case "Weighted_Undirected":
                     foreach (WeightedGraph weightedGraph in weightedGraphs)
@@ -170,6 +176,9 @@ namespace GraphsClassProject
                         }
                     }
 
+                    Prim.Enabled = false;
+                    Topological.Enabled = false;
+                    Kruskal.Enabled = false;
                     break;
                 case "Unweighted_Undirected":
                     foreach (Graph graph in graphs)
@@ -182,6 +191,8 @@ namespace GraphsClassProject
                         }
                     }
 
+                    Dijkstra.Enabled = false;
+                    Topological.Enabled = false;
                     break;
             }
         }
@@ -374,10 +385,10 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
+            /*else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
             {
                 MessageBox.Show("Kruskal's Algorithm is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -416,11 +427,11 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH ||
+            /*else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH ||
                      currentGraphShowing.Type == GraphType.GRAPH)
             {
                 MessageBox.Show("Topological Sort is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -496,10 +507,10 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
+            /*else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
             {
                 MessageBox.Show("Prim's Algorithm is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -534,10 +545,10 @@ namespace GraphsClassProject
             {
                 MessageBox.Show("There is no graph showing yet.");
             }
-            else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
+            /*else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
             {
                 MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
-            }
+            }*/
             else
             {
                 CreateGraphics(currentGraphShowing);
@@ -712,8 +723,7 @@ namespace GraphsClassProject
                 graphics.DrawLine(pen, startingPoint, neighborLocation);
 
                 System.Threading.Thread.Sleep(500);
-            }
-        }
+            }      
 
         private void ShowWeights(Object o, EventArgs e)
         {
