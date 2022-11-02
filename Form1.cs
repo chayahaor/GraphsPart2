@@ -124,11 +124,10 @@ namespace GraphsClassProject
         {
             Label labelGraphType = new Label();
             labelGraphType.Location = new Point(15, 20);
-
+            Size size = new Size(300, 20);
+            labelGraphType.Size = size;
             String type = "";
 
-            //TODO: Replace with based on bool values of graph name and enable/disable buttons accordingly
-            //TODO: Why does Graph A not show label correctly?
             foreach (GraphInfo info in informationGraphs)
             {
                 if (info.name == newGraph.GraphName)
@@ -159,28 +158,28 @@ namespace GraphsClassProject
             switch (type)
             {
                 case "Weighted Digraph":
-                    Topological.Enabled = true;
                     Dijkstra.Enabled = true;
-                    Prim.Enabled = false;
                     Kruskal.Enabled = false;
+                    Topological.Enabled = true;
+                    Prim.Enabled = false;
                     break;
                 case "Weighted Graph":
                     Dijkstra.Enabled = true;
-                    Prim.Enabled = true;
                     Kruskal.Enabled = true;
                     Topological.Enabled = false;
+                    Prim.Enabled = true;
                     break;
                 case "Unweighted Digraph":
-                    Topological.Enabled = true;
                     Dijkstra.Enabled = false;
-                    Prim.Enabled = false;
                     Kruskal.Enabled = false;
+                    Topological.Enabled = true;
+                    Prim.Enabled = false;
                     break;
                 case "Unweighted Graph":
-                    Topological.Enabled = false;
                     Dijkstra.Enabled = false;
-                    Prim.Enabled = false;
                     Kruskal.Enabled = false;
+                    Topological.Enabled = false;
+                    Prim.Enabled = false;
                     break;
             }
             
@@ -337,66 +336,7 @@ namespace GraphsClassProject
             newGraph.DoTopological();
         }
 
-        //TODO: delete/move to GraphNew
-        private void DoTopological()
-        {
-            /*string topologicalOutput = "";
-            try
-            {
-                Vertex[] output = Array.Empty<Vertex>();
-                if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
-                {
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
-                    {
-                        if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
-                        {
-                            if (weightedDigraph.topologicalOutput == null)
-                            {
-                                output = weightedDigraph.DoTopologicalSort();
-                            }
-                            else
-                            {
-                                output = weightedDigraph.topologicalOutput;
-                            }
-
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (Digraph digraph in digraphs)
-                    {
-                        if (digraph.GraphName == currentGraphShowing.GraphName)
-                        {
-                            if (digraph.topologicalOutput == null)
-                            {
-                                output = digraph.DoTopologicalSort();
-                            }
-                            else
-                            {
-                                output = digraph.topologicalOutput;
-                            }
-
-                            break;
-                        }
-                    }
-                }
-
-                foreach (Vertex vertex in output)
-                {
-                    topologicalOutput += vertex.Name + " ";
-                }
-
-                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" +
-                                topologicalOutput);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }*/
-        }
-
+        
         private void Prim_Click(object sender, EventArgs e)
         {
             CreateGraphics();
@@ -409,24 +349,6 @@ namespace GraphsClassProject
             ResetNodeSelectionPanel();
         }
 
-        //TODO: delete/move to GraphNew
-        private void DoPrim()
-        {
-            /*foreach (WeightedGraph weightedGraph in weightedGraphs)
-            {
-                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                {
-                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
-
-                    // draw minimum spanning graph edges in red
-                    DrawRedLines(currentGraphShowing, output);
-
-                    break;
-                }
-            }
-
-            ResetNodeSelectionPanel();*/
-        }
 
         private void Dijkstra_Click(object sender, EventArgs e)
         {
@@ -441,56 +363,7 @@ namespace GraphsClassProject
             ResetNodeSelectionPanel();
         }
 
-        //delete/move to GraphNew
-        private void DoDijkstra()
-        {
-            /*List<Vertex> output = new List<Vertex>();
-            double shortestDist = 0.0;
-
-            try
-            {
-                if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
-                {
-                    foreach (WeightedGraph weightedGraph in weightedGraphs)
-                    {
-                        if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                        {
-                            output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-
-                            shortestDist = weightedGraph.GetDijkstraShortestDistance();
-
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
-                    {
-                        if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
-                        {
-                            output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-
-                            shortestDist = weightedDigraph.GetDijkstraShortestDistance();
-
-                            break;
-                        }
-                    }
-                }
-
-                // Draw path one by one using red lines
-                DrawRedLines(currentGraphShowing, output);
-
-                MessageBox.Show("Shortest distance: " + shortestDist);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            ResetNodeSelectionPanel();*/
-        }
-
+     
         private void ShowPanelNodeSelection(bool isDestDropDownEnabled)
         {
             panelNodeSelection.Visible = true;
@@ -565,7 +438,6 @@ namespace GraphsClassProject
             for (int index = 0; index < input.GetLength(0); index++)
             {
                 Vertex beginning = input[index, 0];
-
                 Vertex ending = input[index, 1];
 
                 /*foreach (var vertex in newGraph.Vertices)
@@ -617,10 +489,136 @@ namespace GraphsClassProject
                 chart.Show();
             }
         }
-
-        public void PopUpWeights()
+        
+        //TODO: delete/move to GraphNew
+        private void DoPrim()
         {
-            //TODO: create window with table of weights
+            /*foreach (WeightedGraph weightedGraph in weightedGraphs)
+            {
+                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                {
+                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
+
+                    // draw minimum spanning graph edges in red
+                    DrawRedLines(currentGraphShowing, output);
+
+                    break;
+                }
+            }
+
+            ResetNodeSelectionPanel();*/
         }
+        
+        //TODO: delete/move to GraphNew
+        private void DoDijkstra()
+        {
+            /*List<Vertex> output = new List<Vertex>();
+            double shortestDist = 0.0;
+
+            try
+            {
+                if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
+                {
+                    foreach (WeightedGraph weightedGraph in weightedGraphs)
+                    {
+                        if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                        {
+                            output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                            shortestDist = weightedGraph.GetDijkstraShortestDistance();
+
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                    {
+                        if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
+                        {
+                            output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                            shortestDist = weightedDigraph.GetDijkstraShortestDistance();
+
+                            break;
+                        }
+                    }
+                }
+
+                // Draw path one by one using red lines
+                DrawRedLines(currentGraphShowing, output);
+
+                MessageBox.Show("Shortest distance: " + shortestDist);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            ResetNodeSelectionPanel();*/
+        }
+
+        
+        //TODO: delete/move to GraphNew
+        private void DoTopological()
+        {
+            /*string topologicalOutput = "";
+            try
+            {
+                Vertex[] output = Array.Empty<Vertex>();
+                if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
+                {
+                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                    {
+                        if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
+                        {
+                            if (weightedDigraph.topologicalOutput == null)
+                            {
+                                output = weightedDigraph.DoTopologicalSort();
+                            }
+                            else
+                            {
+                                output = weightedDigraph.topologicalOutput;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Digraph digraph in digraphs)
+                    {
+                        if (digraph.GraphName == currentGraphShowing.GraphName)
+                        {
+                            if (digraph.topologicalOutput == null)
+                            {
+                                output = digraph.DoTopologicalSort();
+                            }
+                            else
+                            {
+                                output = digraph.topologicalOutput;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                foreach (Vertex vertex in output)
+                {
+                    topologicalOutput += vertex.Name + " ";
+                }
+
+                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" +
+                                topologicalOutput);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }*/
+        }
+
     }
 }
