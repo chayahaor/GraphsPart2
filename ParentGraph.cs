@@ -21,11 +21,11 @@ namespace GraphsClassProject
             MaxWeight = 1;
         }
 
-        internal int GetWeight(Vertex initial, Vertex terminal)
+        internal double GetEdgeWeight(Vertex initial, Vertex terminal)
         {
             int vertexIndex = Vertices.IndexOf(initial);
             int neighborIndex = Vertices[vertexIndex].Neighbors.IndexOf(terminal);
-            int weight = Vertices[vertexIndex].Weights[neighborIndex];
+            double weight = Vertices[vertexIndex].Weights[neighborIndex];
             return weight;
         }
     }

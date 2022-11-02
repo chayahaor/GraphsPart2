@@ -46,16 +46,19 @@
             // panelGraphButtons
             // 
             this.panelGraphButtons.AutoScroll = true;
-            this.panelGraphButtons.Location = new System.Drawing.Point(634, 12);
+            this.panelGraphButtons.Location = new System.Drawing.Point(2008, 34);
+            this.panelGraphButtons.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.panelGraphButtons.Name = "panelGraphButtons";
-            this.panelGraphButtons.Size = new System.Drawing.Size(160, 330);
+            this.panelGraphButtons.Size = new System.Drawing.Size(507, 1035);
             this.panelGraphButtons.TabIndex = 0;
             // 
             // Kruskal
             // 
-            this.Kruskal.Location = new System.Drawing.Point(191, 618);
+            this.Kruskal.Enabled = false;
+            this.Kruskal.Location = new System.Drawing.Point(605, 1759);
+            this.Kruskal.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Kruskal.Name = "Kruskal";
-            this.Kruskal.Size = new System.Drawing.Size(104, 35);
+            this.Kruskal.Size = new System.Drawing.Size(329, 100);
             this.Kruskal.TabIndex = 0;
             this.Kruskal.Text = "Kruskal\'s Algorithm";
             this.Kruskal.UseVisualStyleBackColor = true;
@@ -63,9 +66,11 @@
             // 
             // Dijkstra
             // 
-            this.Dijkstra.Location = new System.Drawing.Point(43, 618);
+            this.Dijkstra.Enabled = false;
+            this.Dijkstra.Location = new System.Drawing.Point(136, 1759);
+            this.Dijkstra.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Dijkstra.Name = "Dijkstra";
-            this.Dijkstra.Size = new System.Drawing.Size(104, 35);
+            this.Dijkstra.Size = new System.Drawing.Size(329, 100);
             this.Dijkstra.TabIndex = 1;
             this.Dijkstra.Text = "Dijkstra\'s Algorithm";
             this.Dijkstra.UseVisualStyleBackColor = true;
@@ -73,9 +78,11 @@
             // 
             // Topological
             // 
-            this.Topological.Location = new System.Drawing.Point(338, 618);
+            this.Topological.Enabled = false;
+            this.Topological.Location = new System.Drawing.Point(1070, 1759);
+            this.Topological.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Topological.Name = "Topological";
-            this.Topological.Size = new System.Drawing.Size(104, 35);
+            this.Topological.Size = new System.Drawing.Size(329, 100);
             this.Topological.TabIndex = 1;
             this.Topological.Text = "Topological Sort";
             this.Topological.UseVisualStyleBackColor = true;
@@ -83,9 +90,11 @@
             // 
             // Prim
             // 
-            this.Prim.Location = new System.Drawing.Point(486, 618);
+            this.Prim.Enabled = false;
+            this.Prim.Location = new System.Drawing.Point(1539, 1759);
+            this.Prim.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Prim.Name = "Prim";
-            this.Prim.Size = new System.Drawing.Size(104, 35);
+            this.Prim.Size = new System.Drawing.Size(329, 100);
             this.Prim.TabIndex = 2;
             this.Prim.Text = "Prim\'s Algorithm";
             this.Prim.UseVisualStyleBackColor = true;
@@ -98,17 +107,19 @@
             this.panelNodeSelection.Controls.Add(this.anotherNode);
             this.panelNodeSelection.Controls.Add(this.originDropDown);
             this.panelNodeSelection.Controls.Add(this.label1);
-            this.panelNodeSelection.Location = new System.Drawing.Point(634, 382);
+            this.panelNodeSelection.Location = new System.Drawing.Point(2008, 1087);
+            this.panelNodeSelection.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.panelNodeSelection.Name = "panelNodeSelection";
-            this.panelNodeSelection.Size = new System.Drawing.Size(165, 230);
+            this.panelNodeSelection.Size = new System.Drawing.Size(523, 655);
             this.panelNodeSelection.TabIndex = 3;
             this.panelNodeSelection.Visible = false;
             // 
             // btnNodeSelection
             // 
-            this.btnNodeSelection.Location = new System.Drawing.Point(44, 190);
+            this.btnNodeSelection.Location = new System.Drawing.Point(139, 541);
+            this.btnNodeSelection.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.btnNodeSelection.Name = "btnNodeSelection";
-            this.btnNodeSelection.Size = new System.Drawing.Size(76, 23);
+            this.btnNodeSelection.Size = new System.Drawing.Size(241, 65);
             this.btnNodeSelection.TabIndex = 4;
             this.btnNodeSelection.Text = "Ready?";
             this.btnNodeSelection.UseVisualStyleBackColor = true;
@@ -118,18 +129,20 @@
             // 
             this.destDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.destDropDown.FormattingEnabled = true;
-            this.destDropDown.Location = new System.Drawing.Point(22, 142);
+            this.destDropDown.Location = new System.Drawing.Point(70, 404);
+            this.destDropDown.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.destDropDown.Name = "destDropDown";
-            this.destDropDown.Size = new System.Drawing.Size(121, 21);
+            this.destDropDown.Size = new System.Drawing.Size(375, 45);
             this.destDropDown.TabIndex = 3;
             this.destDropDown.Visible = false;
             // 
             // anotherNode
             // 
             this.anotherNode.AutoSize = true;
-            this.anotherNode.Location = new System.Drawing.Point(10, 109);
+            this.anotherNode.Location = new System.Drawing.Point(32, 310);
+            this.anotherNode.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.anotherNode.Name = "anotherNode";
-            this.anotherNode.Size = new System.Drawing.Size(145, 13);
+            this.anotherNode.Size = new System.Drawing.Size(429, 37);
             this.anotherNode.TabIndex = 2;
             this.anotherNode.Text = "Please choose another Node";
             this.anotherNode.Visible = false;
@@ -138,34 +151,37 @@
             // 
             this.originDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.originDropDown.FormattingEnabled = true;
-            this.originDropDown.Location = new System.Drawing.Point(22, 50);
+            this.originDropDown.Location = new System.Drawing.Point(70, 142);
+            this.originDropDown.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.originDropDown.Name = "originDropDown";
-            this.originDropDown.Size = new System.Drawing.Size(121, 21);
+            this.originDropDown.Size = new System.Drawing.Size(375, 45);
             this.originDropDown.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 16);
+            this.label1.Location = new System.Drawing.Point(89, 46);
+            this.label1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 13);
+            this.label1.Size = new System.Drawing.Size(338, 37);
             this.label1.TabIndex = 0;
             this.label1.Text = "Please choose a Node";
             // 
             // panelGraph
             // 
-            this.panelGraph.Location = new System.Drawing.Point(12, 12);
+            this.panelGraph.Location = new System.Drawing.Point(38, 34);
+            this.panelGraph.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.panelGraph.Name = "panelGraph";
-            this.panelGraph.Size = new System.Drawing.Size(600, 600);
+            this.panelGraph.Size = new System.Drawing.Size(1900, 1708);
             this.panelGraph.TabIndex = 0;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(811, 660);
+            this.ClientSize = new System.Drawing.Size(2568, 1878);
             this.Controls.Add(this.panelNodeSelection);
             this.Controls.Add(this.Prim);
             this.Controls.Add(this.Topological);
@@ -173,12 +189,12 @@
             this.Controls.Add(this.Kruskal);
             this.Controls.Add(this.panelGraphButtons);
             this.Controls.Add(this.panelGraph);
+            this.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Name = "Form1";
             this.Text = "Graphs";
             this.panelNodeSelection.ResumeLayout(false);
             this.panelNodeSelection.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         #endregion

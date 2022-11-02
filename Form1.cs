@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,20 +10,23 @@ namespace GraphsClassProject
 {
     public partial class Form1 : Form
     {
-        // lists containing each graph in the database based on its type
-        private List<Digraph> digraphs;
-        private List<Graph> graphs;
-        private List<WeightedDigraph> weightedDigraphs;
-        private List<WeightedGraph> weightedGraphs;
+        //DB Connection
+        private String server;
+        private String database;
 
-        // contains all graph names and types (graph names must be unique in the database)
-        private Dictionary<String, String> graphNamesAndTypes;
+        // Graph Showing
+        private GraphNew newGraph;
+
+        // contains all graph names (graph names must be unique in the database)
+        private ArrayList informationGraphs;
+
+        private GraphInfo associatedInfo;
+
+        // List of all the buttons containing graph names
+        private List<Button> GraphNameButtons { get; }
 
         // the center of the panelGraph panel (size 600 by 600)
-        private const int CENTER = 300;
-
-        // the current graph on display in the panelGraph panel 
-        private ParentGraph currentGraphShowing;
+        private readonly int CENTER = 300;
 
         // list of all labels representing nodes specific to each selected graph
         private List<Label> LabelNodes { get; set; }
@@ -35,177 +39,65 @@ namespace GraphsClassProject
         private Vertex selectedVertexB;
 
         // the algorithm type of the current algorithm selected
-        private AlgorithmType? algorithmType;
+        //private AlgorithmType? algorithmType = AlgorithmType.DIJKSTRA;
 
         public Form1()
         {
             InitializeComponent();
-
-            digraphs = new List<Digraph>();
-            graphs = new List<Graph>();
-            weightedDigraphs = new List<WeightedDigraph>();
-            weightedGraphs = new List<WeightedGraph>();
-
+            GraphNameButtons = new List<Button>();
             panelGraph.BackColor = Color.Gray;
-            var server = ConfigurationManager.AppSettings["SERVER"];
-            var database = ConfigurationManager.AppSettings["DATABASE"];
+            server = ConfigurationManager.AppSettings["SERVER"];
+            database = ConfigurationManager.AppSettings["DATABASE"];
+
             GetData getData = new GetData(server, database);
+            informationGraphs = getData.AssociatedInfo;
 
-            graphNamesAndTypes = getData.GraphTypes;
-
-            SetUpGraphNameButtons(server, database);
+            SetUpGraphNameButtons();
         }
 
-        private void SetUpGraphNameButtons(string server, string database)
+        private void SetUpGraphNameButtons()
         {
             int x = 30;
             int y = 0;
+
+            foreach (GraphInfo info in informationGraphs)
+            {
+                Button button = new Button();
+                button.Name = info.name; // All button names are unique because in the SQL code, graph names are unique
+                button.Text = info.name;
+                button.Click += btn_Click;
+                button.Location = new Point(x, y);
+                y += 100;
+                panelGraphButtons.Controls.Add(button);
+            }
+
             Button showGraph = new Button();
             showGraph.Name = "btnShowGraph";
             showGraph.Text = "Show Weights";
             showGraph.Height += showGraph.Height;
             showGraph.Location = new Point(x, y);
             showGraph.Click += ShowWeights;
-
-            y += 100;
+            
             panelGraphButtons.Controls.Add(showGraph);
-            foreach (KeyValuePair<string, string> pair in graphNamesAndTypes)
-            {
-                Button button = new Button();
-                // All button names are unique because in the SQL code, graph names are unique
-                button.Name = pair.Key;
-                button.Text = pair.Key;
-                button.Click += btn_Click;
-                button.Location = new Point(x, y);
-
-                y += 100;
-
-                panelGraphButtons.Controls.Add(button);
-                LoadGraph(server, database, pair);
-            }
         }
 
-        private void LoadGraph(string server, string database, KeyValuePair<string, string> pair)
-        {
-            string errorMessage = "Something went wrong with loading the graph...";
-            switch (pair.Value)
-            {
-                case "Weighted_Directed":
-                    WeightedDigraph weightedDigraph = new WeightedDigraph(pair.Key);
-                    if (!weightedDigraph.LoadGraph(pair.Key, server, database))
-                    {
-                        MessageBox.Show(errorMessage);
-                    }
-
-                    weightedDigraphs.Add(weightedDigraph);
-                    break;
-                case "Unweighted_Directed":
-                    Digraph digraph = new Digraph(pair.Key);
-                    if (!digraph.LoadGraph(pair.Key, server, database))
-                    {
-                        MessageBox.Show(errorMessage);
-                    }
-
-                    digraphs.Add(digraph);
-                    break;
-                case "Weighted_Undirected":
-                    WeightedGraph weightedGraph = new WeightedGraph(pair.Key);
-                    if (!weightedGraph.LoadGraph(pair.Key, server, database))
-                    {
-                        MessageBox.Show(errorMessage);
-                    }
-
-                    weightedGraphs.Add(weightedGraph);
-                    break;
-                case "Unweighted_Undirected":
-                    Graph graph = new Graph(pair.Key);
-                    if (!graph.LoadGraph(pair.Key, server, database))
-                    {
-                        MessageBox.Show(errorMessage);
-                    }
-
-                    graphs.Add(graph);
-                    break;
-            }
-        }
 
         private void btn_Click(object sender, EventArgs e)
         {
+            //When click a button
             Button button = (Button)sender;
-            
-            Prim.Enabled = true;
-            Dijkstra.Enabled = true;
-            Topological.Enabled = true;
-            Kruskal.Enabled = true;
-            
-            switch (graphNamesAndTypes[button.Name])
-            {
-                case "Weighted_Directed":
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
-                    {
-                        if (weightedDigraph.GraphName.Equals(button.Name))
-                        {
-                            FillPanel(weightedDigraph);
-                            currentGraphShowing = weightedDigraph;
-                            break;
-                        }
-                    }
-
-                    break;
-                case "Unweighted_Directed":
-                    foreach (Digraph digraph in digraphs)
-                    {
-                        if (digraph.GraphName.Equals(button.Name))
-                        {
-                            FillPanel(digraph);
-                            currentGraphShowing = digraph;
-                            break;
-                        }
-                    }
-
-                    Dijkstra.Enabled = false;
-                    break;
-                case "Weighted_Undirected":
-                    foreach (WeightedGraph weightedGraph in weightedGraphs)
-                    {
-                        if (weightedGraph.GraphName.Equals(button.Name))
-                        {
-                            FillPanel(weightedGraph);
-                            currentGraphShowing = weightedGraph;
-                            break;
-                        }
-                    }
-
-                    Prim.Enabled = false;
-                    Topological.Enabled = false;
-                    Kruskal.Enabled = false;
-                    break;
-                case "Unweighted_Undirected":
-                    foreach (Graph graph in graphs)
-                    {
-                        if (graph.GraphName.Equals(button.Name))
-                        {
-                            FillPanel(graph);
-                            currentGraphShowing = graph;
-                            break;
-                        }
-                    }
-
-                    Dijkstra.Enabled = false;
-                    Topological.Enabled = false;
-                    break;
-            }
+            //Load the graph
+            newGraph = new GraphNew(button.Name, server, database);
+            //Display the graph
+            FillPanel();
         }
 
-        private void FillPanel(ParentGraph graph)
+        private void FillPanel()
         {
             ResetPanels();
-
-            CreateLabelType(graph);
-
-            CreateLabelNodes(graph);
-
-            CreateGraphics(graph);
+            CreateLabelType();
+            CreateLabelNodes();
+            CreateGraphics();
         }
 
         private void ResetPanels()
@@ -228,44 +120,85 @@ namespace GraphsClassProject
             destDropDown.ResetText();
         }
 
-        private void CreateLabelType(ParentGraph graph)
+        private void CreateLabelType()
         {
             Label labelGraphType = new Label();
             labelGraphType.Location = new Point(15, 20);
-
+            Size size = new Size(300, 20);
+            labelGraphType.Size = size;
             String type = "";
-            switch (graph.Type)
+
+            foreach (GraphInfo info in informationGraphs)
             {
-                case GraphType.WEIGHTED_DIGRAPH:
-                    type = "Weighted Digraph";
-                    break;
-                case GraphType.DIGRAPH:
-                    type = "Digraph";
-                    break;
-                case GraphType.WEIGHTED_GRAPH:
-                    type = "Weighted Graph";
-                    break;
-                case GraphType.GRAPH:
-                    type = "Graph";
-                    break;
+                if (info.name == newGraph.GraphName)
+                {
+                    associatedInfo = info;
+                }
             }
 
+            if (associatedInfo.weight)
+            {
+                type += "Weighted ";
+            }
+            else
+            {
+                type += "Unweighted ";
+            }
+
+            if (associatedInfo.direct)
+            {
+                type += "Digraph";
+            }
+            else
+            {
+                type += "Graph";
+            }
+
+            //TODO: confirm types done correctly
+            switch (type)
+            {
+                case "Weighted Digraph":
+                    Dijkstra.Enabled = true;
+                    Kruskal.Enabled = false;
+                    Topological.Enabled = true;
+                    Prim.Enabled = false;
+                    break;
+                case "Weighted Graph":
+                    Dijkstra.Enabled = true;
+                    Kruskal.Enabled = true;
+                    Topological.Enabled = false;
+                    Prim.Enabled = true;
+                    break;
+                case "Unweighted Digraph":
+                    Dijkstra.Enabled = false;
+                    Kruskal.Enabled = false;
+                    Topological.Enabled = true;
+                    Prim.Enabled = false;
+                    break;
+                case "Unweighted Graph":
+                    Dijkstra.Enabled = false;
+                    Kruskal.Enabled = false;
+                    Topological.Enabled = false;
+                    Prim.Enabled = false;
+                    break;
+            }
+            
             labelGraphType.Text = type;
             labelGraphType.Refresh();
             panelGraph.Controls.Add(labelGraphType);
         }
 
-        private void CreateLabelNodes(ParentGraph graph)
+        private void CreateLabelNodes()
         {
-            for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++)
+            for (int nodeNumber = 0; nodeNumber < newGraph.Vertices.Count; nodeNumber++)
             {
                 Label label = new Label();
-                label.Text = graph.Vertices[nodeNumber].Name;
+                label.Text = newGraph.Vertices[nodeNumber].Name;
                 label.TextAlign = ContentAlignment.MiddleCenter;
 
                 Graphics graphics = panelGraph.CreateGraphics();
                 Pen pen = new Pen(Color.Black);
-                Point location = GetLocation(nodeNumber, graph.Vertices.Count);
+                Point location = GetLocation(nodeNumber, newGraph.Vertices.Count);
                 graphics.DrawEllipse(pen, location.X - 5, location.Y - 5, 10, 10);
 
                 NodeCircleLocations.Add(location);
@@ -287,13 +220,13 @@ namespace GraphsClassProject
             }
         }
 
-        private void CreateGraphics(ParentGraph graph)
+        private new void CreateGraphics()
         {
             SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Black);
 
-            for (int nodeNumber = 0; nodeNumber < graph.Vertices.Count; nodeNumber++)
+            for (int nodeNumber = 0; nodeNumber < newGraph.Vertices.Count; nodeNumber++)
             {
-                Vertex currNode = graph.Vertices[nodeNumber];
+                Vertex currNode = newGraph.Vertices[nodeNumber];
                 foreach (Vertex neighbor in currNode.Neighbors)
                 {
                     if (currNode.Neighbors.Contains(neighbor))
@@ -313,8 +246,15 @@ namespace GraphsClassProject
         {
             graphics = panelGraph.CreateGraphics();
             pen = new Pen(penColor);
-            AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
-            pen.CustomEndCap = adjustableArrowCap;
+            if (associatedInfo.direct)
+            {
+                AdjustableArrowCap adjustableArrowCap = new AdjustableArrowCap(3, 3);
+                pen.CustomEndCap = adjustableArrowCap;
+            }
+            else
+            {
+                pen.EndCap = LineCap.Round;
+            }
         }
 
         private Point GetLocation(int nodeNumber, int numNodes)
@@ -379,73 +319,251 @@ namespace GraphsClassProject
             return vertexLocation;
         }
 
+        //Algorithms
         private void Kruskal_Click(object sender, EventArgs e)
         {
-            if (currentGraphShowing == null)
-            {
-                MessageBox.Show("There is no graph showing yet.");
-            }
-            /*else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
-            {
-                MessageBox.Show("Kruskal's Algorithm is not available for selected graph.");
-            }*/
-            else
-            {
-                CreateGraphics(currentGraphShowing);
+            CreateGraphics();
+            panelNodeSelection.Visible = false;
 
-                algorithmType = AlgorithmType.KRUSKAL;
-
-                panelNodeSelection.Visible = false;
-
-                Vertex[,] output;
-
-                foreach (WeightedGraph weightedGraph in weightedGraphs)
-                {
-                    if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                    {
-                        if (weightedGraph.kruskalOutput == null)
-                        {
-                            output = weightedGraph.DoKruskalAlgorithm();
-                        }
-                        else
-                        {
-                            output = weightedGraph.kruskalOutput;
-                        }
-
-                        // draw minimum spanning graph edges in red
-                        DrawRedLines(currentGraphShowing, output);
-
-                        break;
-                    }
-                }
-            }
+            var output = newGraph.KruskalAlgorithm();
+            DrawRedLines(output);
         }
 
         private void Topological_Click(object sender, EventArgs e)
         {
-            if (currentGraphShowing == null)
+            CreateGraphics();
+            panelNodeSelection.Visible = false;
+            newGraph.DoTopological();
+        }
+
+        
+        private void Prim_Click(object sender, EventArgs e)
+        {
+            CreateGraphics();
+            ShowPanelNodeSelection(false);
+            Vertex[,] output = newGraph.PrimAlgorithm(selectedVertexA);
+
+            // draw minimum spanning graph edges in red
+            DrawRedLines(output);
+
+            ResetNodeSelectionPanel();
+        }
+
+
+        private void Dijkstra_Click(object sender, EventArgs e)
+        {
+            CreateGraphics();
+            ShowPanelNodeSelection(true);
+            List<Vertex> output = new List<Vertex>();
+            double shortestDist = 0.0;
+
+            newGraph.DijkstraAlgorithm();
+            DrawRedLines(output);
+            MessageBox.Show("Shortest distance: " + shortestDist);
+            ResetNodeSelectionPanel();
+        }
+
+     
+        private void ShowPanelNodeSelection(bool isDestDropDownEnabled)
+        {
+            panelNodeSelection.Visible = true;
+            destDropDown.Visible = isDestDropDownEnabled;
+            destDropDown.Enabled = isDestDropDownEnabled;
+            anotherNode.Visible = false;
+            destDropDown.Refresh();
+            anotherNode.Refresh();
+            panelNodeSelection.Refresh();
+            GetInput();
+        }
+
+        private void GetInput()
+        {
+            foreach (Vertex vertex in newGraph.Vertices)
             {
-                MessageBox.Show("There is no graph showing yet.");
+                originDropDown.Items.Add(vertex.Name);
             }
-            /*else if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH ||
-                     currentGraphShowing.Type == GraphType.GRAPH)
-            {
-                MessageBox.Show("Topological Sort is not available for selected graph.");
-            }*/
-            else
-            {
-                CreateGraphics(currentGraphShowing);
 
-                algorithmType = AlgorithmType.TOPOLOGICAL;
-
-                panelNodeSelection.Visible = false;
-                DoTopological();
+            foreach (Vertex vertex in newGraph.Vertices)
+            {
+                destDropDown.Items.Add(vertex.Name);
             }
         }
 
+        private void readyNodes_Click(object sender, EventArgs e)
+        {
+            if (originDropDown.SelectedIndex == -1)
+            {
+                selectedVertexA = newGraph.Vertices[0];
+                MessageBox.Show("Default vertex selected");
+            }
+            else
+            {
+                selectedVertexA = newGraph.Vertices[originDropDown.SelectedIndex];
+                MessageBox.Show("You selected " + selectedVertexA.Name);
+            }
+
+            if (destDropDown.SelectedIndex == -1)
+            {
+                selectedVertexB = newGraph.Vertices[0];
+                /*if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
+                {
+                    MessageBox.Show("Default vertex selected");
+                }*/
+            }
+            else
+            {
+                selectedVertexB = newGraph.Vertices[destDropDown.SelectedIndex];
+                MessageBox.Show("You selected " + selectedVertexB.Name);
+            }
+
+            /*
+            if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
+            {
+                DoPrim();
+            }
+            else if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
+            {
+                DoDijkstra();
+            }*/
+        }
+
+        private void DrawRedLines(Vertex[,] input)
+        {
+            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
+
+            /*Vertex startingVertex = new Vertex("start");
+            Vertex endingVertex = new Vertex("end");
+            */
+
+            for (int index = 0; index < input.GetLength(0); index++)
+            {
+                Vertex beginning = input[index, 0];
+                Vertex ending = input[index, 1];
+
+                /*foreach (var vertex in newGraph.Vertices)
+                {
+                    if (vertex.Name.Equals(beginning.Name))
+                    {
+                        startingVertex = vertex;
+                    }
+
+                    if (vertex.Name.Equals(ending.Name))
+                    {
+                        endingVertex = vertex;
+                    }
+                }
+                */
+
+                pen.Width = 2;
+
+                Point beginLocation = GetVertexLocation(beginning);
+                Point neighborLocation = GetVertexLocation(ending);
+                graphics.DrawLine(pen, beginLocation, neighborLocation);
+            }
+        }
+
+        private void DrawRedLines(List<Vertex> input)
+        {
+            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
+
+            for (int i = 0; i < input.Count - 1; i++)
+            {
+                var startingVertex = input[i];
+                var endingVertex = input[i + 1];
+
+                pen.Width = 2;
+
+                Point startingPoint = GetVertexLocation(startingVertex);
+                Point neighborLocation = GetVertexLocation(endingVertex);
+                graphics.DrawLine(pen, startingPoint, neighborLocation);
+
+                System.Threading.Thread.Sleep(500);
+            }
+        }
+
+        private void ShowWeights(Object o, EventArgs e)
+        {
+            if (newGraph != null)
+            {
+                WeightsChart chart = new WeightsChart(newGraph);
+                chart.Show();
+            }
+        }
+        
+        //TODO: delete/move to GraphNew
+        private void DoPrim()
+        {
+            /*foreach (WeightedGraph weightedGraph in weightedGraphs)
+            {
+                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                {
+                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
+
+                    // draw minimum spanning graph edges in red
+                    DrawRedLines(currentGraphShowing, output);
+
+                    break;
+                }
+            }
+
+            ResetNodeSelectionPanel();*/
+        }
+        
+        //TODO: delete/move to GraphNew
+        private void DoDijkstra()
+        {
+            /*List<Vertex> output = new List<Vertex>();
+            double shortestDist = 0.0;
+
+            try
+            {
+                if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
+                {
+                    foreach (WeightedGraph weightedGraph in weightedGraphs)
+                    {
+                        if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
+                        {
+                            output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                            shortestDist = weightedGraph.GetDijkstraShortestDistance();
+
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
+                    {
+                        if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
+                        {
+                            output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
+
+                            shortestDist = weightedDigraph.GetDijkstraShortestDistance();
+
+                            break;
+                        }
+                    }
+                }
+
+                // Draw path one by one using red lines
+                DrawRedLines(currentGraphShowing, output);
+
+                MessageBox.Show("Shortest distance: " + shortestDist);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            ResetNodeSelectionPanel();*/
+        }
+
+        
+        //TODO: delete/move to GraphNew
         private void DoTopological()
         {
-            string topologicalOutput = "";
+            /*string topologicalOutput = "";
             try
             {
                 Vertex[] output = Array.Empty<Vertex>();
@@ -493,245 +611,14 @@ namespace GraphsClassProject
                     topologicalOutput += vertex.Name + " ";
                 }
 
-                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" + topologicalOutput);
+                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" +
+                                topologicalOutput);
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
-            }
-        }
-
-        private void Prim_Click(object sender, EventArgs e)
-        {
-            if (currentGraphShowing == null)
-            {
-                MessageBox.Show("There is no graph showing yet.");
-            }
-            /*else if (currentGraphShowing.Type != GraphType.WEIGHTED_GRAPH)
-            {
-                MessageBox.Show("Prim's Algorithm is not available for selected graph.");
             }*/
-            else
-            {
-                CreateGraphics(currentGraphShowing);
-
-                algorithmType = AlgorithmType.PRIM;
-
-                ShowPanelNodeSelection(false);
-            }
         }
 
-        private void DoPrim()
-        {
-            foreach (WeightedGraph weightedGraph in weightedGraphs)
-            {
-                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                {
-                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
-
-                    // draw minimum spanning graph edges in red
-                    DrawRedLines(currentGraphShowing, output);
-
-                    break;
-                }
-            }
-
-            ResetNodeSelectionPanel();
-        }
-
-        private void Dijkstra_Click(object sender, EventArgs e)
-        {
-            if (currentGraphShowing == null)
-            {
-                MessageBox.Show("There is no graph showing yet.");
-            }
-            /*else if (currentGraphShowing.Type == GraphType.GRAPH || currentGraphShowing.Type == GraphType.DIGRAPH)
-            {
-                MessageBox.Show("Dijkstra's Algorithm is not available for selected graph.");
-            }*/
-            else
-            {
-                CreateGraphics(currentGraphShowing);
-
-                algorithmType = AlgorithmType.DIJKSTRA;
-
-                ShowPanelNodeSelection(true);
-            }
-        }
-
-        private void DoDijkstra()
-        {
-            List<Vertex> output = new List<Vertex>();
-            double shortestDist = 0.0;
-
-            try
-            {
-                if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
-                {
-                    foreach (WeightedGraph weightedGraph in weightedGraphs)
-                    {
-                        if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                        {
-                            output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-
-                            shortestDist = weightedGraph.GetDijkstraShortestDistance();
-
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
-                    {
-                        if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
-                        {
-                            output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-
-                            shortestDist = weightedDigraph.GetDijkstraShortestDistance();
-
-                            break;
-                        }
-                    }
-                }
-
-                // Draw path one by one using red lines
-                DrawRedLines(currentGraphShowing, output);
-
-                MessageBox.Show("Shortest distance: " + shortestDist);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            ResetNodeSelectionPanel();
-        }
-
-        private void ShowPanelNodeSelection(bool isDestDropDownEnabled)
-        {
-            panelNodeSelection.Visible = true;
-            destDropDown.Visible = isDestDropDownEnabled;
-            destDropDown.Enabled = isDestDropDownEnabled;
-            anotherNode.Visible = false;
-            destDropDown.Refresh();
-            anotherNode.Refresh();
-            panelNodeSelection.Refresh();
-            GetInput(currentGraphShowing);
-        }
-
-        private void GetInput(ParentGraph parentGraph)
-        {
-            foreach (Vertex vertex in parentGraph.Vertices)
-            {
-                originDropDown.Items.Add(vertex.Name);
-            }
-
-            foreach (Vertex vertex in parentGraph.Vertices)
-            {
-                destDropDown.Items.Add(vertex.Name);
-            }
-        }
-
-        private void readyNodes_Click(object sender, EventArgs e)
-        {
-            if (originDropDown.SelectedIndex == -1)
-            {
-                selectedVertexA = currentGraphShowing.Vertices[0];
-                MessageBox.Show("Default vertex selected");
-            }
-            else
-            {
-                selectedVertexA = currentGraphShowing.Vertices[originDropDown.SelectedIndex];
-                MessageBox.Show("You selected " + selectedVertexA.Name);
-            }
-
-            if (destDropDown.SelectedIndex == -1)
-            {
-                selectedVertexB = currentGraphShowing.Vertices[0];
-                if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
-                {
-                    MessageBox.Show("Default vertex selected");
-                }
-            }
-            else
-            {
-                selectedVertexB = currentGraphShowing.Vertices[destDropDown.SelectedIndex];
-                MessageBox.Show("You selected " + selectedVertexB.Name);
-            }
-
-            if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
-            {
-                DoPrim();
-            }
-            else if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
-            {
-                DoDijkstra();
-            }
-        }
-
-        private void DrawRedLines(ParentGraph graph, Vertex[,] input)
-        {
-            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
-
-            Vertex startingVertex = new Vertex("start");
-            Vertex endingVertex = new Vertex("end");
-
-            for (int index = 0; index < input.GetLength(0); index++)
-            {
-                Vertex beginning = input[index, 0];
-
-                Vertex ending = input[index, 1];
-
-                foreach (var vertex in graph.Vertices)
-                {
-                    if (vertex.Name.Equals(beginning.Name))
-                    {
-                        startingVertex = vertex;
-                    }
-
-                    if (vertex.Name.Equals(ending.Name))
-                    {
-                        endingVertex = vertex;
-                    }
-                }
-
-                pen.Width = 2; 
-
-                Point beginLocation = GetVertexLocation(beginning);
-                Point neighborLocation = GetVertexLocation(ending);
-                graphics.DrawLine(pen, beginLocation, neighborLocation);
-            }
-        }
-
-        private void DrawRedLines(ParentGraph graph, List<Vertex> input)
-        {
-            SetUpGraphicsAndPen(out Graphics graphics, out Pen pen, Color.Red);
-
-            Vertex startingVertex;
-            Vertex endingVertex;
-
-            for (int i = 0; i < input.Count - 1; i++)
-            {
-                startingVertex = input[i];
-                endingVertex = input[i + 1];
-
-                pen.Width = 2;
-
-                Point startingPoint = GetVertexLocation(startingVertex);
-                Point neighborLocation = GetVertexLocation(endingVertex);
-                graphics.DrawLine(pen, startingPoint, neighborLocation);
-
-                System.Threading.Thread.Sleep(500);
-            }      
-
-        private void ShowWeights(Object o, EventArgs e)
-        {
-            if (currentGraphShowing != null)
-            {
-                WeightsChart chart = new WeightsChart(currentGraphShowing);
-                chart.Show();
-            }
-        }
     }
 }

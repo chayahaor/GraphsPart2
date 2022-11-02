@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Data;
@@ -8,18 +9,16 @@ namespace GraphsClassProject
 {
     public class GetData
     {
-        public Dictionary<String, String> GraphTypes { get; set; } 
+        public ArrayList AssociatedInfo { get; set; }
 
         public GetData(String server, String database)
         {
-            LoadVerticesFromSQL(server, database);
+            LoadVerticesFromSql(server, database);
         }
 
-        private void LoadVerticesFromSQL(String server, String database)
+        private void LoadVerticesFromSql(String server, String database)
         {
-            // table contains graphName, graphType
-            GraphTypes = new Dictionary<string, string>();
-
+            AssociatedInfo = new ArrayList();
             SqlConnection sqlCon = null;
             try
             {
@@ -39,27 +38,26 @@ namespace GraphsClassProject
                 for (int row = 0; row < nrGraphs; ++row)
                 {
                     String name = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[0];
-                    String type = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
-                    GraphTypes.Add(name, type);
-                }    
+                    bool weight = (bool)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
+                    bool direct = (bool)dataset1.Tables["Graphs"].Rows[row].ItemArray[2];
+                    AssociatedInfo.Add(new GraphInfo(name, weight, direct));
+                    
+                }
             }
             catch (Exception ex)
-
             {
-                 MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
+                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 
             finally
-
             {
-
                 if (sqlCon != null && sqlCon.State == ConnectionState.Open)
-
+                {
                     sqlCon.Close();
-
+                }
             }
-
         }
+        
     }
 }

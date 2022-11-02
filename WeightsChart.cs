@@ -7,8 +7,8 @@ namespace GraphsClassProject
 {
     public partial class WeightsChart : Form
     {
-        private ParentGraph graph;
-        public WeightsChart(ParentGraph sentGraph)
+        private GraphNew graph;
+        public WeightsChart(GraphNew sentGraph)
         {
             InitializeComponent();
             graph = sentGraph;
@@ -27,7 +27,7 @@ namespace GraphsClassProject
                     {
                         output = output + "\n\n" + currNode.Name + " " +
                                  neighbor.Name + " has the weight " +
-                                 graph.GetWeight(currNode, neighbor);
+                                 graph.GetEdgeWeight(currNode, neighbor);
                     }
                 }
             }
