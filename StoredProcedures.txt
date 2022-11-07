@@ -31,50 +31,44 @@ Order by ini.Node_ID
 
 
 ---calculates and populates x, y coordinates in database
-CREATE PROC spCalculateCoordinates @Graph_ID int
+ALTER PROC spCalculateCoordinates @Graph_ID int
 AS
 
-DECLARE @Cursor cursor;
-SET @Cursor = CURSOR 
-FOR select * from Nodes
-where Node_ID IN
-	(select distinct Node_ID
-	from Nodes join Edges 
-	on Nodes.Node_ID = Edges.InitialNode_ID
-	join Graphs 
-	on Graphs.Graph_ID = Edges.Graph_ID
-	WHERE Graphs.Graph_ID = @Graph_ID)
----FOR UPDATE OF X_Coord, Y_Coord
+Declare @Radian float;
+Declare @NumIDs int;
+Declare @Interval float;
+Declare @Curr_ID int;
 
-DECLARE @rows int;
-SET @rows = 3;
+Set @Radian = 90 * (PI()/180); ---sets to 2
+PRINT @Radian
+Select @NumIDs = COUNT(Graph_ID) from XYCoordinates where XYCoordinates.Graph_ID = @Graph_ID;
+PRINT @NumIDs 
+Set @Interval = 2*PI()/cast(@NumIDs as float)
+PRINT @Interval ---sets to 0
+Set @Curr_ID = 1;
+PRINT @Curr_ID
 
-DECLARE @columns int;
-DECLARE @currRow int;
-DECLARE @currColumn int;
-SET @currColumn = 1;
-SET @currRow = 1;
-SET @columns = @rows - 1;
+---create a temp table with identity column to iterate through when making calculations
+SELECT Graph_ID, Node_ID, IDENTITY(int) AS idcol
+into #temp_table 
+from XYCoordinates
+where XYCoordinates.Graph_ID = @Graph_ID
+
+---calculate and reset X/Y values in XYCoordinates table
+WHILE @Curr_ID <= @NumIDs
+BEGIN
+	UPDATE XYCoordinates
+	Set X_Coord = ROUND(SIN(@Radian), 2), Y_Coord = ROUND(COS(@Radian), 2)
+	From XYCoordinates AS orig_table join #temp_table AS temp_table on orig_table.Graph_ID = temp_table.Graph_ID AND orig_table.Node_ID = temp_table.Node_ID
+	where idcol = @Curr_ID AND orig_table.Graph_ID = @Graph_ID;
+
+	Set @Radian += @Interval
+	Set @Curr_ID += 1
+END
+
+drop table #temp_table
 
 
-
-OPEN @Cursor
-FETCH NEXT from @Cursor
----WHILE @@FETCH_STATUS = 0
-
-	while @currRow <= @rows
-		BEGIN
-			while @currColumn <= @columns
-				BEGIN
-					UPDATE Nodes
-					SET X_Coord = round((1/@rows) * (@currRow - 1) , 2), Y_Coord = round((1/@columns) * (@currColumn - 1) , 2)
-					WHERE CURRENT OF @Cursor
-					FETCH next from @Cursor
-					SET @currColumn = @currColumn + 1
-				END
-			SET @currRow = @currRow + 1
-		END
-CLOSE @Cursor
 		 
 
 
