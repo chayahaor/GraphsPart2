@@ -27,22 +27,31 @@ CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED ([Node_ID]),
 )
 GO
 ------------------------------------------------------------------------------
-/****** Object:  Table [dbo].[GraphType] ******/
-CREATE TABLE [dbo].[GraphTypes]
+/****** Object:  Table [dbo].[Coordinates] ******/
+CREATE TABLE [dbo].[XYCoordinates]
 (
-[GraphType_ID][int]IDENTITY(1,1) NOT NULL,
-[Name][varchar](100) NOT NULL,
-[ShortName][varchar](50) NULL,
-CONSTRAINT [PK_GraphType] PRIMARY KEY CLUSTERED ([GraphType_ID]),
+[Graph_ID][int] NOT NULL,
+[Node_ID][int] NOT NULL,
+CONSTRAINT Coordinates PRIMARY KEY
+    (
+        Graph_ID,
+        Node_ID
+    ),
+    FOREIGN KEY (Graph_ID) REFERENCES Graphs (Graph_ID),
+    FOREIGN KEY (Node_ID) REFERENCES Nodes (Node_ID),
+[X_Coord][FLOAT] NULL,
+[Y_Coord][FLOAT] NULL,
 )
 GO
 ------------------------------------------------------------------------------
+
 /****** Object:  Table [dbo].[Graphs]*/
 CREATE TABLE [dbo].[Graphs]
 (
 [Graph_ID][int]IDENTITY(1,1) NOT NULL,
 [Name][varchar](50) NOT NULL UNIQUE,
-[GraphType_ID] [int] NULL FOREIGN KEY REFERENCES [GraphTypes](GraphType_ID),
+[Weighted][bit] NOT NULL,
+[Directed][bit] NOT NULL,
 CONSTRAINT [PK_Graphs] PRIMARY KEY CLUSTERED ( [Graph_ID] ),
 )
 GO
@@ -88,19 +97,12 @@ INSERT INTO nodes (shortname)
   ('Y'),
   ('Z');
 
-INSERT INTO graphtypes (NAME,
-shortname)
-  VALUES ('Weighted_Undirected', 'W_UD'),
-  ('Unweighted_Directed', 'UW_D'),
-  ('Weighted_Directed', 'W_D'),
-  ('Unweighted_Undirected', 'UW_UD')
-
 INSERT INTO graphs (NAME,
-graphtype_id)
-  VALUES ('Grp_A', 1),
-  ('Grp_B', 2),
-  ('Grp_C', 3),
-  ('Grp_D', 4);
+Weighted, Directed)
+  VALUES ('Grp_A', 1, 0),
+  ('Grp_B', 0, 1),
+  ('Grp_C', 1, 1),
+  ('Grp_D', 0, 0);
 
 INSERT INTO edges (graph_id,
 initialnode_id,
@@ -120,9 +122,16 @@ weight)
 (1, 5, 6, 2),	(1, 9, 10, 2),	(1, 17, 18, 2),	(3, 4, 12, 55),	(3, 8, 10, 92), 				
 (1, 5, 11, 5), 	(1, 9, 15, 5),	(3, 4, 7, 88),	(3, 8, 11, 8),	(4, 6, 1, 1), 
 (4, 1, 2, 1),	(4, 2, 4, 1),	(4, 4, 3, 1),	(4, 3, 5, 1),	(4, 1, 5, 1), 
-(4, 3, 1, 1),	(2, 4, 1, 1),	(2, 1, 4, 1),	(2, 1, 3, 1),	(2, 3, 2, 1);		
+(4, 3, 1, 1),	(2, 4, 1, 1),	(2, 1, 4, 1),	(2, 1, 3, 1),	(2, 3, 2, 1);	
 
-EXEC calculate_xycoordinates @Graph_ID = 1;
-EXEC calculate_xycoordinates @Graph_ID = 2;
-EXEC calculate_xycoordinates @Graph_ID = 3;
-EXEC calculate_xycoordinates @Graph_ID = 4;
+INSERT INTO XYCoordinates (Graph_ID, Node_ID)
+	VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), 
+	(1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), 
+	(2, 1), (2, 2), (2, 3), (2, 4), 
+	(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8), (3, 9), (3, 10), (3, 11), (3, 12), (3, 13),
+	(4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6);	
+
+EXEC spCalculateCoordinates @Graph_ID = 1;
+EXEC spCalculateCoordinates @Graph_ID = 2;
+EXEC spCalculateCoordinates @Graph_ID = 3;
+EXEC spCalculateCoordinates @Graph_ID = 4;
