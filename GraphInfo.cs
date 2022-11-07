@@ -5,15 +5,15 @@ namespace GraphsClassProject
     //TODO: change into struct
     public class GraphInfo
     {
-        public String name { get; set; }
-        public bool weight;
-        public bool direct;
+        public String Name { get; set; }
+        public bool Weight;
+        public bool Direct;
 
         public GraphInfo(String name, bool weight, bool direct)
         {
-            this.name = name;
-            this.weight = weight;
-            this.direct = direct;
+            this.Name = name;
+            this.Weight = weight;
+            this.Direct = direct;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -19,42 +18,42 @@ namespace GraphsClassProject
         private void LoadVerticesFromSql(String server, String database)
         {
             AssociatedInfo = new ArrayList();
-            SqlConnection sqlCon = null;
+            SqlConnection SqlCon = null;
             try
             {
-                String strConnect = $"Server={server};Database={database};Trusted_Connection=True;";
-                sqlCon = new SqlConnection(strConnect);
-                sqlCon.Open();
+                String StrConnect = $"Server={server};Database={database};Trusted_Connection=True;";
+                SqlCon = new SqlConnection(StrConnect);
+                SqlCon.Open();
 
                 // get graph names
-                SqlCommand getAllGraphs = new SqlCommand("spGetGraphNames", sqlCon);
-                getAllGraphs.CommandType = CommandType.StoredProcedure;
-                getAllGraphs.ExecuteNonQuery();
-                SqlDataAdapter da1 = new SqlDataAdapter(getAllGraphs);
-                DataSet dataset1 = new DataSet();
-                da1.Fill(dataset1, "Graphs");
+                SqlCommand GetAllGraphs = new SqlCommand("spGetGraphNames", SqlCon);
+                GetAllGraphs.CommandType = CommandType.StoredProcedure;
+                GetAllGraphs.ExecuteNonQuery();
+                SqlDataAdapter Da1 = new SqlDataAdapter(GetAllGraphs);
+                DataSet Dataset1 = new DataSet();
+                Da1.Fill(Dataset1, "Graphs");
 
-                var nrGraphs = dataset1.Tables["Graphs"].Rows.Count;
-                for (int row = 0; row < nrGraphs; ++row)
+                var NrGraphs = Dataset1.Tables["Graphs"].Rows.Count;
+                for (int Row = 0; Row < NrGraphs; ++Row)
                 {
-                    String name = (String)dataset1.Tables["Graphs"].Rows[row].ItemArray[0];
-                    bool weight = (bool)dataset1.Tables["Graphs"].Rows[row].ItemArray[1];
-                    bool direct = (bool)dataset1.Tables["Graphs"].Rows[row].ItemArray[2];
-                    AssociatedInfo.Add(new GraphInfo(name, weight, direct));
+                    String Name = (String)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[0];
+                    bool Weight = (bool)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[1];
+                    bool Direct = (bool)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[2];
+                    AssociatedInfo.Add(new GraphInfo(Name, Weight, Direct));
                     
                 }
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
-                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + ex.Message, "Error", MessageBoxButtons.OK,
+                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + Ex.Message, "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 
             finally
             {
-                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                if (SqlCon != null && SqlCon.State == ConnectionState.Open)
                 {
-                    sqlCon.Close();
+                    SqlCon.Close();
                 }
             }
         }

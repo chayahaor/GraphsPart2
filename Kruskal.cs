@@ -4,119 +4,119 @@ namespace GraphsClassProject
 {
     internal class Kruskal
     {
-        private readonly ParentGraph graph;
+        private readonly GraphNew Graph;
         private List<Vertex> Vertices;
         private List<EdgeStruct> Edges;
 
-        public Kruskal(ParentGraph graph)
+        public Kruskal(GraphNew graph)
         {
-            this.graph = graph;
+            this.Graph = graph;
             this.Vertices = graph.Vertices;
         }
 
         private List<EdgeStruct> GetListOfEdges()
         {
-            List<EdgeStruct> edges = new List<EdgeStruct>();
+            List<EdgeStruct> Edges = new List<EdgeStruct>();
 
-            foreach (Vertex vertex in Vertices)
+            foreach (Vertex Vertex in Vertices)
             {
-                foreach (Vertex neighbor in vertex.Neighbors)
+                foreach (Vertex Neighbor in Vertex.Neighbors)
                 {
-                    edges.Add(new EdgeStruct(vertex, graph.GetEdgeWeight(vertex, neighbor), neighbor));
+                    Edges.Add(new EdgeStruct(Vertex, Graph.GetEdgeWeight(Vertex, Neighbor), Neighbor));
                 }
             }
 
-            return edges;
+            return Edges;
         }
 
         public Vertex[,] KruskalAlgorithm()
         {
             this.Edges = GetListOfEdges();
-            Vertex[,] shortestPath = new Vertex[Vertices.Count - 1, 2];
-            List<EdgeStruct> orderedEdges = SortEdges();
+            Vertex[,] ShortestPath = new Vertex[Vertices.Count - 1, 2];
+            List<EdgeStruct> OrderedEdges = SortEdges();
 
 
-            List<List<Vertex>> visited = new List<List<Vertex>>();
-            int indexToAddAt = 0;
+            List<List<Vertex>> Visited = new List<List<Vertex>>();
+            int IndexToAddAt = 0;
 
-            int temp = Vertices.Count - 2;
-            while (shortestPath[temp, 0] == null)
+            int Temp = Vertices.Count - 2;
+            while (ShortestPath[Temp, 0] == null)
             {
-                EdgeStruct shortest = orderedEdges[0];
-                int foundSourceWhere = -1;
-                int foundDestinationWhere = -1;
+                EdgeStruct Shortest = OrderedEdges[0];
+                int FoundSourceWhere = -1;
+                int FoundDestinationWhere = -1;
 
                 //check if will create cycle
-                foreach (List<Vertex> connectedVertices in visited)
+                foreach (List<Vertex> ConnectedVertices in Visited)
                 {
-                    foreach (Vertex currVertex in connectedVertices)
+                    foreach (Vertex CurrVertex in ConnectedVertices)
                     {
-                        if (currVertex == shortest.source)
+                        if (CurrVertex == Shortest.Source)
                         {
-                            foundSourceWhere = visited.IndexOf(connectedVertices);
+                            FoundSourceWhere = Visited.IndexOf(ConnectedVertices);
                         }
-                        else if (currVertex == shortest.Destination)
+                        else if (CurrVertex == Shortest.Destination)
                         {
-                            foundDestinationWhere = visited.IndexOf(connectedVertices);
+                            FoundDestinationWhere = Visited.IndexOf(ConnectedVertices);
                         }
                     }
                 }
 
-                if (foundSourceWhere == -1)
+                if (FoundSourceWhere == -1)
                 {
-                    if (foundDestinationWhere == -1)
+                    if (FoundDestinationWhere == -1)
                     {
-                        List<Vertex> unconnected = new List<Vertex>();
-                        unconnected.Add(shortest.source);
-                        unconnected.Add(shortest.Destination);
-                        visited.Add(unconnected);
-                        shortestPath[indexToAddAt, 0] = shortest.source;
-                        shortestPath[indexToAddAt, 1] = shortest.Destination;
-                        indexToAddAt++;
+                        List<Vertex> Unconnected = new List<Vertex>();
+                        Unconnected.Add(Shortest.Source);
+                        Unconnected.Add(Shortest.Destination);
+                        Visited.Add(Unconnected);
+                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
+                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        IndexToAddAt++;
                     }
                     else
                     {
-                        visited[foundDestinationWhere].Add(shortest.source);
-                        shortestPath[indexToAddAt, 0] = shortest.source;
-                        shortestPath[indexToAddAt, 1] = shortest.Destination;
-                        indexToAddAt++;
+                        Visited[FoundDestinationWhere].Add(Shortest.Source);
+                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
+                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        IndexToAddAt++;
                     }
                 }
                 else
                 {
-                    if (foundDestinationWhere == -1)
+                    if (FoundDestinationWhere == -1)
                     {
-                        visited[foundSourceWhere].Add(shortest.Destination);
-                        shortestPath[indexToAddAt, 0] = shortest.source;
-                        shortestPath[indexToAddAt, 1] = shortest.Destination;
-                        indexToAddAt++;
+                        Visited[FoundSourceWhere].Add(Shortest.Destination);
+                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
+                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        IndexToAddAt++;
                     }
-                    else if (foundDestinationWhere != foundSourceWhere)
+                    else if (FoundDestinationWhere != FoundSourceWhere)
                     {
-                        foreach (Vertex movingVertex in visited[foundDestinationWhere])
+                        foreach (Vertex MovingVertex in Visited[FoundDestinationWhere])
                         {
-                            visited[foundSourceWhere].Add(movingVertex);
+                            Visited[FoundSourceWhere].Add(MovingVertex);
                         }
 
-                        visited.RemoveAt(foundDestinationWhere);
-                        shortestPath[indexToAddAt, 0] = shortest.source;
-                        shortestPath[indexToAddAt, 1] = shortest.Destination;
-                        indexToAddAt++;
+                        Visited.RemoveAt(FoundDestinationWhere);
+                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
+                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        IndexToAddAt++;
                     }
                 }
 
-                orderedEdges.RemoveAt(0);
+                OrderedEdges.RemoveAt(0);
             }
 
-            return shortestPath;
+            return ShortestPath;
         }
         
 
         private List<EdgeStruct> SortEdges()
         {
-            List<EdgeStruct> sorted = Edges;
-            sorted.Sort((x, y) => (int)(x.Weight - y.Weight)); //TODO: Confirm that casting does not mess it up
-            return sorted;
+            List<EdgeStruct> Sorted = Edges;
+            Sorted.Sort((x, y) => (int)(x.Weight - y.Weight)); //TODO: Confirm that casting does not mess it up
+            return Sorted;
         }
 
         struct EdgeStruct
@@ -124,12 +124,12 @@ namespace GraphsClassProject
             // constructor
             public EdgeStruct(Vertex vertexA, double weight, Vertex vertexB)
             {
-                this.source = vertexA;
+                this.Source = vertexA;
                 this.Weight = weight;
                 this.Destination = vertexB;
             }
 
-            internal Vertex source;
+            internal Vertex Source;
             internal double Weight { get; set; }
             internal Vertex Destination { get; set; }
         }

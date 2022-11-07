@@ -7,36 +7,36 @@ namespace GraphsClassProject
 {
     public partial class WeightsChart : Form
     {
-        private GraphNew graph;
+        private GraphNew Graph;
         public WeightsChart(GraphNew sentGraph)
         {
             InitializeComponent();
-            graph = sentGraph;
+            Graph = sentGraph;
             LoopThrough();
         }
 
         private void LoopThrough()
         {
-            String output = "";
+            String Output = "";
 
-            foreach (Vertex currNode in graph.Vertices)
+            foreach (Vertex CurrNode in Graph.Vertices)
             {
-                foreach (Vertex neighbor in currNode.Neighbors)
+                foreach (Vertex Neighbor in CurrNode.Neighbors)
                 {
-                    if (currNode.Neighbors.Contains(neighbor))
+                    if (CurrNode.Neighbors.Contains(Neighbor))
                     {
-                        output = output + "\n\n" + currNode.Name + " " +
-                                 neighbor.Name + " has the weight " +
-                                 graph.GetEdgeWeight(currNode, neighbor);
+                        Output = Output + "\n\n" + CurrNode.Name + " " +
+                                 Neighbor.Name + " has the weight " +
+                                 Graph.GetEdgeWeight(CurrNode, Neighbor);
                     }
                 }
             }
-            Label label = new Label();
-            label.Text = output + "\n\n\n\n";
-            label.Font = new Font("Arial", 8);
-            label.AutoSize = true;
-            label.Location = new Point(5, 5);
-            this.Controls.Add(label);
+            Label Label = new Label();
+            Label.Text = Output + "\n\n\n\n";
+            Label.Font = new Font("Arial", 8);
+            Label.AutoSize = true;
+            Label.Location = new Point(5, 5);
+            this.Controls.Add(Label);
             this.AutoScroll = true;
         }
 
