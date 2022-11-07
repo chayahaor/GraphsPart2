@@ -5,74 +5,73 @@ namespace GraphsClassProject
 {
     internal class TopologicalSort
     {
-        // only for digraphs
-        private readonly ParentGraph graph;
+        private readonly GraphNew Graph;
 
-        public TopologicalSort(ParentGraph graph)
+        public TopologicalSort(GraphNew graph)
         {
-            this.graph = graph;
+            this.Graph = graph;
         }
 
         public Vertex[] GetTopologicalSort()
         {
-            Vertex[] sorted = new Vertex[graph.Vertices.Count];
+            Vertex[] Sorted = new Vertex[Graph.Vertices.Count];
 
             // make adjacency list (use each vertex's neighbors list) - dictionary
-            Dictionary<Vertex, List<Vertex>> adjacencyList = new Dictionary<Vertex, List<Vertex>>();
+            Dictionary<Vertex, List<Vertex>> AdjacencyList = new Dictionary<Vertex, List<Vertex>>();
 
             // make indegree list (use each vertex's indegree) - dictionary
-            Dictionary<Vertex, int> indegreeList = new Dictionary<Vertex, int>();
+            Dictionary<Vertex, int> IndegreeList = new Dictionary<Vertex, int>();
 
-            foreach (Vertex vertex in graph.Vertices)
+            foreach (Vertex Vertex in Graph.Vertices)
             {
-                adjacencyList.Add(vertex, vertex.Neighbors);
-                indegreeList.Add(vertex, vertex.Indegree);
+                AdjacencyList.Add(Vertex, Vertex.Neighbors);
+                IndegreeList.Add(Vertex, Vertex.Indegree);
             }
 
             // make 0s queue
-            Queue<Vertex> zeroes = new Queue<Vertex>();
+            Queue<Vertex> Zeroes = new Queue<Vertex>();
 
             // enqueue all 0 indegrees
-            foreach (KeyValuePair<Vertex, int> entry in indegreeList)
+            foreach (KeyValuePair<Vertex, int> Entry in IndegreeList)
             {
-                if (entry.Value == 0)
+                if (Entry.Value == 0)
                 {
-                    zeroes.Enqueue(entry.Key);
+                    Zeroes.Enqueue(Entry.Key);
                 }
             }
 
-            if (zeroes.Count == 0)
+            if (Zeroes.Count == 0)
             {
                 throw new Exception("Graph contains cycle");
             }
 
-            int numVerticesAdded = 0;
+            int NumVerticesAdded = 0;
 
-            while (zeroes.Count > 0)
+            while (Zeroes.Count > 0)
             {
                 // dequeue Vertex v, add to sorted
-                Vertex v = zeroes.Dequeue();
-                sorted[numVerticesAdded] = v;
-                numVerticesAdded++;
+                Vertex V = Zeroes.Dequeue();
+                Sorted[NumVerticesAdded] = V;
+                NumVerticesAdded++;
 
                 // for all vertices in v's adjacency list, indegree--. if new indegree == 0, enqueue
-                List<Vertex> verticesToSubtract = adjacencyList[v];
-                foreach (Vertex neighbor in verticesToSubtract)
+                List<Vertex> VerticesToSubtract = AdjacencyList[V];
+                foreach (Vertex Neighbor in VerticesToSubtract)
                 {
-                    indegreeList[neighbor]--;
-                    if (indegreeList[neighbor] == 0)
+                    IndegreeList[Neighbor]--;
+                    if (IndegreeList[Neighbor] == 0)
                     {
-                        zeroes.Enqueue(neighbor);
+                        Zeroes.Enqueue(Neighbor);
                     }
                 }
                 
-                if (numVerticesAdded > graph.Vertices.Count)
+                if (NumVerticesAdded > Graph.Vertices.Count)
                 {
                     throw new Exception("Graph contains cycle");
                 }
             }
 
-            return sorted;
+            return Sorted;
         }
     }
 }

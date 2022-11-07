@@ -5,85 +5,85 @@ namespace GraphsClassProject
     internal class Prim
     {
         //only relevant to weighted graphs
-        private readonly ParentGraph graph;
+        private readonly GraphNew Graph;
         
 
-        public Prim(ParentGraph graph)
+        public Prim(GraphNew graph)
         {
-            this.graph = graph;
+            this.Graph = graph;
         }
         
         public Vertex[,] PrimMinSpanningGraph(Vertex start)
         {
-            Vertex[,] edges = new Vertex[graph.Vertices.Count - 1, 2];
-            List<PrimStruct> prims = new List<PrimStruct>();
-            List<Vertex> foundVertices = new List<Vertex>();
-            int numEdgesFound = 0;
+            Vertex[,] Edges = new Vertex[Graph.Vertices.Count - 1, 2];
+            List<PrimStruct> Prims = new List<PrimStruct>();
+            List<Vertex> FoundVertices = new List<Vertex>();
+            int NumEdgesFound = 0;
 
-            foundVertices.Add(start);
+            FoundVertices.Add(start);
 
             // add prims for all neighbors of start
-            foreach (Vertex neighbor in start.Neighbors)
+            foreach (Vertex Neighbor in start.Neighbors)
             {
-                if (!foundVertices.Contains(neighbor))
+                if (!FoundVertices.Contains(Neighbor))
                 {
-                    prims.Add(new PrimStruct(neighbor,
-                        graph.GetEdgeWeight(start, neighbor),
+                    Prims.Add(new PrimStruct(Neighbor,
+                        Graph.GetEdgeWeight(start, Neighbor),
                         start));
                 }
             }
 
-            while (numEdgesFound < graph.Vertices.Count - 1)
+            while (NumEdgesFound < Graph.Vertices.Count - 1)
             {
 
                 // get the vertex with the shortest cost
-                prims.Sort((x, y) => x.Cost.CompareTo(y.Cost));
-                PrimStruct currentPrim = prims[0];
-                prims.RemoveAt(0);
+                Prims.Sort((x, y) => x.Cost.CompareTo(y.Cost));
+                PrimStruct CurrentPrim = Prims[0];
+                Prims.RemoveAt(0);
 
                 // add an edge to that prim
-                edges[numEdgesFound, 0] = currentPrim.Parent;
-                edges[numEdgesFound, 1] = currentPrim.vertex;
-                foundVertices.Add(currentPrim.vertex);
-                numEdgesFound++;
+                Edges[NumEdgesFound, 0] = CurrentPrim.Parent;
+                Edges[NumEdgesFound, 1] = CurrentPrim.Vertex;
+                FoundVertices.Add(CurrentPrim.Vertex);
+                NumEdgesFound++;
 
-                foreach (Vertex neighbor in currentPrim.vertex.Neighbors)
+                foreach (Vertex Neighbor in CurrentPrim.Vertex.Neighbors)
                 {
-                    if (!foundVertices.Contains(neighbor))
+                    if (!FoundVertices.Contains(Neighbor))
                     {
-                        PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(neighbor));
-                        if (neighborPrim.vertex != null)
+                        PrimStruct NeighborPrim = Prims.Find(p => p.Vertex.Equals(Neighbor));
+                        if (NeighborPrim.Vertex != null)
                         {
-                            if (graph.GetEdgeWeight(currentPrim.vertex, neighbor) < neighborPrim.Cost)
+                            if (Graph.GetEdgeWeight(CurrentPrim.Vertex, Neighbor) < NeighborPrim.Cost)
                             {
-                                neighborPrim.Cost = graph.GetEdgeWeight(currentPrim.vertex, neighbor);
-                                neighborPrim.Parent = currentPrim.vertex;
+                                NeighborPrim.Cost = Graph.GetEdgeWeight(CurrentPrim.Vertex, Neighbor);
+                                NeighborPrim.Parent = CurrentPrim.Vertex;
                             }
                         }
                         else
                         {
-                            prims.Add(new PrimStruct(neighbor,
-                            graph.GetEdgeWeight(currentPrim.vertex, neighbor),
-                            currentPrim.vertex));
+                            Prims.Add(new PrimStruct(Neighbor,
+                            Graph.GetEdgeWeight(CurrentPrim.Vertex, Neighbor),
+                            CurrentPrim.Vertex));
                         }
                     }
 
                 }
             }
 
-            return edges;
+            return Edges;
         }
 
         struct PrimStruct
         {
             public PrimStruct(Vertex vertex, double cost, Vertex parent)
             {
-                this.vertex = vertex;
+                this.Vertex = vertex;
                 this.Cost = cost;
                 this.Parent = parent;
             }
 
-            internal Vertex vertex;
+            internal Vertex Vertex;
             internal double Cost { get; set; }
             internal Vertex Parent { get; set; }
         }

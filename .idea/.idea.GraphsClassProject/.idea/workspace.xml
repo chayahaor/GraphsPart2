@@ -4,12 +4,28 @@
     <projectFile>GraphsClassProject.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="Made GraphInfo">
+    <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AlgorithmType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Digraph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DijkstrasAlgorithm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShortestPath.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GetData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GetData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphNew.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphNew.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphsClassProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphsClassProject.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kruskal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Kruskal.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParentGraph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Prim.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TopologicalSort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TopologicalSort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedDigraph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightedGraph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightsChart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightsChart.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
