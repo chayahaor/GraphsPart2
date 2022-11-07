@@ -57,6 +57,8 @@
     </Compile>
     <Compile Include="Graph.cs" />
     <Compile Include="AlgorithmType.cs" />
+    <Compile Include="GraphInfo.cs" />
+    <Compile Include="GraphNew.cs" />
     <Compile Include="GraphType.cs" />
     <Compile Include="Kruskal.cs" />
     <Compile Include="ParentGraph.cs" />
@@ -67,6 +69,12 @@
     <Compile Include="Vertex.cs" />
     <Compile Include="WeightedDigraph.cs" />
     <Compile Include="WeightedGraph.cs" />
+    <Compile Include="WeightsChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WeightsChart.Designer.cs">
+      <DependentUpon>WeightsChart.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,6 +87,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WeightsChart.resx">
+      <DependentUpon>WeightsChart.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

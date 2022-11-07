@@ -22,11 +22,12 @@ CREATE TABLE [dbo].[Nodes]
 (
 [Node_ID][int] IDENTITY(1,1) NOT NULL,
 [ShortName][varchar](50) NOT NULL,
+[X_Coord][DECIMAL] NULL,
+[Y_Coord][DECIMAL] NULL,
 [Info_ID] [int] NULL FOREIGN KEY REFERENCES [Info](Info_ID)
 CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED ([Node_ID]),
 )
 GO
-------------------------------------------------------------------------------
 /****** Object:  Table [dbo].[Coordinates] ******/
 CREATE TABLE [dbo].[XYCoordinates]
 (
@@ -43,7 +44,6 @@ CONSTRAINT Coordinates PRIMARY KEY
 [Y_Coord][FLOAT] NULL,
 )
 GO
-------------------------------------------------------------------------------
 
 /****** Object:  Table [dbo].[Graphs]*/
 CREATE TABLE [dbo].[Graphs]

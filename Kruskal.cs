@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
@@ -26,7 +22,7 @@ namespace GraphsClassProject
             {
                 foreach (Vertex neighbor in vertex.Neighbors)
                 {
-                    edges.Add(new EdgeStruct(vertex, graph.GetWeight(vertex, neighbor), neighbor));
+                    edges.Add(new EdgeStruct(vertex, graph.GetEdgeWeight(vertex, neighbor), neighbor));
                 }
             }
 
@@ -119,14 +115,14 @@ namespace GraphsClassProject
         private List<EdgeStruct> SortEdges()
         {
             List<EdgeStruct> sorted = Edges;
-            sorted.Sort((x, y) => x.Weight - y.Weight);
+            sorted.Sort((x, y) => (int)(x.Weight - y.Weight)); //TODO: Confirm that casting does not mess it up
             return sorted;
         }
 
         struct EdgeStruct
         {
             // constructor
-            public EdgeStruct(Vertex vertexA, int weight, Vertex vertexB)
+            public EdgeStruct(Vertex vertexA, double weight, Vertex vertexB)
             {
                 this.source = vertexA;
                 this.Weight = weight;
@@ -134,7 +130,7 @@ namespace GraphsClassProject
             }
 
             internal Vertex source;
-            internal int Weight { get; set; }
+            internal double Weight { get; set; }
             internal Vertex Destination { get; set; }
         }
     }

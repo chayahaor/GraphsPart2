@@ -4,9 +4,12 @@
     <projectFile>GraphsClassProject.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="">
+    <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="Made GraphInfo">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Prim.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +26,21 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/03/f80aca8e/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377d90b6a60246c8b0fcf7d6e7b8f936568ba0/bc/e2962ae8/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/578d960b41204f0aa9038fac387556e95227a0/82/be0be3eb/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/85a420b2bf614d95a7a4ca460c46dcd35a5d48/92/347c7c31/Button.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/85a420b2bf614d95a7a4ca460c46dcd35a5d48/a8/e9e6cc7c/Control.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/861e23c672704a4a8eca9c234af0cac552e590/84/2066f37a/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/90ee3cbb9dbb439fb2a3106cefde0581564d90/00/6ba6567b/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/90ee3cbb9dbb439fb2a3106cefde0581564d90/a6/46d25ea3/Nullable`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d97a3e9b3b244525be5c53d3b5e394ea5b3bb0/29/2b877edb/Button.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/edef46c9b2db4b878c98495bfdc516fa568ba8/3d/7f1c7f1f/Console.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Kruskal.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="29Ljtgx18BBjQZIh14HGoM7foNk" />
   <component name="ProjectViewState">
@@ -38,6 +52,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.47472528&quot;,
     &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
@@ -91,6 +106,12 @@
       <workItem from="1653664582672" duration="3646000" />
       <workItem from="1653956030287" duration="364000" />
       <workItem from="1654018834916" duration="651000" />
+      <workItem from="1663853901686" duration="676000" />
+      <workItem from="1663873173375" duration="3736000" />
+      <workItem from="1663877807269" duration="433000" />
+      <workItem from="1663892039548" duration="24000" />
+      <workItem from="1664402162453" duration="410000" />
+      <workItem from="1664495733584" duration="832000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>
@@ -134,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653956387192</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Made GraphInfo">
+      <created>1667234611515</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667234611515</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,7 +189,8 @@
     <MESSAGE value="Fixed TopologicalSort.cs" />
     <MESSAGE value="Cleanup - variable names same syntax" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="Made GraphInfo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made GraphInfo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

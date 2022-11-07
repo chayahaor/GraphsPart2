@@ -42,7 +42,7 @@ namespace GraphsClassProject
             {
                 foreach (Vertex v in currNode.Vertex.Neighbors)
                 {
-                    currNode = UpdateStructs(vertexStructs, currNode, out Dijkstra currStruct, out int newDistance, v);
+                    currNode = UpdateStructs(vertexStructs, currNode, out Dijkstra currStruct, out double newDistance, v);
 
                 }
 
@@ -58,7 +58,7 @@ namespace GraphsClassProject
         private static Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
         {
             //find shortest false node and set to currNode and true
-            int shortestFalse = MaxVal;
+            double shortestFalse = MaxVal;
             foreach (KeyValuePair<Vertex, Dijkstra> d in vertexStructs)
             {
 
@@ -82,7 +82,7 @@ namespace GraphsClassProject
             return currNode;
         }
 
-        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode, out Dijkstra currStruct, out int newDistance, Vertex neighbor)
+        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode, out Dijkstra currStruct, out double newDistance, Vertex neighbor)
         {
             if (!vertexStructs.ContainsKey(neighbor))
             {
@@ -91,7 +91,7 @@ namespace GraphsClassProject
             }
 
             currStruct = vertexStructs[neighbor];
-            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetWeight(currNode.Vertex, neighbor);
+            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + graph.GetEdgeWeight(currNode.Vertex, neighbor);
 
             if (newDistance < currStruct.DistanceFromStart)
             {
@@ -130,11 +130,11 @@ namespace GraphsClassProject
         struct Dijkstra
         {
             internal bool SdFound { get; set; }
-            internal int DistanceFromStart { get; set; }
+            internal double DistanceFromStart { get; set; }
             internal Vertex Parent { get; set; }
             internal Vertex Vertex { get; set; }
 
-            public Dijkstra(bool sdFound, int distanceFromStart, Vertex parent, Vertex vertex)
+            public Dijkstra(bool sdFound, double distanceFromStart, Vertex parent, Vertex vertex)
             {
                 this.SdFound = sdFound;
                 this.DistanceFromStart = distanceFromStart;
