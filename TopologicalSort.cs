@@ -5,7 +5,7 @@ namespace GraphsClassProject
 {
     internal class TopologicalSort
     {
-        // only for digraphs
+        // (if (directed) )
         private readonly ParentGraph graph;
 
         public TopologicalSort(ParentGraph graph)

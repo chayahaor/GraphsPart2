@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    public class ParentGraph
+    public partial class ParentGraph
     {
         public int MaxWeight { get; set; } 
         internal List<Vertex> Vertices { get; set; }

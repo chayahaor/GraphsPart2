@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
@@ -15,7 +12,7 @@ namespace GraphsClassProject
         public Kruskal(ParentGraph graph)
         {
             this.graph = graph;
-            this.Vertices = graph.Vertices;
+            Vertices = graph.Vertices;
         }
 
         private List<EdgeStruct> GetListOfEdges()
@@ -35,9 +32,9 @@ namespace GraphsClassProject
 
         public Vertex[,] KruskalAlgorithm()
         {
-            this.Edges = GetListOfEdges();
+            Edges = GetListOfEdges();
             Vertex[,] shortestPath = new Vertex[Vertices.Count - 1, 2];
-            List<EdgeStruct> orderedEdges = SortEdges();
+            Edges.Sort((x, y) => x.Weight.CompareTo(y.Weight));
 
 
             List<List<Vertex>> visited = new List<List<Vertex>>();
@@ -46,7 +43,7 @@ namespace GraphsClassProject
             int temp = Vertices.Count - 2;
             while (shortestPath[temp, 0] == null)
             {
-                EdgeStruct shortest = orderedEdges[0];
+                EdgeStruct shortest = Edges[0];
                 int foundSourceWhere = -1;
                 int foundDestinationWhere = -1;
 
@@ -109,20 +106,12 @@ namespace GraphsClassProject
                     }
                 }
 
-                orderedEdges.RemoveAt(0);
+                Edges.RemoveAt(0);
             }
 
             return shortestPath;
         }
         
-
-        private List<EdgeStruct> SortEdges()
-        {
-            List<EdgeStruct> sorted = Edges;
-            sorted.Sort((x, y) => x.Weight - y.Weight);
-            return sorted;
-        }
-
         struct EdgeStruct
         {
             // constructor

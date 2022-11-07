@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-    internal class DijkstrasAlgorithm
+    internal class ShortestPath
     {
-        //relevant to weighted graphs and weighted digraphs
+        //( if (weighted) )
   
         private readonly ParentGraph graph;
         public List<Vertex> Path { get; set; }
@@ -17,7 +14,7 @@ namespace GraphsClassProject
         public double ShortestDist { get; set; }
 
 
-        public DijkstrasAlgorithm(ParentGraph graph)
+        public ShortestPath(ParentGraph graph)
         {
             this.graph = graph;
             Path = new List<Vertex>();

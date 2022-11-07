@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-    internal class Prim
+    partial class ParentGraph
     {
         //(if (weighted) )
         //add functionality for unweighted (weight of 1) with basic formula
-        private readonly ParentGraph graph;
-        
 
-        public Prim(ParentGraph graph)
+        private Vertex[,] PrimMinSpanningGraph(Vertex start)
         {
-            this.graph = graph;
-        }
-        
-        public Vertex[,] PrimMinSpanningGraph(Vertex start)
-        {
-            Vertex[,] edges = new Vertex[graph.Vertices.Count - 1, 2];
-            List<PrimStruct> prims = new List<PrimStruct>();
+            Vertex[,] edges = new Vertex[Vertices.Count - 1, 2];
+            List<EdgeStruct> prims = new List<EdgeStruct>();
             List<Vertex> foundVertices = new List<Vertex>();
             int numEdgesFound = 0;
 
@@ -30,22 +25,22 @@ namespace GraphsClassProject
             {
                 if (!foundVertices.Contains(neighbor))
                 {
-                    prims.Add(new PrimStruct(neighbor,
-                        graph.GetWeight(start, neighbor),
+                    prims.Add(new EdgeStruct(neighbor,
+                        GetWeight(start, neighbor),
                         start));
                 }
             }
 
-            while (numEdgesFound < graph.Vertices.Count - 1)
+            while (numEdgesFound < Vertices.Count - 1)
             {
 
                 // get the vertex with the shortest cost
-                prims.Sort((x, y) => x.Cost.CompareTo(y.Cost));
-                PrimStruct currentPrim = prims[0];
+                prims.Sort((x, y) => x.Weight.CompareTo(y.Weight));
+                EdgeStruct currentPrim = prims[0];
                 prims.RemoveAt(0);
 
                 // add an edge to that prim
-                edges[numEdgesFound, 0] = currentPrim.Parent;   
+                edges[numEdgesFound, 0] = currentPrim.Parent;
                 edges[numEdgesFound, 1] = currentPrim.vertex;
                 foundVertices.Add(currentPrim.vertex);
                 numEdgesFound++;
@@ -54,19 +49,19 @@ namespace GraphsClassProject
                 {
                     if (!foundVertices.Contains(neighbor))
                     {
-                        PrimStruct neighborPrim = prims.Find(p => p.vertex.Equals(neighbor));
+                        EdgeStruct neighborPrim = prims.Find(p => p.vertex.Equals(neighbor));
                         if (neighborPrim.vertex != null)
                         {
-                            if (graph.GetWeight(currentPrim.vertex, neighbor) < neighborPrim.Cost)
+                            if (GetWeight(currentPrim.vertex, neighbor) < neighborPrim.Weight)
                             {
-                                neighborPrim.Cost = graph.GetWeight(currentPrim.vertex, neighbor);
+                                neighborPrim.Weight = GetWeight(currentPrim.vertex, neighbor);
                                 neighborPrim.Parent = currentPrim.vertex;
                             }
                         }
                         else
                         {
-                            prims.Add(new PrimStruct(neighbor, 
-                            graph.GetWeight(currentPrim.vertex, neighbor),
+                            prims.Add(new EdgeStruct(neighbor,
+                            GetWeight(currentPrim.vertex, neighbor),
                             currentPrim.vertex));
                         }
                     }
@@ -78,18 +73,19 @@ namespace GraphsClassProject
         }
 
         //replace with edgestruct that can also be used for kruskal
-        struct PrimStruct
+        struct EdgeStruct
         {
-            public PrimStruct(Vertex vertex, int cost, Vertex parent)
+            public EdgeStruct(Vertex vertex, int weight, Vertex parent)
             {
                 this.vertex = vertex;
-                this.Cost = cost;
+                this.Weight = weight;
                 this.Parent = parent;
             }
 
             internal Vertex vertex;
-            internal int Cost { get; set; }
+            internal int Weight { get; set; }
             internal Vertex Parent { get; set; }
         }
     }
 }
+

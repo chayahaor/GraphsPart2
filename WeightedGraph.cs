@@ -8,7 +8,7 @@ namespace GraphsClassProject
     class WeightedGraph : ParentGraph
     {
         private Prim prim;
-        private DijkstrasAlgorithm dijkstra;
+        private ShortestPath dijkstra;
         private Kruskal kruskal;
         public Vertex[,] kruskalOutput { get; set; } // kruskal will always return the same output, so store it the first time it is calculated
 
@@ -18,7 +18,7 @@ namespace GraphsClassProject
             Vertices = new List<Vertex>();
             Type = GraphType.WEIGHTED_GRAPH;
             prim = new Prim(this);
-            dijkstra = new DijkstrasAlgorithm(this);
+            dijkstra = new ShortestPath(this);
             kruskal = new Kruskal(this);
             kruskalOutput = null;
         }

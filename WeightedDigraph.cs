@@ -10,7 +10,7 @@ namespace GraphsClassProject
         private TopologicalSort topologicalSort;
         public Vertex[] topologicalOutput { get; set; } // topologicalSort will always return the same output, so store it the first time it is calculated
 
-        private DijkstrasAlgorithm dijkstra;
+        private ShortestPath dijkstra;
 
         public WeightedDigraph(String graphName) : base(graphName)
         {
@@ -19,7 +19,7 @@ namespace GraphsClassProject
             Type = GraphType.WEIGHTED_DIGRAPH;
             topologicalSort = new TopologicalSort(this);
             topologicalOutput = null;
-            dijkstra = new DijkstrasAlgorithm(this);
+            dijkstra = new ShortestPath(this);
         }
 
         public bool LoadGraph(String name, String server, String database)
