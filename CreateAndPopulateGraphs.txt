@@ -28,6 +28,18 @@ CREATE TABLE [dbo].[Nodes]
 CONSTRAINT [PK_Nodes] PRIMARY KEY CLUSTERED ([Node_ID]),
 )
 GO
+
+/****** Object:  Table [dbo].[Graphs]*/
+CREATE TABLE [dbo].[Graphs]
+(
+[Graph_ID][int]IDENTITY(1,1) NOT NULL,
+[Name][varchar](50) NOT NULL UNIQUE,
+[Weighted][bit] NOT NULL,
+[Directed][bit] NOT NULL,
+CONSTRAINT [PK_Graphs] PRIMARY KEY CLUSTERED ( [Graph_ID] ),
+)
+GO
+
 /****** Object:  Table [dbo].[Coordinates] ******/
 CREATE TABLE [dbo].[XYCoordinates]
 (
@@ -45,16 +57,6 @@ CONSTRAINT Coordinates PRIMARY KEY
 )
 GO
 
-/****** Object:  Table [dbo].[Graphs]*/
-CREATE TABLE [dbo].[Graphs]
-(
-[Graph_ID][int]IDENTITY(1,1) NOT NULL,
-[Name][varchar](50) NOT NULL UNIQUE,
-[Weighted][bit] NOT NULL,
-[Directed][bit] NOT NULL,
-CONSTRAINT [PK_Graphs] PRIMARY KEY CLUSTERED ( [Graph_ID] ),
-)
-GO
 ------------------------------------------------------------------------------
 /****** Object:  Table [dbo].[Edges]
 ******/
