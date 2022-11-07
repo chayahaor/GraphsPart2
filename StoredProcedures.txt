@@ -25,5 +25,55 @@ ON ter.Node_ID = Edges.TerminalNode_ID
 WHERE Graphs.name = @GraphName
 Order by ini.Node_ID
 
-exec spGetEdges @GraphName = 'Grp_A'
+---exec spGetEdges @GraphName = 'Grp_A'
+
+
+---calculates and populates x, y coordinates in database
+ALTER PROC spCalculateCoordinates @Graph_ID int
+AS
+
+Declare @Radian float;
+Declare @NumIDs int;
+Declare @Interval float;
+Declare @Curr_ID int;
+
+Set @Radian = 90 * (PI()/180); ---sets to 2
+PRINT @Radian
+Select @NumIDs = COUNT(Graph_ID) from XYCoordinates where XYCoordinates.Graph_ID = @Graph_ID;
+PRINT @NumIDs 
+Set @Interval = 2*PI()/cast(@NumIDs as float)
+PRINT @Interval ---sets to 0
+Set @Curr_ID = 1;
+PRINT @Curr_ID
+
+---create a temp table with identity column to iterate through when making calculations
+SELECT Graph_ID, Node_ID, IDENTITY(int) AS idcol
+into #temp_table 
+from XYCoordinates
+where XYCoordinates.Graph_ID = @Graph_ID
+
+---calculate and reset X/Y values in XYCoordinates table
+WHILE @Curr_ID <= @NumIDs
+BEGIN
+	UPDATE XYCoordinates
+	Set X_Coord = ROUND(SIN(@Radian), 2), Y_Coord = ROUND(COS(@Radian), 2)
+	From XYCoordinates AS orig_table join #temp_table AS temp_table on orig_table.Graph_ID = temp_table.Graph_ID AND orig_table.Node_ID = temp_table.Node_ID
+	where idcol = @Curr_ID AND orig_table.Graph_ID = @Graph_ID;
+
+	Set @Radian += @Interval
+	Set @Curr_ID += 1
+END
+
+drop table #temp_table
+
+
+		 
+
+
+
+
+
+
+
+
 
