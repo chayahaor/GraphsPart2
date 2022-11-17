@@ -5,26 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_24_2022_4_12_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_10_38_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/shelf/Uncommitted_changes_before_Update_at_5_25_2022_11_01_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlgorithmType.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Digraph.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DijkstrasAlgorithm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShortestPath.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GetData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GetData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graph.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphNew.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphNew.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphNew.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphsClassProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphsClassProject.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Kruskal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Kruskal.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ParentGraph.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Prim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Prim.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShortestPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShortestPath.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TopologicalSort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TopologicalSort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WeightedDigraph.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WeightedGraph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vertex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Vertex.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WeightsChart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightsChart.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +91,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ad9d400b-566b-4553-9951-1c88845bb475" name="Changes" comment="" />
+      <changelist id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="" />
       <created>1652899484708</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -128,6 +121,12 @@
       <workItem from="1663892039548" duration="24000" />
       <workItem from="1664402162453" duration="410000" />
       <workItem from="1664495733584" duration="832000" />
+      <workItem from="1668467608737" duration="50000" />
+      <workItem from="1668550119599" duration="1285000" />
+      <workItem from="1668552869267" duration="590000" />
+      <workItem from="1668699739167" duration="639000" />
+      <workItem from="1668711043134" duration="814000" />
+      <workItem from="1668718230602" duration="657000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>

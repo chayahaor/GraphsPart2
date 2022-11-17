@@ -15,17 +15,11 @@ namespace GraphsClassProject
         private String Database;
 
         // Graph Showing
-        private GraphNew NewGraph;
+        private GraphNew GraphNew;
         private GraphInfo AssociatedInfo;
-        
+
         // contains all graph names (graph names must be unique in the database)
         private ArrayList InformationGraphs;
-        
-        // List of all the buttons containing graph names
-        private List<Button> GraphNameButtons { get; }
-
-        // the center of the panelGraph panel (size 600 by 600)
-        private readonly int Center = 300;
 
         // list of all labels representing nodes specific to each selected graph
         private List<Label> LabelNodes { get; set; }
@@ -40,7 +34,6 @@ namespace GraphsClassProject
         public Form1()
         {
             InitializeComponent();
-            GraphNameButtons = new List<Button>();
             panelGraph.BackColor = Color.Gray;
             Server = ConfigurationManager.AppSettings["SERVER"];
             Database = ConfigurationManager.AppSettings["DATABASE"];
@@ -53,7 +46,7 @@ namespace GraphsClassProject
 
         private void SetUpGraphNameButtons()
         {
-            int X = 30;
+            const int X = 30;
             int Y = 0;
 
             foreach (GraphInfo Info in InformationGraphs)
@@ -73,18 +66,15 @@ namespace GraphsClassProject
             ShowGraph.Height += ShowGraph.Height;
             ShowGraph.Location = new Point(X, Y);
             ShowGraph.Click += ShowWeights;
-            
+
             panelGraphButtons.Controls.Add(ShowGraph);
         }
 
 
         private void btn_Click(object sender, EventArgs e)
         {
-            //When click a button
             Button Button = (Button)sender;
-            //Load the graph
-            NewGraph = new GraphNew(Button.Name, Server, Database);
-            //Display the graph
+            GraphNew = new GraphNew(Button.Name, Server, Database);
             FillPanel();
         }
 
@@ -126,7 +116,7 @@ namespace GraphsClassProject
 
             foreach (GraphInfo Info in InformationGraphs)
             {
-                if (Info.Name == NewGraph.GraphName)
+                if (Info.Name == GraphNew.GraphName)
                 {
                     AssociatedInfo = Info;
                 }
@@ -150,7 +140,6 @@ namespace GraphsClassProject
                 Type += "Graph";
             }
 
-            //TODO: confirm types done correctly
             switch (Type)
             {
                 case "Weighted Digraph":
@@ -173,12 +162,12 @@ namespace GraphsClassProject
                     break;
                 case "Unweighted Graph":
                     Dijkstra.Enabled = false;
-                    Kruskal.Enabled = false;
+                    Kruskal.Enabled = true;
                     Topological.Enabled = false;
-                    Prim.Enabled = false;
+                    Prim.Enabled = true;
                     break;
             }
-            
+
             LabelGraphType.Text = Type;
             LabelGraphType.Refresh();
             panelGraph.Controls.Add(LabelGraphType);
@@ -186,20 +175,20 @@ namespace GraphsClassProject
 
         private void CreateLabelNodes()
         {
-            for (int NodeNumber = 0; NodeNumber < NewGraph.Vertices.Count; NodeNumber++)
+            for (int NodeNumber = 0; NodeNumber < GraphNew.Vertices.Count; NodeNumber++)
             {
                 Label Label = new Label();
-                Label.Text = NewGraph.Vertices[NodeNumber].Name;
+                Label.Text = GraphNew.Vertices[NodeNumber].Name;
                 Label.TextAlign = ContentAlignment.MiddleCenter;
 
                 Graphics Graphics = panelGraph.CreateGraphics();
                 Pen Pen = new Pen(Color.Black);
-                Point Location = GetLocation(NodeNumber, NewGraph.Vertices.Count);
-                Graphics.DrawEllipse(Pen, Location.X - 5, Location.Y - 5, 10, 10);
+                Point LocationPont = GetLocation(GraphNew.Vertices[NodeNumber]);
+                Graphics.DrawEllipse(Pen, LocationPont.X - 5, LocationPont.Y - 5, 10, 10);
 
-                NodeCircleLocations.Add(Location);
+                NodeCircleLocations.Add(LocationPont);
 
-                Label.Location = GetNewXAndY(Location);
+                Label.Location = GetNewXAndY(LocationPont);
                 Label.Font = new Font("Arial", 8);
                 Label.Size = new Size(20, 15);
                 Label.ForeColor = Color.White;
@@ -220,9 +209,9 @@ namespace GraphsClassProject
         {
             SetUpGraphicsAndPen(out Graphics Graphics, out Pen Pen, Color.Black);
 
-            for (int NodeNumber = 0; NodeNumber < NewGraph.Vertices.Count; NodeNumber++)
+            for (int NodeNumber = 0; NodeNumber < GraphNew.Vertices.Count; NodeNumber++)
             {
-                Vertex CurrNode = NewGraph.Vertices[NodeNumber];
+                Vertex CurrNode = GraphNew.Vertices[NodeNumber];
                 foreach (Vertex Neighbor in CurrNode.Neighbors)
                 {
                     if (CurrNode.Neighbors.Contains(Neighbor))
@@ -231,7 +220,7 @@ namespace GraphsClassProject
                         Pen.Color = Color.Black;
 
                         Point OriginalLocation = NodeCircleLocations[NodeNumber];
-                        Point NeighborLocation = GetVertexLocation(Neighbor);
+                        Point NeighborLocation = GetLocation(Neighbor);
                         Graphics.DrawLine(Pen, OriginalLocation, NeighborLocation);
                     }
                 }
@@ -253,13 +242,11 @@ namespace GraphsClassProject
             }
         }
 
-        private Point GetLocation(int nodeNumber, int numNodes)
+        private Point GetLocation(Vertex vertex)
         {
-            //TODO: Move this to a SP in DB
-            // MAX NUMBER OF NODES: 26 
-            // MAX INNER NUMBER OF NODES: 10
-
-            int XCoord;
+            int XCoord = (int)(vertex.XCoord * panelGraph.Width);
+            int YCoord = (int)(vertex.YCoord * panelGraph.Height);
+            /*int XCoord;
             int YCoord;
             if (numNodes < 16 || nodeNumber < 16)
             {
@@ -279,13 +266,13 @@ namespace GraphsClassProject
                 XCoord = (int)Math.Floor(Center + DistanceFromCenter * Math.Cos(Angle));
                 YCoord = (int)Math.Floor(Center - DistanceFromCenter * Math.Sin(Angle));
             }
+            */
 
             return new Point(XCoord, YCoord);
         }
 
         private Point GetNewXAndY(Point location)
         {
-            //TODO: is this needed?
             int XCoord;
             int YCoord;
 
@@ -300,28 +287,14 @@ namespace GraphsClassProject
             return new Point(XCoord, YCoord);
         }
 
-        private Point GetVertexLocation(Vertex neighbor)
-        {
-            // default location points to the center of the panel
-            Point VertexLocation = new Point(Center, Center);
-            for (int LabelIndex = 0; LabelIndex < LabelNodes.Count; LabelIndex++)
-            {
-                if (LabelNodes[LabelIndex].Text == neighbor.Name)
-                {
-                    VertexLocation = NodeCircleLocations[LabelIndex];
-                }
-            }
-
-            return VertexLocation;
-        }
-
+       
         //Algorithms
         private void Kruskal_Click(object sender, EventArgs e)
         {
             CreateGraphics();
             panelNodeSelection.Visible = false;
 
-            var Output = NewGraph.KruskalAlgorithm();
+            var Output = GraphNew.KruskalAlgorithm();
             DrawRedLines(Output);
         }
 
@@ -329,15 +302,15 @@ namespace GraphsClassProject
         {
             CreateGraphics();
             panelNodeSelection.Visible = false;
-            NewGraph.DoTopological();
+            GraphNew.DoTopological();
         }
 
-        
+
         private void Prim_Click(object sender, EventArgs e)
         {
             CreateGraphics();
             ShowPanelNodeSelection(false);
-            Vertex[,] Output = NewGraph.PrimAlgorithm(SelectedVertexA);
+            Vertex[,] Output = GraphNew.PrimAlgorithm(SelectedVertexA);
 
             // draw minimum spanning graph edges in red
             DrawRedLines(Output);
@@ -353,13 +326,13 @@ namespace GraphsClassProject
             List<Vertex> Output = new List<Vertex>();
             double ShortestDist = 0.0;
 
-            NewGraph.DijkstraAlgorithm();
+            GraphNew.DijkstraAlgorithm();
             DrawRedLines(Output);
             MessageBox.Show("Shortest distance: " + ShortestDist);
             ResetNodeSelectionPanel();
         }
 
-     
+
         private void ShowPanelNodeSelection(bool isDestDropDownEnabled)
         {
             panelNodeSelection.Visible = true;
@@ -374,12 +347,12 @@ namespace GraphsClassProject
 
         private void GetInput()
         {
-            foreach (Vertex Vertex in NewGraph.Vertices)
+            foreach (Vertex Vertex in GraphNew.Vertices)
             {
                 originDropDown.Items.Add(Vertex.Name);
             }
 
-            foreach (Vertex Vertex in NewGraph.Vertices)
+            foreach (Vertex Vertex in GraphNew.Vertices)
             {
                 destDropDown.Items.Add(Vertex.Name);
             }
@@ -389,18 +362,18 @@ namespace GraphsClassProject
         {
             if (originDropDown.SelectedIndex == -1)
             {
-                SelectedVertexA = NewGraph.Vertices[0];
+                SelectedVertexA = GraphNew.Vertices[0];
                 MessageBox.Show("Default vertex selected");
             }
             else
             {
-                SelectedVertexA = NewGraph.Vertices[originDropDown.SelectedIndex];
+                SelectedVertexA = GraphNew.Vertices[originDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexA.Name);
             }
 
             if (destDropDown.SelectedIndex == -1)
             {
-                SelectedVertexB = NewGraph.Vertices[0];
+                SelectedVertexB = GraphNew.Vertices[0];
                 /*if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
                 {
                     MessageBox.Show("Default vertex selected");
@@ -408,7 +381,7 @@ namespace GraphsClassProject
             }
             else
             {
-                SelectedVertexB = NewGraph.Vertices[destDropDown.SelectedIndex];
+                SelectedVertexB = GraphNew.Vertices[destDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexB.Name);
             }
 
@@ -452,8 +425,8 @@ namespace GraphsClassProject
 
                 Pen.Width = 2;
 
-                Point BeginLocation = GetVertexLocation(Beginning);
-                Point NeighborLocation = GetVertexLocation(Ending);
+                Point BeginLocation = GetLocation(Beginning);
+                Point NeighborLocation = GetLocation(Ending);
                 Graphics.DrawLine(Pen, BeginLocation, NeighborLocation);
             }
         }
@@ -469,8 +442,8 @@ namespace GraphsClassProject
 
                 Pen.Width = 2;
 
-                Point StartingPoint = GetVertexLocation(StartingVertex);
-                Point NeighborLocation = GetVertexLocation(EndingVertex);
+                Point StartingPoint = GetLocation(StartingVertex);
+                Point NeighborLocation = GetLocation(EndingVertex);
                 Graphics.DrawLine(Pen, StartingPoint, NeighborLocation);
 
                 System.Threading.Thread.Sleep(500);
@@ -479,13 +452,13 @@ namespace GraphsClassProject
 
         private void ShowWeights(Object o, EventArgs e)
         {
-            if (NewGraph != null)
+            if (GraphNew != null)
             {
-                WeightsChart Chart = new WeightsChart(NewGraph);
+                WeightsChart Chart = new WeightsChart(GraphNew);
                 Chart.Show();
             }
         }
-        
+
         //TODO: delete/move to GraphNew
         private void DoPrim()
         {
@@ -504,7 +477,7 @@ namespace GraphsClassProject
 
             ResetNodeSelectionPanel();*/
         }
-        
+
         //TODO: delete/move to GraphNew
         private void DoDijkstra()
         {
@@ -555,7 +528,7 @@ namespace GraphsClassProject
             ResetNodeSelectionPanel();*/
         }
 
-        
+
         //TODO: delete/move to GraphNew
         private void DoTopological()
         {
@@ -615,6 +588,5 @@ namespace GraphsClassProject
                 MessageBox.Show(exception.Message);
             }*/
         }
-
     }
 }

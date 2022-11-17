@@ -7,16 +7,16 @@ namespace GraphsClassProject
     {
         //relevant to weighted graphs and weighted digraphs
   
-        private readonly GraphNew Graph;
+        private readonly GraphNew GraphNew;
         public List<Vertex> Path { get; }
         private const int MAX_VAL = int.MaxValue;
 
         public double ShortestDist { get; set; }
 
 
-        public ShortestPath(GraphNew graph)
+        public ShortestPath(GraphNew graphNew)
         {
-            this.Graph = graph;
+            this.GraphNew = graphNew;
             Path = new List<Vertex>();
         }
 
@@ -88,7 +88,7 @@ namespace GraphsClassProject
             }
 
             currStruct = vertexStructs[neighbor];
-            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + Graph.GetEdgeWeight(currNode.Vertex, neighbor);
+            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + GraphNew.GetEdgeWeight(currNode.Vertex, neighbor);
 
             if (newDistance < currStruct.DistanceFromStart)
             {

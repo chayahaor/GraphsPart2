@@ -20,12 +20,11 @@ namespace GraphsClassProject
             Vertices = new List<Vertex>();
             LoadGraph(graphName);
         }
-        
-        public bool LoadGraph(String name)
+
+        private bool LoadGraph(String name)
         {
             bool RetVal = true;
-
-
+            
             try
             {
                 String StrConnect = $"Server={Server};Database={Database};Trusted_Connection=True;";
@@ -52,13 +51,16 @@ namespace GraphsClassProject
                     // check initial node
                     String InitialNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[0];
                     String TerminalNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[1];
-
+                    double initXCoord = .5; //TODO: get from SP
+                    double initYCoord = .5; //TODO: get from SP
+                    double termXCoord = .5; //TODO: get from SP
+                    double termYCoord = .5; //TODO: get from SP
                     int InitialIndex = Vertices.FindIndex(item => InitialNode.Equals(item.Name));
                     int TerminalIndex = Vertices.FindIndex(item => TerminalNode.Equals(item.Name));
 
-                    Vertex Initial = InitialIndex < 0 ? new Vertex(InitialNode)
+                    Vertex Initial = InitialIndex < 0 ? new Vertex(InitialNode, initXCoord, initYCoord)
                                                     : Vertices[InitialIndex];
-                    Vertex Terminal = TerminalIndex < 0 ? new Vertex(TerminalNode)
+                    Vertex Terminal = TerminalIndex < 0 ? new Vertex(TerminalNode, termXCoord, termYCoord)
                                                     : Vertices[TerminalIndex];
 
                     if (InitialIndex < 0 && TerminalIndex < 0)

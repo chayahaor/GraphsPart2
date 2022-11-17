@@ -4,14 +4,14 @@ namespace GraphsClassProject
 {
     internal class Kruskal
     {
-        private readonly GraphNew Graph;
+        private readonly GraphNew GraphNew;
         private List<Vertex> Vertices;
         private List<EdgeStruct> Edges;
 
-        public Kruskal(GraphNew graph)
+        public Kruskal(GraphNew graphNew)
         {
-            this.Graph = graph;
-            this.Vertices = graph.Vertices;
+            this.GraphNew = graphNew;
+            this.Vertices = graphNew.Vertices;
         }
 
         private List<EdgeStruct> GetListOfEdges()
@@ -22,7 +22,7 @@ namespace GraphsClassProject
             {
                 foreach (Vertex Neighbor in Vertex.Neighbors)
                 {
-                    Edges.Add(new EdgeStruct(Vertex, Graph.GetEdgeWeight(Vertex, Neighbor), Neighbor));
+                    Edges.Add(new EdgeStruct(Vertex, GraphNew.GetEdgeWeight(Vertex, Neighbor), Neighbor));
                 }
             }
 

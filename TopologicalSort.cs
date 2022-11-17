@@ -5,16 +5,16 @@ namespace GraphsClassProject
 {
     internal class TopologicalSort
     {
-        private readonly GraphNew Graph;
+        private readonly GraphNew GraphNew;
 
-        public TopologicalSort(GraphNew graph)
+        public TopologicalSort(GraphNew graphNew)
         {
-            this.Graph = graph;
+            this.GraphNew = graphNew;
         }
 
         public Vertex[] GetTopologicalSort()
         {
-            Vertex[] Sorted = new Vertex[Graph.Vertices.Count];
+            Vertex[] Sorted = new Vertex[GraphNew.Vertices.Count];
 
             // make adjacency list (use each vertex's neighbors list) - dictionary
             Dictionary<Vertex, List<Vertex>> AdjacencyList = new Dictionary<Vertex, List<Vertex>>();
@@ -22,7 +22,7 @@ namespace GraphsClassProject
             // make indegree list (use each vertex's indegree) - dictionary
             Dictionary<Vertex, int> IndegreeList = new Dictionary<Vertex, int>();
 
-            foreach (Vertex Vertex in Graph.Vertices)
+            foreach (Vertex Vertex in GraphNew.Vertices)
             {
                 AdjacencyList.Add(Vertex, Vertex.Neighbors);
                 IndegreeList.Add(Vertex, Vertex.Indegree);
@@ -65,7 +65,7 @@ namespace GraphsClassProject
                     }
                 }
                 
-                if (NumVerticesAdded > Graph.Vertices.Count)
+                if (NumVerticesAdded > GraphNew.Vertices.Count)
                 {
                     throw new Exception("Graph contains cycle");
                 }

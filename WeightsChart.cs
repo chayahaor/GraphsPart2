@@ -7,11 +7,11 @@ namespace GraphsClassProject
 {
     public partial class WeightsChart : Form
     {
-        private GraphNew Graph;
-        public WeightsChart(GraphNew sentGraph)
+        private GraphNew GraphNew;
+        public WeightsChart(GraphNew sentGraphNew)
         {
             InitializeComponent();
-            Graph = sentGraph;
+            GraphNew = sentGraphNew;
             LoopThrough();
         }
 
@@ -19,7 +19,7 @@ namespace GraphsClassProject
         {
             String Output = "";
 
-            foreach (Vertex CurrNode in Graph.Vertices)
+            foreach (Vertex CurrNode in GraphNew.Vertices)
             {
                 foreach (Vertex Neighbor in CurrNode.Neighbors)
                 {
@@ -27,7 +27,7 @@ namespace GraphsClassProject
                     {
                         Output = Output + "\n\n" + CurrNode.Name + " " +
                                  Neighbor.Name + " has the weight " +
-                                 Graph.GetEdgeWeight(CurrNode, Neighbor);
+                                 GraphNew.GetEdgeWeight(CurrNode, Neighbor);
                     }
                 }
             }
