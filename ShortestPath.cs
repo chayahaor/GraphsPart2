@@ -3,26 +3,15 @@ using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    internal class ShortestPath
+    partial class GraphNew
     {
-        //relevant to weighted graphs and weighted digraphs
-  
-        private readonly GraphNew GraphNew;
-        public List<Vertex> Path { get; }
         private const int MAX_VAL = int.MaxValue;
 
-        public double ShortestDist { get; set; }
-
-
-        public ShortestPath(GraphNew graphNew)
+        private void DijskstrasShortestPath(Vertex source, Vertex target)
         {
-            this.GraphNew = graphNew;
-            Path = new List<Vertex>();
-        }
+            double ShortestDist;
 
-        public void DijskstrasShortestPath(Vertex source, Vertex target)
-        {
-            ClearPath();
+            //ClearPath();
 
             if (source.Equals(target))
             {
@@ -88,7 +77,8 @@ namespace GraphsClassProject
             }
 
             currStruct = vertexStructs[neighbor];
-            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + GraphNew.GetEdgeWeight(currNode.Vertex, neighbor);
+
+            newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + GetEdgeWeight(currNode.Vertex, neighbor);
 
             if (newDistance < currStruct.DistanceFromStart)
             {
@@ -106,6 +96,8 @@ namespace GraphsClassProject
 
         private void CreatePath(Vertex source, Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
         {
+            List<Vertex> Path = new List<Vertex>();
+
             Vertex Parent = currNode.Parent;
             Path.Add(Parent);
 
@@ -119,10 +111,10 @@ namespace GraphsClassProject
             
         }
 
-        private void ClearPath()
-        {
-            Path.Clear();
-        }
+        //private void ClearPath()
+        //{
+        //    Path.Clear();
+        //}
 
         struct Dijkstra
         {

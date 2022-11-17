@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace GraphsClassProject
 {
-    public class GraphNew
+    public partial class GraphNew
     {
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
@@ -103,25 +103,28 @@ namespace GraphsClassProject
             return Weight;
         }
         
-        //TODO: add partial classes with all the algorithms 
         //TODO: Add implementation
         public Vertex[,] KruskalAlgorithm()
         {
+            //which graphs does this work for? undirected and weighted for sure. directed and weighted - ?? 
             throw new NotImplementedException();
         }
 
         public void DoTopological()
         {
+            //do only if directed graph
             throw new NotImplementedException();
         }
 
         public Vertex[,] PrimAlgorithm(Vertex selectedVertexA)
         {
+            //only for weighted graphs
             throw new NotImplementedException();
         }
 
         public void DijkstraAlgorithm()
         {
+            //do only if weighted graph
             throw new NotImplementedException();
         }
     }
