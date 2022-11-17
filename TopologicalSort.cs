@@ -3,18 +3,11 @@ using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    internal class TopologicalSort
+    partial class GraphNew
     {
-        private readonly GraphNew Graph;
-
-        public TopologicalSort(GraphNew graph)
-        {
-            this.Graph = graph;
-        }
-
         public Vertex[] GetTopologicalSort()
         {
-            Vertex[] Sorted = new Vertex[Graph.Vertices.Count];
+            Vertex[] Sorted = new Vertex[Vertices.Count];
 
             // make adjacency list (use each vertex's neighbors list) - dictionary
             Dictionary<Vertex, List<Vertex>> AdjacencyList = new Dictionary<Vertex, List<Vertex>>();
@@ -22,7 +15,7 @@ namespace GraphsClassProject
             // make indegree list (use each vertex's indegree) - dictionary
             Dictionary<Vertex, int> IndegreeList = new Dictionary<Vertex, int>();
 
-            foreach (Vertex Vertex in Graph.Vertices)
+            foreach (Vertex Vertex in Vertices)
             {
                 AdjacencyList.Add(Vertex, Vertex.Neighbors);
                 IndegreeList.Add(Vertex, Vertex.Indegree);
@@ -65,7 +58,7 @@ namespace GraphsClassProject
                     }
                 }
                 
-                if (NumVerticesAdded > Graph.Vertices.Count)
+                if (NumVerticesAdded > Vertices.Count)
                 {
                     throw new Exception("Graph contains cycle");
                 }
