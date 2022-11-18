@@ -15,7 +15,7 @@ namespace GraphsClassProject
         private String Database;
 
         // Graph Showing
-        private GraphNew GraphNew;
+        private Graph Graph;
         private GraphInfo AssociatedInfo;
 
         // contains all graph names (graph names must be unique in the database)
@@ -52,7 +52,7 @@ namespace GraphsClassProject
             foreach (GraphInfo Info in InformationGraphs)
             {
                 Button Button = new Button();
-                Button.Name = Info.Name; // All button names are unique because in the SQL code, graph names are unique
+                Button.Name = Info.Name;
                 Button.Text = Info.Name;
                 Button.Click += btn_Click;
                 Button.Location = new Point(X, Y);
@@ -74,7 +74,7 @@ namespace GraphsClassProject
         private void btn_Click(object sender, EventArgs e)
         {
             Button Button = (Button)sender;
-            GraphNew = new GraphNew(Button.Name, Server, Database);
+            Graph = new Graph(Button.Name, Server, Database);
             FillPanel();
         }
 
@@ -110,13 +110,13 @@ namespace GraphsClassProject
         {
             Label LabelGraphType = new Label();
             LabelGraphType.Location = new Point(15, 20);
-            Size Size = new Size(300, 20);
-            LabelGraphType.Size = Size;
+            Size LblSize = new Size(300, 20);
+            LabelGraphType.Size = LblSize;
             String Type = "";
 
             foreach (GraphInfo Info in InformationGraphs)
             {
-                if (Info.Name == GraphNew.GraphName)
+                if (Info.Name == Graph.GraphName)
                 {
                     AssociatedInfo = Info;
                 }
@@ -175,15 +175,15 @@ namespace GraphsClassProject
 
         private void CreateLabelNodes()
         {
-            for (int NodeNumber = 0; NodeNumber < GraphNew.Vertices.Count; NodeNumber++)
+            for (int NodeNumber = 0; NodeNumber < Graph.Vertices.Count; NodeNumber++)
             {
                 Label Label = new Label();
-                Label.Text = GraphNew.Vertices[NodeNumber].Name;
+                Label.Text = Graph.Vertices[NodeNumber].Name;
                 Label.TextAlign = ContentAlignment.MiddleCenter;
 
                 Graphics Graphics = panelGraph.CreateGraphics();
                 Pen Pen = new Pen(Color.Black);
-                Point LocationPont = GetLocation(GraphNew.Vertices[NodeNumber]);
+                Point LocationPont = GetLocation(Graph.Vertices[NodeNumber]);
                 Graphics.DrawEllipse(Pen, LocationPont.X - 5, LocationPont.Y - 5, 10, 10);
 
                 NodeCircleLocations.Add(LocationPont);
@@ -209,9 +209,9 @@ namespace GraphsClassProject
         {
             SetUpGraphicsAndPen(out Graphics Graphics, out Pen Pen, Color.Black);
 
-            for (int NodeNumber = 0; NodeNumber < GraphNew.Vertices.Count; NodeNumber++)
+            for (int NodeNumber = 0; NodeNumber < Graph.Vertices.Count; NodeNumber++)
             {
-                Vertex CurrNode = GraphNew.Vertices[NodeNumber];
+                Vertex CurrNode = Graph.Vertices[NodeNumber];
                 foreach (Vertex Neighbor in CurrNode.Neighbors)
                 {
                     if (CurrNode.Neighbors.Contains(Neighbor))
@@ -246,28 +246,6 @@ namespace GraphsClassProject
         {
             int XCoord = (int)(vertex.XCoord * panelGraph.Width);
             int YCoord = (int)(vertex.YCoord * panelGraph.Height);
-            /*int XCoord;
-            int YCoord;
-            if (numNodes < 16 || nodeNumber < 16)
-            {
-                int DistanceFromCenter = 200;
-
-                double Angle = 2.0 * Math.PI / (numNodes) * nodeNumber;
-
-                XCoord = (int)Math.Floor(Center + DistanceFromCenter * Math.Cos(Angle));
-                YCoord = (int)Math.Floor(Center - DistanceFromCenter * Math.Sin(Angle));
-            }
-            else
-            {
-                int DistanceFromCenter = 100;
-
-                double Angle = 2.0 * Math.PI / numNodes - 17 * nodeNumber;
-
-                XCoord = (int)Math.Floor(Center + DistanceFromCenter * Math.Cos(Angle));
-                YCoord = (int)Math.Floor(Center - DistanceFromCenter * Math.Sin(Angle));
-            }
-            */
-
             return new Point(XCoord, YCoord);
         }
 
@@ -287,14 +265,14 @@ namespace GraphsClassProject
             return new Point(XCoord, YCoord);
         }
 
-       
+
         //Algorithms
         private void Kruskal_Click(object sender, EventArgs e)
         {
             CreateGraphics();
             panelNodeSelection.Visible = false;
 
-            var Output = GraphNew.KruskalAlgorithm();
+            var Output = Graph.GetKruskalAlgorithm();
             DrawRedLines(Output);
         }
 
@@ -302,36 +280,30 @@ namespace GraphsClassProject
         {
             CreateGraphics();
             panelNodeSelection.Visible = false;
-            GraphNew.DoTopological();
+            Vertex[] Output =   Graph.GetTopologicalSort();
+            //TODO: determine what to do with the results of topological sort
         }
-
 
         private void Prim_Click(object sender, EventArgs e)
         {
             CreateGraphics();
             ShowPanelNodeSelection(false);
-            Vertex[,] Output = GraphNew.PrimAlgorithm(SelectedVertexA);
-
+            Vertex[,] Output = Graph.PrimMinSpanningGraph(SelectedVertexA);
             // draw minimum spanning graph edges in red
             DrawRedLines(Output);
 
             ResetNodeSelectionPanel();
         }
 
-
         private void Dijkstra_Click(object sender, EventArgs e)
         {
             CreateGraphics();
             ShowPanelNodeSelection(true);
-            List<Vertex> Output = new List<Vertex>();
-            double ShortestDist = 0.0;
-
-            GraphNew.DijkstraAlgorithm();
+            var Output = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
             DrawRedLines(Output);
-            MessageBox.Show("Shortest distance: " + ShortestDist);
+            MessageBox.Show("Shortest distance: " + Graph.ShortestDistance());
             ResetNodeSelectionPanel();
         }
-
 
         private void ShowPanelNodeSelection(bool isDestDropDownEnabled)
         {
@@ -347,12 +319,12 @@ namespace GraphsClassProject
 
         private void GetInput()
         {
-            foreach (Vertex Vertex in GraphNew.Vertices)
+            foreach (Vertex Vertex in Graph.Vertices)
             {
                 originDropDown.Items.Add(Vertex.Name);
             }
 
-            foreach (Vertex Vertex in GraphNew.Vertices)
+            foreach (Vertex Vertex in Graph.Vertices)
             {
                 destDropDown.Items.Add(Vertex.Name);
             }
@@ -362,18 +334,18 @@ namespace GraphsClassProject
         {
             if (originDropDown.SelectedIndex == -1)
             {
-                SelectedVertexA = GraphNew.Vertices[0];
+                SelectedVertexA = Graph.Vertices[0];
                 MessageBox.Show("Default vertex selected");
             }
             else
             {
-                SelectedVertexA = GraphNew.Vertices[originDropDown.SelectedIndex];
+                SelectedVertexA = Graph.Vertices[originDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexA.Name);
             }
 
             if (destDropDown.SelectedIndex == -1)
             {
-                SelectedVertexB = GraphNew.Vertices[0];
+                SelectedVertexB = Graph.Vertices[0];
                 /*if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
                 {
                     MessageBox.Show("Default vertex selected");
@@ -381,7 +353,7 @@ namespace GraphsClassProject
             }
             else
             {
-                SelectedVertexB = GraphNew.Vertices[destDropDown.SelectedIndex];
+                SelectedVertexB = Graph.Vertices[destDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexB.Name);
             }
 
@@ -399,30 +371,11 @@ namespace GraphsClassProject
         private void DrawRedLines(Vertex[,] input)
         {
             SetUpGraphicsAndPen(out Graphics Graphics, out Pen Pen, Color.Red);
-
-            /*Vertex startingVertex = new Vertex("start");
-            Vertex endingVertex = new Vertex("end");
-            */
-
             for (int Index = 0; Index < input.GetLength(0); Index++)
             {
                 Vertex Beginning = input[Index, 0];
                 Vertex Ending = input[Index, 1];
-
-                /*foreach (var vertex in newGraph.Vertices)
-                {
-                    if (vertex.Name.Equals(beginning.Name))
-                    {
-                        startingVertex = vertex;
-                    }
-
-                    if (vertex.Name.Equals(ending.Name))
-                    {
-                        endingVertex = vertex;
-                    }
-                }
-                */
-
+                
                 Pen.Width = 2;
 
                 Point BeginLocation = GetLocation(Beginning);
@@ -452,141 +405,11 @@ namespace GraphsClassProject
 
         private void ShowWeights(Object o, EventArgs e)
         {
-            if (GraphNew != null)
+            if (Graph != null)
             {
-                WeightsChart Chart = new WeightsChart(GraphNew);
+                WeightsChart Chart = new WeightsChart(Graph);
                 Chart.Show();
             }
-        }
-
-        //TODO: delete/move to GraphNew
-        private void DoPrim()
-        {
-            /*foreach (WeightedGraph weightedGraph in weightedGraphs)
-            {
-                if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                {
-                    Vertex[,] output = weightedGraph.DoPrimAlgorithm(selectedVertexA);
-
-                    // draw minimum spanning graph edges in red
-                    DrawRedLines(currentGraphShowing, output);
-
-                    break;
-                }
-            }
-
-            ResetNodeSelectionPanel();*/
-        }
-
-        //TODO: delete/move to GraphNew
-        private void DoDijkstra()
-        {
-            /*List<Vertex> output = new List<Vertex>();
-            double shortestDist = 0.0;
-
-            try
-            {
-                if (currentGraphShowing.Type == GraphType.WEIGHTED_GRAPH)
-                {
-                    foreach (WeightedGraph weightedGraph in weightedGraphs)
-                    {
-                        if (weightedGraph.GraphName.Equals(currentGraphShowing.GraphName))
-                        {
-                            output = weightedGraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-
-                            shortestDist = weightedGraph.GetDijkstraShortestDistance();
-
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
-                    {
-                        if (weightedDigraph.GraphName.Equals(currentGraphShowing.GraphName))
-                        {
-                            output = weightedDigraph.DoDijkstraAlgorithm(selectedVertexA, selectedVertexB);
-
-                            shortestDist = weightedDigraph.GetDijkstraShortestDistance();
-
-                            break;
-                        }
-                    }
-                }
-
-                // Draw path one by one using red lines
-                DrawRedLines(currentGraphShowing, output);
-
-                MessageBox.Show("Shortest distance: " + shortestDist);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            ResetNodeSelectionPanel();*/
-        }
-
-
-        //TODO: delete/move to GraphNew
-        private void DoTopological()
-        {
-            /*string topologicalOutput = "";
-            try
-            {
-                Vertex[] output = Array.Empty<Vertex>();
-                if (currentGraphShowing.Type == GraphType.WEIGHTED_DIGRAPH)
-                {
-                    foreach (WeightedDigraph weightedDigraph in weightedDigraphs)
-                    {
-                        if (weightedDigraph.GraphName == currentGraphShowing.GraphName)
-                        {
-                            if (weightedDigraph.topologicalOutput == null)
-                            {
-                                output = weightedDigraph.DoTopologicalSort();
-                            }
-                            else
-                            {
-                                output = weightedDigraph.topologicalOutput;
-                            }
-
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (Digraph digraph in digraphs)
-                    {
-                        if (digraph.GraphName == currentGraphShowing.GraphName)
-                        {
-                            if (digraph.topologicalOutput == null)
-                            {
-                                output = digraph.DoTopologicalSort();
-                            }
-                            else
-                            {
-                                output = digraph.topologicalOutput;
-                            }
-
-                            break;
-                        }
-                    }
-                }
-
-                foreach (Vertex vertex in output)
-                {
-                    topologicalOutput += vertex.Name + " ";
-                }
-
-                MessageBox.Show("Topological sort of " + currentGraphShowing.GraphName + ":\n\n" +
-                                topologicalOutput);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }*/
         }
     }
 }

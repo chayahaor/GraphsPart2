@@ -1,31 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    partial class GraphNew
+    partial class Graph
     {
-<<<<<<< HEAD:Kruskal.cs
-        private readonly GraphNew GraphNew;
-        private List<Vertex> Vertices;
-        private List<EdgeStruct> Edges;
-
-        public Kruskal(GraphNew graphNew)
-        {
-            this.GraphNew = graphNew;
-            this.Vertices = graphNew.Vertices;
-        }
-
-        private List<EdgeStruct> GetListOfEdges()
-=======
         
        // private List<EdgeStruct> Edges;
 
         private List<EdgeStruct> GetListOfEdgesForKruskal()
->>>>>>> e821afd8a1b49f7121c129b6bb950751f1e633cc:MinSpanningTrees.cs
         {
             List<EdgeStruct> Edges = new List<EdgeStruct>();
 
@@ -33,11 +15,7 @@ namespace GraphsClassProject
             {
                 foreach (Vertex Neighbor in Vertex.Neighbors)
                 {
-<<<<<<< HEAD:Kruskal.cs
-                    Edges.Add(new EdgeStruct(Vertex, GraphNew.GetEdgeWeight(Vertex, Neighbor), Neighbor));
-=======
                     Edges.Add(new EdgeStruct(Vertex, GetEdgeWeight(Vertex, Neighbor), Neighbor));
->>>>>>> e821afd8a1b49f7121c129b6bb950751f1e633cc:MinSpanningTrees.cs
                 }
             }
 

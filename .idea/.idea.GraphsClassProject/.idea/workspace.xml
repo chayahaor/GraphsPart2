@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/GraphNew.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphNew.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kruskal.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MinSpanningTrees.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MinSpanningTrees.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Prim.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/App.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.resx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphNew.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphsClassProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphsClassProject.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MinSpanningTrees.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prim.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/Resources.resx" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/Resources.resx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/Settings.settings" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/Settings.settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ShortestPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShortestPath.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TopologicalSort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TopologicalSort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightsChart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WeightsChart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WeightsChart.resx" beforeDir="false" afterPath="$PROJECT_DIR$/WeightsChart.resx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +129,7 @@
       <workItem from="1668552869267" duration="590000" />
       <workItem from="1668699739167" duration="639000" />
       <workItem from="1668711043134" duration="814000" />
-      <workItem from="1668718230602" duration="1004000" />
+      <workItem from="1668718230602" duration="7814000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>

@@ -5,14 +5,15 @@ using System.Data.SqlClient;
 
 namespace GraphsClassProject
 {
-    public partial class GraphNew
+    public partial class Graph
     {
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
-        
+
         private String Server;
         private String Database;
-        public GraphNew(String graphName, String server, String database)
+
+        public Graph(String graphName, String server, String database)
         {
             this.GraphName = graphName;
             this.Server = server;
@@ -24,7 +25,7 @@ namespace GraphsClassProject
         private bool LoadGraph(String name)
         {
             bool RetVal = true;
-            
+
             try
             {
                 String StrConnect = $"Server={Server};Database={Database};Trusted_Connection=True;";
@@ -32,7 +33,6 @@ namespace GraphsClassProject
                 SqlCon.Open();
 
                 SqlCommand GetEdgesForGraph = new SqlCommand("spGetEdges", SqlCon);
-
                 SqlParameter SqlParameter = new SqlParameter();
                 SqlParameter.ParameterName = "@GraphName";
                 SqlParameter.Value = name;
@@ -43,7 +43,9 @@ namespace GraphsClassProject
                 SqlDataAdapter Da2 = new SqlDataAdapter(GetEdgesForGraph);
                 DataSet DataSet = new DataSet();
                 Da2.Fill(DataSet, "Edges");
-                // edge table: initialNode, terminalNode, weight (should be 1)
+                
+
+                // edge table: initialNode, terminalNode, weight
 
                 var NrEdges = DataSet.Tables["Edges"].Rows.Count;
                 for (int Row = 0; Row < NrEdges; ++Row)
@@ -51,17 +53,19 @@ namespace GraphsClassProject
                     // check initial node
                     String InitialNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[0];
                     String TerminalNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[1];
-                    double initXCoord = .5; //TODO: get from SP
-                    double initYCoord = .5; //TODO: get from SP
-                    double termXCoord = .5; //TODO: get from SP
-                    double termYCoord = .5; //TODO: get from SP
+                    double initXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[2];
+                    double initYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[3];
+                    double termXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[4];
+                    double termYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[5];
                     int InitialIndex = Vertices.FindIndex(item => InitialNode.Equals(item.Name));
                     int TerminalIndex = Vertices.FindIndex(item => TerminalNode.Equals(item.Name));
 
-                    Vertex Initial = InitialIndex < 0 ? new Vertex(InitialNode, initXCoord, initYCoord)
-                                                    : Vertices[InitialIndex];
-                    Vertex Terminal = TerminalIndex < 0 ? new Vertex(TerminalNode, termXCoord, termYCoord)
-                                                    : Vertices[TerminalIndex];
+                    Vertex Initial = InitialIndex < 0
+                        ? new Vertex(InitialNode, initXCoord, initYCoord)
+                        : Vertices[InitialIndex];
+                    Vertex Terminal = TerminalIndex < 0
+                        ? new Vertex(TerminalNode, termXCoord, termYCoord)
+                        : Vertices[TerminalIndex];
 
                     if (InitialIndex < 0 && TerminalIndex < 0)
                     {
@@ -79,6 +83,7 @@ namespace GraphsClassProject
                         // terminal doesn't exist, create and add edge between initial and it with weight = 1
                         Vertices.Add(Terminal);
                     }
+
                     // if they both already exist, no need to add anything
                     Initial.AddEdge(Terminal, 1);
                     Terminal.AddEdge(Initial, 1);
@@ -93,7 +98,6 @@ namespace GraphsClassProject
 
             return RetVal;
         }
-
         
         internal double GetEdgeWeight(Vertex initial, Vertex terminal)
         {
@@ -101,31 +105,6 @@ namespace GraphsClassProject
             int NeighborIndex = Vertices[VertexIndex].Neighbors.IndexOf(terminal);
             double Weight = Vertices[VertexIndex].Weights[NeighborIndex];
             return Weight;
-        }
-        
-        //TODO: Add implementation
-        public Vertex[,] KruskalAlgorithm()
-        {
-            //which graphs does this work for? undirected and weighted for sure. directed and weighted - ?? 
-            throw new NotImplementedException();
-        }
-
-        public void DoTopological()
-        {
-            //do only if directed graph
-            throw new NotImplementedException();
-        }
-
-        public Vertex[,] PrimAlgorithm(Vertex selectedVertexA)
-        {
-            //only for weighted graphs
-            throw new NotImplementedException();
-        }
-
-        public void DijkstraAlgorithm()
-        {
-            //do only if weighted graph
-            throw new NotImplementedException();
         }
     }
 }

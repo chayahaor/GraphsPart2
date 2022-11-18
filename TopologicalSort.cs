@@ -3,15 +3,12 @@ using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    partial class GraphNew
+    partial class Graph
     {
-       
-
         public Vertex[] GetTopologicalSort()
         {
             Vertex[] Sorted = new Vertex[Vertices.Count];
-
-
+            
             // make adjacency list (use each vertex's neighbors list) - dictionary
             Dictionary<Vertex, List<Vertex>> AdjacencyList = new Dictionary<Vertex, List<Vertex>>();
 
@@ -61,7 +58,6 @@ namespace GraphsClassProject
                     }
                 }
                 
-
                 if (NumVerticesAdded > Vertices.Count)
                 {
                     throw new Exception("Graph contains cycle");
