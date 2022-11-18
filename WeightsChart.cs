@@ -7,8 +7,8 @@ namespace GraphsClassProject
 {
     public partial class WeightsChart : Form
     {
-        private GraphNew Graph;
-        public WeightsChart(GraphNew sentGraph)
+        private Graph Graph;
+        public WeightsChart(Graph sentGraph)
         {
             InitializeComponent();
             Graph = sentGraph;

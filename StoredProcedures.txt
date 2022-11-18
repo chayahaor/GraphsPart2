@@ -16,7 +16,11 @@ CREATE PROC Spgetedges @GraphName VARCHAR(50)
 AS
     SELECT ini.shortname AS [Initial Node Name],
            ter.shortname AS [Terminal Node Name],
-           [weight]
+           [weight],
+		   ini_xy.X_Coord AS [Initial Node X Coordinate],
+		   ini_xy.Y_Coord AS [Initial Node Y Coordinate],
+		   ter_xy.X_Coord AS [Terminal Node X Coordinate],
+		   ter_xy.Y_Coord AS [Terminal Node Y Coordinate]
     FROM   edges
            JOIN graphs
              ON edges.graph_id = graphs.graph_id
@@ -24,6 +28,10 @@ AS
              ON ini.node_id = edges.initialnode_id
            JOIN nodes ter
              ON ter.node_id = edges.terminalnode_id
+		   JOIN XYCoordinates ini_xy
+		     ON ini.Node_ID = ini_xy.Node_ID AND graphs.Graph_ID = ini_xy.Graph_ID
+		   JOIN XYCoordinates ter_xy
+		     ON ter.Node_ID = ter_xy.Node_ID AND graphs.Graph_ID = ter_xy.Graph_ID 
     WHERE  graphs.NAME = @GraphName
     ORDER  BY ini.node_id
 
