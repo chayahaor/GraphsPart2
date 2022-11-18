@@ -74,7 +74,9 @@ namespace GraphsClassProject
         private void btn_Click(object sender, EventArgs e)
         {
             Button Button = (Button)sender;
+            //Load the graph
             Graph = new Graph(Button.Name, Server, Database);
+            //Display the graph
             FillPanel();
         }
 
@@ -185,7 +187,7 @@ namespace GraphsClassProject
                 Pen Pen = new Pen(Color.Black);
                 Point LocationPont = GetLocation(Graph.Vertices[NodeNumber]);
                 Graphics.DrawEllipse(Pen, LocationPont.X - 5, LocationPont.Y - 5, 10, 10);
-
+                
                 NodeCircleLocations.Add(LocationPont);
 
                 Label.Location = GetNewXAndY(LocationPont);
@@ -281,7 +283,6 @@ namespace GraphsClassProject
             CreateGraphics();
             panelNodeSelection.Visible = false;
             Vertex[] Output =   Graph.GetTopologicalSort();
-            //TODO: determine what to do with the results of topological sort
         }
 
         private void Prim_Click(object sender, EventArgs e)
@@ -299,7 +300,7 @@ namespace GraphsClassProject
         {
             CreateGraphics();
             ShowPanelNodeSelection(true);
-            var Output = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
+            List<Vertex> Output = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
             DrawRedLines(Output);
             MessageBox.Show("Shortest distance: " + Graph.ShortestDistance());
             ResetNodeSelectionPanel();
