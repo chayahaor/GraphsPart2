@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Drawing.Drawing2D;
+using System.Security.AccessControl;
+using System.Threading;
 
 namespace GraphsClassProject
 {
@@ -182,10 +184,9 @@ namespace GraphsClassProject
                 Label Label = new Label();
                 Label.Text = Graph.Vertices[NodeNumber].Name;
                 Label.TextAlign = ContentAlignment.MiddleCenter;
-
                 Graphics Graphics = panelGraph.CreateGraphics();
                 Pen Pen = new Pen(Color.Black);
-                Point LocationPont = GetLocation(Graph.Vertices[NodeNumber]);
+                Point LocationPont = GetLocation(Graph.Vertices[NodeNumber]); 
                 Graphics.DrawEllipse(Pen, LocationPont.X - 5, LocationPont.Y - 5, 10, 10);
                 
                 NodeCircleLocations.Add(LocationPont);
@@ -246,9 +247,13 @@ namespace GraphsClassProject
 
         private Point GetLocation(Vertex vertex)
         {
-            int XCoord = (int)(vertex.XCoord * panelGraph.Width);
-            int YCoord = (int)(vertex.YCoord * panelGraph.Height);
+            double PanelWidth = panelGraph.Width-150;
+            double PanelHeight = panelGraph.Height-150;
+            int XCoord = (int)(vertex.XCoord * PanelWidth)+75; 
+            int YCoord = (int)(vertex.YCoord * PanelHeight)+75;
+            
             return new Point(XCoord, YCoord);
+            
         }
 
         private Point GetNewXAndY(Point location)
@@ -347,26 +352,12 @@ namespace GraphsClassProject
             if (destDropDown.SelectedIndex == -1)
             {
                 SelectedVertexB = Graph.Vertices[0];
-                /*if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
-                {
-                    MessageBox.Show("Default vertex selected");
-                }*/
             }
             else
             {
                 SelectedVertexB = Graph.Vertices[destDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexB.Name);
             }
-
-            /*
-            if (algorithmType != null && algorithmType.Equals(AlgorithmType.PRIM))
-            {
-                DoPrim();
-            }
-            else if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
-            {
-                DoDijkstra();
-            }*/
         }
 
         private void DrawRedLines(Vertex[,] input)
@@ -381,6 +372,7 @@ namespace GraphsClassProject
 
                 Point BeginLocation = GetLocation(Beginning);
                 Point NeighborLocation = GetLocation(Ending);
+                Thread.Sleep(500);
                 Graphics.DrawLine(Pen, BeginLocation, NeighborLocation);
             }
         }
@@ -400,7 +392,7 @@ namespace GraphsClassProject
                 Point NeighborLocation = GetLocation(EndingVertex);
                 Graphics.DrawLine(Pen, StartingPoint, NeighborLocation);
 
-                System.Threading.Thread.Sleep(500);
+                Thread.Sleep(500);
             }
         }
 

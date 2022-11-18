@@ -45,7 +45,7 @@ namespace GraphsClassProject
                 Da2.Fill(DataSet, "Edges");
                 
 
-                // edge table: initialNode, terminalNode, weight
+                // edge table: initialNode, terminalNode, weight, initX, initY, termX, termY
 
                 var NrEdges = DataSet.Tables["Edges"].Rows.Count;
                 for (int Row = 0; Row < NrEdges; ++Row)
@@ -53,10 +53,10 @@ namespace GraphsClassProject
                     // check initial node
                     String InitialNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[0];
                     String TerminalNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[1];
-                    double initXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[2];
-                    double initYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[3];
-                    double termXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[4];
-                    double termYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[5];
+                    double initXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[3];
+                    double initYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[4];
+                    double termXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[5];
+                    double termYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[6];
                     int InitialIndex = Vertices.FindIndex(item => InitialNode.Equals(item.Name));
                     int TerminalIndex = Vertices.FindIndex(item => TerminalNode.Equals(item.Name));
 

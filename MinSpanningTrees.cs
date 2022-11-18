@@ -107,7 +107,7 @@ namespace GraphsClassProject
         private List<EdgeStruct> SortEdges()
         {
             List<EdgeStruct> Sorted = GetListOfEdgesForKruskal();
-            Sorted.Sort((x, y) => (int)(x.Weight - y.Weight)); //TODO: Confirm that casting does not mess it up
+            Sorted.Sort((x, y) => (int)(x.Weight - y.Weight));
             return Sorted;
         }
 

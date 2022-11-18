@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GraphsClassProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GraphsClassProject.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StoredProcedures.txt" beforeDir="false" afterPath="$PROJECT_DIR$/StoredProcedures.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MinSpanningTrees.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MinSpanningTrees.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="29Ljtgx18BBjQZIh14HGoM7foNk" />
   <component name="ProjectViewState">
@@ -119,7 +119,7 @@
       <workItem from="1668699739167" duration="639000" />
       <workItem from="1668711043134" duration="814000" />
       <workItem from="1668718230602" duration="7814000" />
-      <workItem from="1668783176969" duration="379000" />
+      <workItem from="1668783176969" duration="4687000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>
