@@ -103,4 +103,5 @@
     <Content Include="StoredProcedures.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

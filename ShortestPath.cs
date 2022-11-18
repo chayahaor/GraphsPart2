@@ -6,13 +6,9 @@ namespace GraphsClassProject
     partial class Graph
     {
         private const int MAX_VAL = int.MaxValue;
-
-        private void DijskstrasShortestPath(Vertex source, Vertex target)
+        private static double ShortestDist;
+        public List<Vertex> DijskstrasShortestPath(Vertex source, Vertex target)
         {
-            double ShortestDist;
-
-            //ClearPath();
-
             if (source.Equals(target))
             {
                 throw new Exception("Source and target are the same. Shortest distance: 0.0");
@@ -21,33 +17,36 @@ namespace GraphsClassProject
             Dictionary<Vertex, Dijkstra> VertexStructs =
                 new Dictionary<Vertex, Dijkstra>();
             Dijkstra CurrNode = new Dijkstra(true, 0, source, source);
-            
+
             VertexStructs.Add(source, CurrNode);
 
             while (CurrNode.Vertex != target)
             {
                 foreach (Vertex V in CurrNode.Vertex.Neighbors)
                 {
-                    CurrNode = UpdateStructs(VertexStructs, CurrNode, out Dijkstra CurrStruct, out double NewDistance, V);
-
+                    CurrNode = UpdateStructs(VertexStructs, CurrNode, out Dijkstra CurrStruct, out double NewDistance,
+                        V);
                 }
 
                 CurrNode = GetNewCurrNode(VertexStructs, CurrNode);
-
             }
-
-            CreatePath(source, VertexStructs, CurrNode);
-
+            
+            List<Vertex> Path = CreatePath(source, VertexStructs, CurrNode); 
             ShortestDist = CurrNode.DistanceFromStart;
+            return Path;
         }
 
+        public static double ShortestDistance()
+        {
+            return ShortestDist;
+        }
+        
         private static Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
         {
             //find shortest false node and set to currNode and true
             double ShortestFalse = MAX_VAL;
             foreach (KeyValuePair<Vertex, Dijkstra> D in vertexStructs)
             {
-
                 if (!D.Value.SdFound && D.Value.DistanceFromStart < ShortestFalse)
                 {
                     currNode = D.Value;
@@ -60,15 +59,15 @@ namespace GraphsClassProject
                 //all shortest paths have been found
                 throw new Exception("No path exists");
             }
-
-
+            
             currNode.SdFound = true;
             vertexStructs.Remove(currNode.Vertex);
             vertexStructs.Add(currNode.Vertex, currNode);
             return currNode;
         }
 
-        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode, out Dijkstra currStruct, out double newDistance, Vertex neighbor)
+        private Dijkstra UpdateStructs(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode,
+            out Dijkstra currStruct, out double newDistance, Vertex neighbor)
         {
             if (!vertexStructs.ContainsKey(neighbor))
             {
@@ -77,6 +76,7 @@ namespace GraphsClassProject
             }
 
             currStruct = vertexStructs[neighbor];
+
             newDistance = vertexStructs[currNode.Vertex].DistanceFromStart + GetEdgeWeight(currNode.Vertex, neighbor);
 
             if (newDistance < currStruct.DistanceFromStart)
@@ -86,17 +86,14 @@ namespace GraphsClassProject
                 currStruct.DistanceFromStart = newDistance;
                 vertexStructs.Remove(neighbor);
                 vertexStructs.Add(neighbor, currStruct);
-
-
             }
 
             return currNode;
         }
 
-        private void CreatePath(Vertex source, Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
+        private List<Vertex> CreatePath(Vertex source, Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
         {
             List<Vertex> Path = new List<Vertex>();
-
             Vertex Parent = currNode.Parent;
             Path.Add(Parent);
 
@@ -107,14 +104,9 @@ namespace GraphsClassProject
             }
 
             Path.Add(currNode.Vertex);
-            
+            return Path;
         }
-
-        //private void ClearPath()
-        //{
-        //    Path.Clear();
-        //}
-
+        
         struct Dijkstra
         {
             internal bool SdFound { get; set; }

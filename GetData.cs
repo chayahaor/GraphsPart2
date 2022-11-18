@@ -8,7 +8,7 @@ namespace GraphsClassProject
 {
     public class GetData
     {
-        public ArrayList AssociatedInfo { get; set; }
+        public ArrayList AssociatedInfo { get; private set; }
 
         public GetData(String server, String database)
         {

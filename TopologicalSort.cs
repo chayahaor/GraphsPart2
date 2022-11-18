@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace GraphsClassProject
 {
@@ -8,13 +9,13 @@ namespace GraphsClassProject
         public Vertex[] GetTopologicalSort()
         {
             Vertex[] Sorted = new Vertex[Vertices.Count];
-
+            
             // make adjacency list (use each vertex's neighbors list) - dictionary
             Dictionary<Vertex, List<Vertex>> AdjacencyList = new Dictionary<Vertex, List<Vertex>>();
 
             // make indegree list (use each vertex's indegree) - dictionary
             Dictionary<Vertex, int> IndegreeList = new Dictionary<Vertex, int>();
-
+            
             foreach (Vertex Vertex in Vertices)
             {
                 AdjacencyList.Add(Vertex, Vertex.Neighbors);

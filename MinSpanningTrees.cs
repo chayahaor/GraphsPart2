@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
@@ -111,7 +107,7 @@ namespace GraphsClassProject
         private List<EdgeStruct> SortEdges()
         {
             List<EdgeStruct> Sorted = GetListOfEdgesForKruskal();
-            Sorted.Sort((x, y) => (int)(x.Weight - y.Weight)); //TODO: Confirm that casting does not mess it up
+            Sorted.Sort((x, y) => (int)(x.Weight - y.Weight));
             return Sorted;
         }
 
