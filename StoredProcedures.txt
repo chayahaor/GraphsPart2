@@ -38,8 +38,9 @@ AS
 go
 
 ---exec spGetEdges @GraphName = 'Grp_A'
+
 ---calculates and populates x, y coordinates in database
-CREATE PROC Spcalculatecoordinates @Graph_ID INT
+CREATE PROC spCalculateCoordinates @Graph_ID INT
 AS
     DECLARE @Radian FLOAT;
     DECLARE @NumIDs INT;
@@ -76,8 +77,8 @@ AS
     WHILE @Curr_ID <= @NumIDs
       BEGIN
           UPDATE xycoordinates
-          SET    x_coord = Round(Sin(@Radian), 2),
-                 y_coord = Round(Cos(@Radian), 2)
+          SET    x_coord = Round((Sin(@Radian) + 1) / 2, 2),
+                 y_coord = Round((Cos(@Radian) + 1) / 2, 2)
           FROM   xycoordinates AS orig_table
                  JOIN #temp_table AS temp_table
                    ON orig_table.graph_id = temp_table.graph_id
