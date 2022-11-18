@@ -15,7 +15,7 @@ namespace GraphsClassProject
         private String Database;
 
         // Graph Showing
-        private GraphNew NewGraph;
+        private Graph Graph;
         private GraphInfo AssociatedInfo;
         
         // contains all graph names (graph names must be unique in the database)
@@ -83,7 +83,7 @@ namespace GraphsClassProject
             //When click a button
             Button Button = (Button)sender;
             //Load the graph
-            NewGraph = new GraphNew(Button.Name, Server, Database);
+            Graph = new Graph(Button.Name, Server, Database);
             //Display the graph
             FillPanel();
         }
@@ -126,7 +126,7 @@ namespace GraphsClassProject
 
             foreach (GraphInfo Info in InformationGraphs)
             {
-                if (Info.Name == NewGraph.GraphName)
+                if (Info.Name == Graph.GraphName)
                 {
                     AssociatedInfo = Info;
                 }
@@ -186,15 +186,15 @@ namespace GraphsClassProject
 
         private void CreateLabelNodes()
         {
-            for (int NodeNumber = 0; NodeNumber < NewGraph.Vertices.Count; NodeNumber++)
+            for (int NodeNumber = 0; NodeNumber < Graph.Vertices.Count; NodeNumber++)
             {
                 Label Label = new Label();
-                Label.Text = NewGraph.Vertices[NodeNumber].Name;
+                Label.Text = Graph.Vertices[NodeNumber].Name;
                 Label.TextAlign = ContentAlignment.MiddleCenter;
 
                 Graphics Graphics = panelGraph.CreateGraphics();
                 Pen Pen = new Pen(Color.Black);
-                Point Location = GetLocation(NodeNumber, NewGraph.Vertices.Count);
+                Point Location = GetLocation(NodeNumber, Graph.Vertices.Count);
                 Graphics.DrawEllipse(Pen, Location.X - 5, Location.Y - 5, 10, 10);
 
                 NodeCircleLocations.Add(Location);
@@ -220,9 +220,9 @@ namespace GraphsClassProject
         {
             SetUpGraphicsAndPen(out Graphics Graphics, out Pen Pen, Color.Black);
 
-            for (int NodeNumber = 0; NodeNumber < NewGraph.Vertices.Count; NodeNumber++)
+            for (int NodeNumber = 0; NodeNumber < Graph.Vertices.Count; NodeNumber++)
             {
-                Vertex CurrNode = NewGraph.Vertices[NodeNumber];
+                Vertex CurrNode = Graph.Vertices[NodeNumber];
                 foreach (Vertex Neighbor in CurrNode.Neighbors)
                 {
                     if (CurrNode.Neighbors.Contains(Neighbor))
@@ -321,7 +321,7 @@ namespace GraphsClassProject
             CreateGraphics();
             panelNodeSelection.Visible = false;
 
-            var Output = NewGraph.KruskalAlgorithm();
+            var Output = Graph.KruskalAlgorithm();
             DrawRedLines(Output);
         }
 
@@ -329,7 +329,7 @@ namespace GraphsClassProject
         {
             CreateGraphics();
             panelNodeSelection.Visible = false;
-            NewGraph.DoTopological();
+            Graph.DoTopological();
         }
 
         
@@ -337,7 +337,7 @@ namespace GraphsClassProject
         {
             CreateGraphics();
             ShowPanelNodeSelection(false);
-            Vertex[,] Output = NewGraph.PrimAlgorithm(SelectedVertexA);
+            Vertex[,] Output = Graph.PrimAlgorithm(SelectedVertexA);
 
             // draw minimum spanning graph edges in red
             DrawRedLines(Output);
@@ -353,7 +353,7 @@ namespace GraphsClassProject
             List<Vertex> Output = new List<Vertex>();
             double ShortestDist = 0.0;
 
-            NewGraph.DijkstraAlgorithm();
+            Graph.DijkstraAlgorithm();
             DrawRedLines(Output);
             MessageBox.Show("Shortest distance: " + ShortestDist);
             ResetNodeSelectionPanel();
@@ -374,12 +374,12 @@ namespace GraphsClassProject
 
         private void GetInput()
         {
-            foreach (Vertex Vertex in NewGraph.Vertices)
+            foreach (Vertex Vertex in Graph.Vertices)
             {
                 originDropDown.Items.Add(Vertex.Name);
             }
 
-            foreach (Vertex Vertex in NewGraph.Vertices)
+            foreach (Vertex Vertex in Graph.Vertices)
             {
                 destDropDown.Items.Add(Vertex.Name);
             }
@@ -389,18 +389,18 @@ namespace GraphsClassProject
         {
             if (originDropDown.SelectedIndex == -1)
             {
-                SelectedVertexA = NewGraph.Vertices[0];
+                SelectedVertexA = Graph.Vertices[0];
                 MessageBox.Show("Default vertex selected");
             }
             else
             {
-                SelectedVertexA = NewGraph.Vertices[originDropDown.SelectedIndex];
+                SelectedVertexA = Graph.Vertices[originDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexA.Name);
             }
 
             if (destDropDown.SelectedIndex == -1)
             {
-                SelectedVertexB = NewGraph.Vertices[0];
+                SelectedVertexB = Graph.Vertices[0];
                 /*if (algorithmType != null && algorithmType.Equals(AlgorithmType.DIJKSTRA))
                 {
                     MessageBox.Show("Default vertex selected");
@@ -408,7 +408,7 @@ namespace GraphsClassProject
             }
             else
             {
-                SelectedVertexB = NewGraph.Vertices[destDropDown.SelectedIndex];
+                SelectedVertexB = Graph.Vertices[destDropDown.SelectedIndex];
                 MessageBox.Show("You selected " + SelectedVertexB.Name);
             }
 
@@ -479,9 +479,9 @@ namespace GraphsClassProject
 
         private void ShowWeights(Object o, EventArgs e)
         {
-            if (NewGraph != null)
+            if (Graph != null)
             {
-                WeightsChart Chart = new WeightsChart(NewGraph);
+                WeightsChart Chart = new WeightsChart(Graph);
                 Chart.Show();
             }
         }

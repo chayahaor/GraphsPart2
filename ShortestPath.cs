@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GraphsClassProject
 {
-    partial class GraphNew
+    partial class Graph
     {
         private const int MAX_VAL = int.MaxValue;
 
