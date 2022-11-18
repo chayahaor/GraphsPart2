@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphsClassProject
 {
-    partial class GraphNew
+    partial class Graph
     {
         
        // private List<EdgeStruct> Edges;

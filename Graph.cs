@@ -5,14 +5,14 @@ using System.Data.SqlClient;
 
 namespace GraphsClassProject
 {
-    public partial class GraphNew
+    public partial class Graph
     {
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
         
         private String Server;
         private String Database;
-        public GraphNew(String graphName, String server, String database)
+        public Graph(String graphName, String server, String database)
         {
             this.GraphName = graphName;
             this.Server = server;
