@@ -49,21 +49,13 @@ AS
 
     SET @Radian = 90 * ( Pi() / 180 ); ---sets to 2
 
-    PRINT @Radian
-
     SELECT @NumIDs = Count(graph_id)
     FROM   xycoordinates
     WHERE  xycoordinates.graph_id = @Graph_ID;
 
-    PRINT @NumIDs
-
     SET @Interval = 2 * Pi() / Cast(@NumIDs AS FLOAT)
 
-    PRINT @Interval ---sets to 0
-
     SET @Curr_ID = 1;
-
-    PRINT @Curr_ID
 
     ---create a temp table with identity column to iterate through when making calculations
     SELECT graph_id,
