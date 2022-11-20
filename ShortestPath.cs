@@ -11,7 +11,7 @@ namespace GraphsClassProject
         {
             if (source.Equals(target))
             {
-                throw new Exception("Source and target are the same. Shortest distance: 0.0");
+                return new List<Vertex> { source };
             }
 
             Dictionary<Vertex, Dijkstra> VertexStructs =
@@ -57,7 +57,8 @@ namespace GraphsClassProject
             if (ShortestFalse == MAX_VAL)
             {
                 //all shortest paths have been found
-                throw new Exception("No path exists");
+                throw new Exception("No path exists"); //TODO: find way to remove throw
+                
             }
             
             currNode.SdFound = true;

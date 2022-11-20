@@ -33,6 +33,8 @@ namespace GraphsClassProject
         private Vertex SelectedVertexA;
         private Vertex SelectedVertexB;
 
+        private String AlgorithmSelected;
+
         public Form1()
         {
             InitializeComponent();
@@ -276,6 +278,7 @@ namespace GraphsClassProject
         //Algorithms
         private void Kruskal_Click(object sender, EventArgs e)
         {
+            AlgorithmSelected = "Kruskal";
             CreateGraphics();
             panelNodeSelection.Visible = false;
 
@@ -285,15 +288,35 @@ namespace GraphsClassProject
 
         private void Topological_Click(object sender, EventArgs e)
         {
+            AlgorithmSelected = "Topological";
             CreateGraphics();
             panelNodeSelection.Visible = false;
             Vertex[] Output =   Graph.GetTopologicalSort();
+            if (Output == null)
+            {
+                MessageBox.Show("Graph contains a cycle.");
+            }
+            else
+            {
+                String Message = "";
+                foreach (Vertex Element in Output)
+                {
+                    Message += Element+" ";
+                }
+
+                MessageBox.Show(Message);
+            }
         }
 
         private void Prim_Click(object sender, EventArgs e)
         {
+            AlgorithmSelected = "Prim";
             CreateGraphics();
             ShowPanelNodeSelection(false);
+        }
+
+        private void PrimCall()
+        {
             Vertex[,] Output = Graph.PrimMinSpanningGraph(SelectedVertexA);
             // draw minimum spanning graph edges in red
             DrawRedLines(Output);
@@ -303,11 +326,31 @@ namespace GraphsClassProject
 
         private void Dijkstra_Click(object sender, EventArgs e)
         {
+            AlgorithmSelected = "Dijkstra";
             CreateGraphics();
             ShowPanelNodeSelection(true);
-            List<Vertex> Output = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
-            DrawRedLines(Output);
-            MessageBox.Show("Shortest distance: " + Graph.ShortestDistance());
+            
+            
+        }
+
+        private void ShortestPathCall()
+        {
+            List<Vertex> Shortest = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
+
+            if (Shortest == null)
+            {
+                MessageBox.Show("");
+            }
+            else if (Shortest.Count == 1)
+            {
+                MessageBox.Show("Source and target are the same. Shortest distance: 0.0");
+            }
+            else
+            {
+                DrawRedLines(Shortest);
+                MessageBox.Show("Shortest distance: " + Graph.ShortestDistance());
+            }
+
             ResetNodeSelectionPanel();
         }
 
@@ -349,14 +392,23 @@ namespace GraphsClassProject
                 MessageBox.Show("You selected " + SelectedVertexA.Name);
             }
 
-            if (destDropDown.SelectedIndex == -1)
+            if (AlgorithmSelected.Equals("Dijkstra"))
             {
-                SelectedVertexB = Graph.Vertices[0];
+                if (destDropDown.SelectedIndex == -1)
+                {
+                    SelectedVertexB = Graph.Vertices[0];
+                }
+                else
+                {
+                    SelectedVertexB = Graph.Vertices[destDropDown.SelectedIndex];
+                    MessageBox.Show("You selected " + SelectedVertexB.Name);
+                }
+
+                ShortestPathCall();
             }
-            else
+            else if (AlgorithmSelected.Equals("Prim"))
             {
-                SelectedVertexB = Graph.Vertices[destDropDown.SelectedIndex];
-                MessageBox.Show("You selected " + SelectedVertexB.Name);
+                PrimCall();
             }
         }
 
