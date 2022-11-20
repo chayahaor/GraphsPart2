@@ -58,9 +58,11 @@ namespace GraphsClassProject
                 {
                     if (FoundDestinationWhere == -1)
                     {
-                        List<Vertex> Unconnected = new List<Vertex>();
-                        Unconnected.Add(Shortest.Source);
-                        Unconnected.Add(Shortest.Destination);
+                        List<Vertex> Unconnected = new List<Vertex>
+                        {
+                            Shortest.Source,
+                            Shortest.Destination
+                        };
                         Visited.Add(Unconnected);
                         ShortestPath[IndexToAddAt, 0] = Shortest.Source;
                         ShortestPath[IndexToAddAt, 1] = Shortest.Destination;

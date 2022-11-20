@@ -45,7 +45,7 @@ namespace GraphsClassProject
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(" " + DateTime.Now.ToLongTimeString() + Ex.Message, "Error", MessageBoxButtons.OK,
+                MessageBox.Show(DateTime.Now.ToLongTimeString() + Ex.Message, "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 

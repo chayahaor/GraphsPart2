@@ -33,9 +33,11 @@ namespace GraphsClassProject
                 SqlCon.Open();
 
                 SqlCommand GetEdgesForGraph = new SqlCommand("spGetEdges", SqlCon);
-                SqlParameter SqlParameter = new SqlParameter();
-                SqlParameter.ParameterName = "@GraphName";
-                SqlParameter.Value = name;
+                SqlParameter SqlParameter = new SqlParameter
+                {
+                    ParameterName = "@GraphName",
+                    Value = name
+                };
                 GetEdgesForGraph.Parameters.Add(SqlParameter);
 
                 GetEdgesForGraph.CommandType = CommandType.StoredProcedure;
@@ -53,18 +55,18 @@ namespace GraphsClassProject
                     // check initial node
                     String InitialNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[0];
                     String TerminalNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[1];
-                    double initXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[3];
-                    double initYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[4];
-                    double termXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[5];
-                    double termYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[6];
+                    double InitXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[3];
+                    double InitYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[4];
+                    double TermXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[5];
+                    double TermYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[6];
                     int InitialIndex = Vertices.FindIndex(item => InitialNode.Equals(item.Name));
                     int TerminalIndex = Vertices.FindIndex(item => TerminalNode.Equals(item.Name));
 
                     Vertex Initial = InitialIndex < 0
-                        ? new Vertex(InitialNode, initXCoord, initYCoord)
+                        ? new Vertex(InitialNode, InitXCoord, InitYCoord)
                         : Vertices[InitialIndex];
                     Vertex Terminal = TerminalIndex < 0
-                        ? new Vertex(TerminalNode, termXCoord, termYCoord)
+                        ? new Vertex(TerminalNode, TermXCoord, TermYCoord)
                         : Vertices[TerminalIndex];
 
                     if (InitialIndex < 0 && TerminalIndex < 0)
