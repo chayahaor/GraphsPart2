@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Drawing.Drawing2D;
-using System.Security.AccessControl;
 using System.Threading;
 
 namespace GraphsClassProject
@@ -53,6 +52,14 @@ namespace GraphsClassProject
             const int X = 30;
             int Y = 0;
 
+            Button ShowGraph = new Button();
+            ShowGraph.Name = "btnShowGraph";
+            ShowGraph.Text = "Show Weights";
+            ShowGraph.Height += ShowGraph.Height; //Make it twice as tall as the other buttons
+            ShowGraph.Location = new Point(X, Y);
+            ShowGraph.Click += ShowWeights;
+            Y += 100;
+            panelGraphButtons.Controls.Add(ShowGraph);
             foreach (GraphInfo Info in InformationGraphs)
             {
                 Button Button = new Button();
@@ -63,17 +70,7 @@ namespace GraphsClassProject
                 Y += 100;
                 panelGraphButtons.Controls.Add(Button);
             }
-
-            Button ShowGraph = new Button();
-            ShowGraph.Name = "btnShowGraph";
-            ShowGraph.Text = "Show Weights";
-            ShowGraph.Height += ShowGraph.Height;
-            ShowGraph.Location = new Point(X, Y);
-            ShowGraph.Click += ShowWeights;
-
-            panelGraphButtons.Controls.Add(ShowGraph);
         }
-
 
         private void btn_Click(object sender, EventArgs e)
         {
@@ -181,16 +178,16 @@ namespace GraphsClassProject
 
         private void CreateLabelNodes()
         {
-            for (int NodeNumber = 0; NodeNumber < Graph.Vertices.Count; NodeNumber++)
+            foreach (var CurrNode in Graph.Vertices)
             {
                 Label Label = new Label();
-                Label.Text = Graph.Vertices[NodeNumber].Name;
+                Label.Text = CurrNode.Name;
                 Label.TextAlign = ContentAlignment.MiddleCenter;
                 Graphics Graphics = panelGraph.CreateGraphics();
                 Pen Pen = new Pen(Color.Black);
-                Point LocationPont = GetLocation(Graph.Vertices[NodeNumber]); 
+                Point LocationPont = GetLocation(CurrNode);
                 Graphics.DrawEllipse(Pen, LocationPont.X - 5, LocationPont.Y - 5, 10, 10);
-                
+
                 NodeCircleLocations.Add(LocationPont);
 
                 Label.Location = GetNewXAndY(LocationPont);
@@ -249,13 +246,12 @@ namespace GraphsClassProject
 
         private Point GetLocation(Vertex vertex)
         {
-            double PanelWidth = panelGraph.Width-150;
-            double PanelHeight = panelGraph.Height-150;
-            int XCoord = (int)(vertex.XCoord * PanelWidth)+75; 
-            int YCoord = (int)(vertex.YCoord * PanelHeight)+75;
-            
+            double PanelWidth = panelGraph.Width - 150;
+            double PanelHeight = panelGraph.Height - 150;
+            int XCoord = (int)(vertex.XCoord * PanelWidth) + 75;
+            int YCoord = (int)(vertex.YCoord * PanelHeight) + 75;
+
             return new Point(XCoord, YCoord);
-            
         }
 
         private Point GetNewXAndY(Point location)
@@ -291,7 +287,7 @@ namespace GraphsClassProject
             AlgorithmSelected = "Topological";
             CreateGraphics();
             panelNodeSelection.Visible = false;
-            Vertex[] Output =   Graph.GetTopologicalSort();
+            Vertex[] Output = Graph.GetTopologicalSort();
             if (Output == null)
             {
                 MessageBox.Show("Graph contains a cycle.");
@@ -301,7 +297,7 @@ namespace GraphsClassProject
                 String Message = "";
                 foreach (Vertex Element in Output)
                 {
-                    Message += Element+" ";
+                    Message += Element + " ";
                 }
 
                 MessageBox.Show(Message);
@@ -329,19 +325,13 @@ namespace GraphsClassProject
             AlgorithmSelected = "Dijkstra";
             CreateGraphics();
             ShowPanelNodeSelection(true);
-            
-            
         }
 
         private void ShortestPathCall()
         {
             List<Vertex> Shortest = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
 
-            if (Shortest == null)
-            {
-                MessageBox.Show("");
-            }
-            else if (Shortest.Count == 1)
+            if (Shortest.Count == 1)
             {
                 MessageBox.Show("Source and target are the same. Shortest distance: 0.0");
             }
@@ -384,12 +374,10 @@ namespace GraphsClassProject
             if (originDropDown.SelectedIndex == -1)
             {
                 SelectedVertexA = Graph.Vertices[0];
-                MessageBox.Show("Default vertex selected");
             }
             else
             {
                 SelectedVertexA = Graph.Vertices[originDropDown.SelectedIndex];
-                MessageBox.Show("You selected " + SelectedVertexA.Name);
             }
 
             if (AlgorithmSelected.Equals("Dijkstra"))
@@ -401,7 +389,6 @@ namespace GraphsClassProject
                 else
                 {
                     SelectedVertexB = Graph.Vertices[destDropDown.SelectedIndex];
-                    MessageBox.Show("You selected " + SelectedVertexB.Name);
                 }
 
                 ShortestPathCall();
@@ -419,7 +406,7 @@ namespace GraphsClassProject
             {
                 Vertex Beginning = input[Index, 0];
                 Vertex Ending = input[Index, 1];
-                
+
                 Pen.Width = 2;
 
                 Point BeginLocation = GetLocation(Beginning);
