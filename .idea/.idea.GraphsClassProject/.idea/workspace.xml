@@ -7,8 +7,8 @@
     <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MinSpanningTrees.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MinSpanningTrees.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShortestPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShortestPath.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TopologicalSort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TopologicalSort.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

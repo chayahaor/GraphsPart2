@@ -36,7 +36,8 @@ namespace GraphsClassProject
 
             if (Zeroes.Count == 0)
             {
-                throw new Exception("Graph contains cycle");
+                return null;
+                //throw new Exception("Graph contains cycle");
             }
 
             int NumVerticesAdded = 0;
@@ -61,7 +62,8 @@ namespace GraphsClassProject
                 
                 if (NumVerticesAdded > Vertices.Count)
                 {
-                    throw new Exception("Graph contains cycle");
+                    return null;
+                    //throw new Exception("Graph contains cycle");
                 }
             }
 
