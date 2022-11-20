@@ -15,5 +15,10 @@ namespace GraphsClassProject
             this.Weight = weight;
             this.Direct = direct;
         }
+
+        public override string ToString()
+        {
+            return Name + " is " + Weight + " weighted and " + Direct + " directed";
+        }
     }
 }

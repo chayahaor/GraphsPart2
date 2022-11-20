@@ -37,8 +37,8 @@ namespace GraphsClassProject
                 for (int Row = 0; Row < NrGraphs; ++Row)
                 {
                     String Name = (String)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[0];
-                    bool Weight = (bool)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[1];
-                    bool Direct = (bool)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[2];
+                    bool Direct = (bool)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[1];
+                    bool Weight = (bool)Dataset1.Tables["Graphs"].Rows[Row].ItemArray[2];
                     AssociatedInfo.Add(new GraphInfo(Name, Weight, Direct));
                     
                 }
