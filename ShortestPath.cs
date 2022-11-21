@@ -7,6 +7,10 @@ namespace GraphsClassProject
     {
         private const int MAX_VAL = int.MaxValue;
         private static double DijkstrasShortestDistance;
+        public static double ShortestDistance()
+        {
+            return DijkstrasShortestDistance;
+        }
         public List<Vertex> DijskstrasShortestPath(Vertex source, Vertex target)
         {
             if (source.Equals(target))
@@ -34,11 +38,6 @@ namespace GraphsClassProject
             List<Vertex> Path = CreatePath(source, VertexStructs, CurrNode); 
             DijkstrasShortestDistance = CurrNode.DistanceFromStart;
             return Path;
-        }
-
-        public static double ShortestDistance()
-        {
-            return DijkstrasShortestDistance;
         }
         
         private static Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
