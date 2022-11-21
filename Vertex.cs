@@ -27,5 +27,10 @@ namespace GraphsClassProject
             Weights.Add(weight);
             target.Indegree++;
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }
