@@ -1,10 +1,10 @@
 ---returns graph name and graph type
 CREATE PROC Spgetgraphnames
 AS
-    SELECT graphs.NAME     AS NAME,
-           graphs.directed AS Directed,
-           graphs.weighted AS Weighted
-    FROM   graphs
+SELECT graphs.NAME AS NAME,
+       graphs.directed AS Directed,
+       graphs.weighted AS Weighted
+FROM graphs
 
 go
 
@@ -14,26 +14,28 @@ go
 --Set @GraphName = 'Grp_A'
 CREATE PROC Spgetedges @GraphName VARCHAR(50)
 AS
-    SELECT ini.shortname AS [Initial Node Name],
-           ter.shortname AS [Terminal Node Name],
-           [weight],
-		   ini_xy.X_Coord AS [Initial Node X Coordinate],
-		   ini_xy.Y_Coord AS [Initial Node Y Coordinate],
-		   ter_xy.X_Coord AS [Terminal Node X Coordinate],
-		   ter_xy.Y_Coord AS [Terminal Node Y Coordinate]
-    FROM   edges
-           JOIN graphs
-             ON edges.graph_id = graphs.graph_id
-           JOIN nodes ini
-             ON ini.node_id = edges.initialnode_id
-           JOIN nodes ter
-             ON ter.node_id = edges.terminalnode_id
-		   JOIN XYCoordinates ini_xy
-		     ON ini.Node_ID = ini_xy.Node_ID AND graphs.Graph_ID = ini_xy.Graph_ID
-		   JOIN XYCoordinates ter_xy
-		     ON ter.Node_ID = ter_xy.Node_ID AND graphs.Graph_ID = ter_xy.Graph_ID 
-    WHERE  graphs.NAME = @GraphName
-    ORDER  BY ini.node_id
+SELECT ini.shortname AS [Initial Node Name],
+       ter.shortname AS [Terminal Node Name],
+       [weight],
+       ini_xy.X_Coord AS [Initial Node X Coordinate],
+       ini_xy.Y_Coord AS [Initial Node Y Coordinate],
+       ter_xy.X_Coord AS [Terminal Node X Coordinate],
+       ter_xy.Y_Coord AS [Terminal Node Y Coordinate]
+FROM edges
+    JOIN graphs
+        ON edges.graph_id = graphs.graph_id
+    JOIN nodes ini
+        ON ini.node_id = edges.initialnode_id
+    JOIN nodes ter
+        ON ter.node_id = edges.terminalnode_id
+    JOIN XYCoordinates ini_xy
+        ON ini.Node_ID = ini_xy.Node_ID
+           AND graphs.Graph_ID = ini_xy.Graph_ID
+    JOIN XYCoordinates ter_xy
+        ON ter.Node_ID = ter_xy.Node_ID
+           AND graphs.Graph_ID = ter_xy.Graph_ID
+WHERE graphs.NAME = @GraphName
+ORDER BY ini.node_id
 
 go
 
@@ -42,44 +44,44 @@ go
 ---calculates and populates x, y coordinates in database
 CREATE PROC spCalculateCoordinates @Graph_ID INT
 AS
-    DECLARE @Radian FLOAT;
-    DECLARE @NumIDs INT;
-    DECLARE @Interval FLOAT;
-    DECLARE @Curr_ID INT;
+DECLARE @Radian FLOAT;
+DECLARE @NumIDs INT;
+DECLARE @Interval FLOAT;
+DECLARE @Curr_ID INT;
 
-    SET @Radian = 90 * ( Pi() / 180 ); ---sets to 2
+SET @Radian = 90 * (Pi() / 180); ---sets to 2
 
-    SELECT @NumIDs = Count(graph_id)
-    FROM   xycoordinates
-    WHERE  xycoordinates.graph_id = @Graph_ID;
+SELECT @NumIDs = Count(graph_id)
+FROM xycoordinates
+WHERE xycoordinates.graph_id = @Graph_ID;
 
-    SET @Interval = 2 * Pi() / Cast(@NumIDs AS FLOAT)
+SET @Interval = 2 * Pi() / Cast(@NumIDs AS FLOAT)
 
-    SET @Curr_ID = 1;
+SET @Curr_ID = 1;
 
-    ---create a temp table with identity column to iterate through when making calculations
-    SELECT graph_id,
-           node_id,
-           IDENTITY(int) AS idcol
-    INTO   #temp_table
-    FROM   xycoordinates
-    WHERE  xycoordinates.graph_id = @Graph_ID
+---create a temp table with identity column to iterate through when making calculations
+SELECT graph_id,
+       node_id,
+       IDENTITY(int) AS idcol
+INTO #temp_table
+FROM xycoordinates
+WHERE xycoordinates.graph_id = @Graph_ID
 
-    ---calculate and reset X/Y values in XYCoordinates table
-    WHILE @Curr_ID <= @NumIDs
-      BEGIN
-          UPDATE xycoordinates
-          SET    x_coord = Round((Sin(@Radian) + 1) / 2, 2),
-                 y_coord = Round((Cos(@Radian) + 1) / 2, 2)
-          FROM   xycoordinates AS orig_table
-                 JOIN #temp_table AS temp_table
-                   ON orig_table.graph_id = temp_table.graph_id
-                      AND orig_table.node_id = temp_table.node_id
-          WHERE  idcol = @Curr_ID
-                 AND orig_table.graph_id = @Graph_ID;
+---calculate and reset X/Y values in XYCoordinates table
+WHILE @Curr_ID <= @NumIDs
+BEGIN
+    UPDATE xycoordinates
+    SET x_coord = Round((Sin(@Radian) + 1) / 2, 2),
+        y_coord = Round((Cos(@Radian) + 1) / 2, 2)
+    FROM xycoordinates AS orig_table
+        JOIN #temp_table AS temp_table
+            ON orig_table.graph_id = temp_table.graph_id
+               AND orig_table.node_id = temp_table.node_id
+    WHERE idcol = @Curr_ID
+          AND orig_table.graph_id = @Graph_ID;
 
-          SET @Radian += @Interval
-          SET @Curr_ID += 1
-      END
+    SET @Radian += @Interval
+    SET @Curr_ID += 1
+END
 
-    DROP TABLE #temp_table 
+DROP TABLE #temp_table
