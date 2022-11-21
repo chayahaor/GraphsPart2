@@ -45,17 +45,14 @@ namespace GraphsClassProject
                             Shortest.Destination
                         };
                         Visited.Add(Unconnected);
-                        MSTEdges[IndexToAddAt, 0] = Shortest.Source;
-                        MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
-                        IndexToAddAt++;
                     }
                     else
                     {
                         Visited[FoundDestinationWhere].Add(Shortest.Source);
-                        MSTEdges[IndexToAddAt, 0] = Shortest.Source;
-                        MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
-                        IndexToAddAt++;
                     }
+                    MSTEdges[IndexToAddAt, 0] = Shortest.Source;
+                    MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
+                    IndexToAddAt++;
                 }
                 else
                 {
@@ -79,7 +76,7 @@ namespace GraphsClassProject
                         IndexToAddAt++;
                     }
                 }
-
+                
                 OrderedEdges.RemoveAt(0);
             }
 
