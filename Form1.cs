@@ -278,7 +278,7 @@ namespace GraphsClassProject
             CreateGraphics();
             panelNodeSelection.Visible = false;
 
-            var Output = Graph.GetKruskalAlgorithm();
+            var Output = Graph.GetKruskalsMST();
             DrawRedLines(Output);
         }
 
@@ -313,7 +313,7 @@ namespace GraphsClassProject
 
         private void PrimCall()
         {
-            Vertex[,] Output = Graph.PrimMinSpanningGraph(SelectedVertexA);
+            Vertex[,] Output = Graph.GetPrimsMST(SelectedVertexA);
             // draw minimum spanning graph edges in red
             DrawRedLines(Output);
 
