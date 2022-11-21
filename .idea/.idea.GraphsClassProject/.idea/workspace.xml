@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b6aa729e-7d17-4620-874c-f0794ee80ea7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GraphsClassProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Form1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShortestPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShortestPath.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vertex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Vertex.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,11 +37,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/90ee3cbb9dbb439fb2a3106cefde0581564d90/a6/46d25ea3/Nullable`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d97a3e9b3b244525be5c53d3b5e394ea5b3bb0/29/2b877edb/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/edef46c9b2db4b878c98495bfdc516fa568ba8/3d/7f1c7f1f/Console.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsPart2/Form1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Graph.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsPart2/Graph.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsPart2/MinSpanningTrees.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/chaya/RiderProjects/GraphsPart2/TopologicalSort.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -122,7 +122,8 @@
       <workItem from="1668711043134" duration="814000" />
       <workItem from="1668718230602" duration="7814000" />
       <workItem from="1668783176969" duration="4687000" />
-      <workItem from="1668974221210" duration="6573000" />
+      <workItem from="1668974221210" duration="7332000" />
+      <workItem from="1668995231748" duration="3990000" />
     </task>
     <task id="LOCAL-00001" summary="Made the width of the pen equal to the relative weight&#10;Made minor edits to GUI">
       <created>1653068617641</created>
@@ -202,25 +203,6 @@
     <MESSAGE value="." />
     <MESSAGE value="Made GraphInfo" />
     <option name="LAST_COMMIT_MESSAGE" value="Made GraphInfo" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TopologicalSort.cs</url>
-          <line>7</line>
-          <properties documentPath="C:\Users\chaya\RiderProjects\GraphsPart2\TopologicalSort.cs" initialLine="7" containingFunctionPresentation="method 'GetTopologicalSort'">
-            <startOffsets>
-              <option value="149" />
-            </startOffsets>
-            <endOffsets>
-              <option value="150" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

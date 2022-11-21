@@ -6,12 +6,16 @@ namespace GraphsClassProject
     partial class Graph
     {
         private const int MAX_VAL = int.MaxValue;
-        private static double DijkstrasShortestDistance;
-        public static double ShortestDistance()
+        private double DijkstrasShortestDistance;
+
+        public bool noDijkstraPath { get; set; } = false;
+
+        public double ShortestDistance()
         {
             return DijkstrasShortestDistance;
         }
-        public List<Vertex> DijskstrasShortestPath(Vertex source, Vertex target)
+
+        public List<Vertex> DijkstrasShortestPath(Vertex source, Vertex target)
         {
             if (source.Equals(target))
             {
@@ -33,14 +37,18 @@ namespace GraphsClassProject
                 }
 
                 CurrNode = GetNewCurrNode(VertexStructs, CurrNode);
+                if (noDijkstraPath)
+                {
+                    break;
+                }
             }
-            
-            List<Vertex> Path = CreatePath(source, VertexStructs, CurrNode); 
+
+            List<Vertex> Path = CreatePath(source, VertexStructs, CurrNode);
             DijkstrasShortestDistance = CurrNode.DistanceFromStart;
             return Path;
         }
-        
-        private static Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
+
+        private Dijkstra GetNewCurrNode(Dictionary<Vertex, Dijkstra> vertexStructs, Dijkstra currNode)
         {
             //find shortest false node and set to currNode and true
             double ShortestFalse = MAX_VAL;
@@ -55,11 +63,9 @@ namespace GraphsClassProject
 
             if (ShortestFalse == MAX_VAL)
             {
-                //all shortest paths have been found
-                throw new Exception("No path exists"); //TODO: find way to remove throw - this is correct, but gui needs to show message box when this happens
-                
+                this.noDijkstraPath = true;
             }
-            
+
             currNode.SdFound = true;
             vertexStructs.Remove(currNode.Vertex);
             vertexStructs.Add(currNode.Vertex, currNode);
@@ -106,7 +112,7 @@ namespace GraphsClassProject
             Path.Add(currNode.Vertex);
             return Path;
         }
-        
+
         struct Dijkstra
         {
             internal bool SdFound { get; set; }

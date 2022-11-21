@@ -76,7 +76,15 @@ namespace GraphsClassProject
         {
             Button Button = (Button)sender;
             //Load the graph
-            Graph = new Graph(Button.Name, Server, Database);
+            foreach (GraphInfo Info in InformationGraphs)
+            {
+                if (Info.Name == Button.Name)
+                {
+                    AssociatedInfo = Info;
+                }
+            }
+
+            Graph = new Graph(Button.Name, AssociatedInfo.Direct, Server, Database);
             //Display the graph
             FillPanel();
         }
@@ -329,16 +337,22 @@ namespace GraphsClassProject
 
         private void ShortestPathCall()
         {
-            List<Vertex> Shortest = Graph.DijskstrasShortestPath(SelectedVertexA, SelectedVertexB);
-
-            if (Shortest.Count == 1)
+            List<Vertex> Shortest = Graph.DijkstrasShortestPath(SelectedVertexA, SelectedVertexB);
+            if (Graph.noDijkstraPath)
             {
-                MessageBox.Show("Source and target are the same. Shortest distance: 0.0");
+                MessageBox.Show("No path found");
             }
             else
             {
-                DrawRedLines(Shortest);
-                MessageBox.Show("Shortest distance: " + Graph.ShortestDistance());
+                if (Shortest.Count == 1)
+                {
+                    MessageBox.Show("Source and target are the same. Shortest distance: 0.0");
+                }
+                else
+                {
+                    DrawRedLines(Shortest);
+                    MessageBox.Show("Shortest distance: " + Graph.ShortestDistance());
+                }
             }
 
             ResetNodeSelectionPanel();

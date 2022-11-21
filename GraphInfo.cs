@@ -2,7 +2,6 @@
 
 namespace GraphsClassProject
 {
-    //TODO: change into struct
     public class GraphInfo
     {
         public String Name { get; set; }

@@ -9,13 +9,14 @@ namespace GraphsClassProject
     {
         internal List<Vertex> Vertices { get; set; }
         public String GraphName { get; set; }
-
+        private bool Directed;
         private String Server;
         private String Database;
 
-        public Graph(String graphName, String server, String database)
+        public Graph(String graphName, bool directed, String server, String database)
         {
             this.GraphName = graphName;
+            this.Directed = directed;
             this.Server = server;
             this.Database = database;
             Vertices = new List<Vertex>();
@@ -45,7 +46,7 @@ namespace GraphsClassProject
                 SqlDataAdapter Da2 = new SqlDataAdapter(GetEdgesForGraph);
                 DataSet DataSet = new DataSet();
                 Da2.Fill(DataSet, "Edges");
-                
+
 
                 // edge table: initialNode, terminalNode, weight, initX, initY, termX, termY
 
@@ -55,6 +56,7 @@ namespace GraphsClassProject
                     // check initial node
                     String InitialNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[0];
                     String TerminalNode = (String)DataSet.Tables["Edges"].Rows[Row].ItemArray[1];
+                    int Weight = (int)DataSet.Tables["Edges"].Rows[Row].ItemArray[2];
                     double InitXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[3];
                     double InitYCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[4];
                     double TermXCoord = (double)DataSet.Tables["Edges"].Rows[Row].ItemArray[5];
@@ -87,10 +89,12 @@ namespace GraphsClassProject
                     }
 
                     // if they both already exist, no need to add anything
-                    Initial.AddEdge(Terminal, 1);
+                    Initial.AddEdge(Terminal, Weight);
 
-                    //TODO: this should only happen if the graph is undirected
-                    Terminal.AddEdge(Initial, 1);  
+                    if (!Directed)
+                    {
+                        Terminal.AddEdge(Initial, Weight);
+                    }
                 }
             }
             catch (Exception E)
@@ -102,7 +106,7 @@ namespace GraphsClassProject
 
             return RetVal;
         }
-        
+
         internal double GetEdgeWeight(Vertex initial, Vertex terminal)
         {
             int VertexIndex = Vertices.IndexOf(initial);
