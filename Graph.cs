@@ -88,7 +88,9 @@ namespace GraphsClassProject
 
                     // if they both already exist, no need to add anything
                     Initial.AddEdge(Terminal, 1);
-                    Terminal.AddEdge(Initial, 1);
+
+                    //TODO: this should only happen if the graph is undirected
+                    Terminal.AddEdge(Initial, 1);  
                 }
             }
             catch (Exception E)

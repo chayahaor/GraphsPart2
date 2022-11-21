@@ -57,7 +57,7 @@ namespace GraphsClassProject
             if (ShortestFalse == MAX_VAL)
             {
                 //all shortest paths have been found
-                throw new Exception("No path exists"); //TODO: find way to remove throw
+                throw new Exception("No path exists"); //TODO: find way to remove throw - this is correct, but gui needs to show message box when this happens
                 
             }
             

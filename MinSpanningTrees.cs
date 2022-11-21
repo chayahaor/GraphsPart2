@@ -4,35 +4,16 @@ namespace GraphsClassProject
 {
     partial class Graph
     {
-        
-       // private List<EdgeStruct> Edges;
 
-        private List<EdgeStruct> GetListOfEdgesForKruskal()
+        public Vertex[,] GetKruskalsMST()
         {
-            List<EdgeStruct> Edges = new List<EdgeStruct>();
-
-            foreach (Vertex Vertex in Vertices)
-            {
-                foreach (Vertex Neighbor in Vertex.Neighbors)
-                {
-                    Edges.Add(new EdgeStruct(Vertex, GetEdgeWeight(Vertex, Neighbor), Neighbor));
-                }
-            }
-
-            return Edges;
-        }
-
-        public Vertex[,] GetKruskalAlgorithm()
-        {
-            Vertex[,] ShortestPath = new Vertex[Vertices.Count - 1, 2];
-            List<EdgeStruct> OrderedEdges = SortEdges();
-
+            Vertex[,] MSTEdges = new Vertex[Vertices.Count - 1, 2];
+            List<EdgeStruct> OrderedEdges = GetSortedListOfEdges();
 
             List<List<Vertex>> Visited = new List<List<Vertex>>();
             int IndexToAddAt = 0;
 
-            int Temp = Vertices.Count - 2;
-            while (ShortestPath[Temp, 0] == null)
+            while (MSTEdges[Vertices.Count - 2, 0] == null)
             {
                 EdgeStruct Shortest = OrderedEdges[0];
                 int FoundSourceWhere = -1;
@@ -64,15 +45,15 @@ namespace GraphsClassProject
                             Shortest.Destination
                         };
                         Visited.Add(Unconnected);
-                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
-                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        MSTEdges[IndexToAddAt, 0] = Shortest.Source;
+                        MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
                         IndexToAddAt++;
                     }
                     else
                     {
                         Visited[FoundDestinationWhere].Add(Shortest.Source);
-                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
-                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        MSTEdges[IndexToAddAt, 0] = Shortest.Source;
+                        MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
                         IndexToAddAt++;
                     }
                 }
@@ -81,8 +62,8 @@ namespace GraphsClassProject
                     if (FoundDestinationWhere == -1)
                     {
                         Visited[FoundSourceWhere].Add(Shortest.Destination);
-                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
-                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        MSTEdges[IndexToAddAt, 0] = Shortest.Source;
+                        MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
                         IndexToAddAt++;
                     }
                     else if (FoundDestinationWhere != FoundSourceWhere)
@@ -93,8 +74,8 @@ namespace GraphsClassProject
                         }
 
                         Visited.RemoveAt(FoundDestinationWhere);
-                        ShortestPath[IndexToAddAt, 0] = Shortest.Source;
-                        ShortestPath[IndexToAddAt, 1] = Shortest.Destination;
+                        MSTEdges[IndexToAddAt, 0] = Shortest.Source;
+                        MSTEdges[IndexToAddAt, 1] = Shortest.Destination;
                         IndexToAddAt++;
                     }
                 }
@@ -102,40 +83,13 @@ namespace GraphsClassProject
                 OrderedEdges.RemoveAt(0);
             }
 
-            return ShortestPath;
+            return MSTEdges;
         }
 
-
-        private List<EdgeStruct> SortEdges()
+        public Vertex[,] GetPrimsMST(Vertex start)
         {
-            List<EdgeStruct> Sorted = GetListOfEdgesForKruskal();
-            Sorted.Sort((x, y) => (int)(x.Weight - y.Weight));
-            return Sorted;
-        }
-
-        struct EdgeStruct
-        {
-            // constructor
-            public EdgeStruct(Vertex vertexA, double weight, Vertex vertexB)
-            {
-                Source = vertexA;
-                Weight = weight;
-                Destination = vertexB;
-            }
-
-            internal Vertex Source;
-            internal double Weight { get; set; }
-            internal Vertex Destination { get; set; }
-        }
-
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-
-        public Vertex[,] PrimMinSpanningGraph(Vertex start)
-        {
-            Vertex[,] Edges = new Vertex[Vertices.Count - 1, 2];
-            List<PrimStruct> Prims = new List<PrimStruct>();
+            Vertex[,] MSTEdges = new Vertex[Vertices.Count - 1, 2];
+            List<EdgeStruct> Prims = new List<EdgeStruct>();
             List<Vertex> FoundVertices = new List<Vertex>();
             int NumEdgesFound = 0;
 
@@ -146,9 +100,9 @@ namespace GraphsClassProject
             {
                 if (!FoundVertices.Contains(Neighbor))
                 {
-                    Prims.Add(new PrimStruct(Neighbor,
+                    Prims.Add(new EdgeStruct(start,
                         GetEdgeWeight(start, Neighbor),
-                        start));
+                        Neighbor));
                 }
             }
 
@@ -156,55 +110,71 @@ namespace GraphsClassProject
             {
 
                 // get the vertex with the shortest cost
-                Prims.Sort((x, y) => x.Cost.CompareTo(y.Cost));
-                PrimStruct CurrentPrim = Prims[0];
+                Prims.Sort((x, y) => x.Weight.CompareTo(y.Weight));
+                EdgeStruct CurrentPrim = Prims[0];
                 Prims.RemoveAt(0);
 
                 // add an edge to that prim
-                Edges[NumEdgesFound, 0] = CurrentPrim.Parent;
-                Edges[NumEdgesFound, 1] = CurrentPrim.Vertex;
-                FoundVertices.Add(CurrentPrim.Vertex);
+                MSTEdges[NumEdgesFound, 0] = CurrentPrim.Source;
+                MSTEdges[NumEdgesFound, 1] = CurrentPrim.Destination;
+                FoundVertices.Add(CurrentPrim.Destination);
                 NumEdgesFound++;
 
-                foreach (Vertex Neighbor in CurrentPrim.Vertex.Neighbors)
+                foreach (Vertex Neighbor in CurrentPrim.Destination.Neighbors)
                 {
                     if (!FoundVertices.Contains(Neighbor))
                     {
-                        PrimStruct NeighborPrim = Prims.Find(p => p.Vertex.Equals(Neighbor));
-                        if (NeighborPrim.Vertex != null)
+                        EdgeStruct NeighborPrim = Prims.Find(p => p.Destination.Equals(Neighbor));
+                        if (NeighborPrim.Destination != null)
                         {
-                            if (GetEdgeWeight(CurrentPrim.Vertex, Neighbor) < NeighborPrim.Cost)
+                            if (GetEdgeWeight(CurrentPrim.Destination, Neighbor) < NeighborPrim.Weight)
                             {
-                                NeighborPrim.Cost = GetEdgeWeight(CurrentPrim.Vertex, Neighbor);
-                                NeighborPrim.Parent = CurrentPrim.Vertex;
+                                NeighborPrim.Weight = GetEdgeWeight(CurrentPrim.Destination, Neighbor);
+                                NeighborPrim.Source = CurrentPrim.Destination;
                             }
                         }
                         else
                         {
-                            Prims.Add(new PrimStruct(Neighbor,
-                            GetEdgeWeight(CurrentPrim.Vertex, Neighbor),
-                            CurrentPrim.Vertex));
+                            Prims.Add(new EdgeStruct(CurrentPrim.Destination,
+                            GetEdgeWeight(CurrentPrim.Destination, Neighbor),
+                            Neighbor));
                         }
                     }
 
                 }
             }
 
-            return Edges;
+            return MSTEdges;
         }
 
-        struct PrimStruct
+        struct EdgeStruct
         {
-            public PrimStruct(Vertex vertex, double cost, Vertex parent)
+            public EdgeStruct(Vertex vertexA, double weight, Vertex vertexB)
             {
-                this.Vertex = vertex;
-                this.Cost = cost;
-                this.Parent = parent;
+                Source = vertexA;
+                Weight = weight;
+                Destination = vertexB;
             }
 
-            internal Vertex Vertex;
-            internal double Cost { get; set; }
-            internal Vertex Parent { get; set; }
+            internal Vertex Source { get; set; }
+            internal double Weight { get; set; }
+            internal Vertex Destination { get; set; }
+        }
+
+        private List<EdgeStruct> GetSortedListOfEdges()
+        {
+            List<EdgeStruct> Edges = new List<EdgeStruct>();
+
+            foreach (Vertex Vertex in Vertices)
+            {
+                foreach (Vertex Neighbor in Vertex.Neighbors)
+                {
+                    Edges.Add(new EdgeStruct(Vertex, GetEdgeWeight(Vertex, Neighbor), Neighbor));
+                }
+            }
+
+            Edges.Sort((x, y) => (int)(x.Weight - y.Weight));
+            return Edges;
         }
     }
 }
