@@ -1,18 +1,17 @@
 # Graphs SQL/C# Group Project
 
-Merging what we learned in C# and SQL, we created this final project as a class.
-We took the data from a database, containing graphs, nodes, and edges, and made a visualization using a C# Windows Form.
-We also implemented graph algorithms (Dijkstra's Algorithm, Topological Sort, Prim's and Kruskal's MST), and displayed
-them using the GUI.
+This is an updated, enhanced version of the Graphs Project that we did as a class last semester.
+The project merged what we learned in C# and SQL to create a program that implements popular graph algorithms.
+We took data containing graphs, nodes, and edges from a database; with a visualization using a C# Windows Form.
+We implemented Dijkstra's Algorithm, Topological Sort, Prim's and Kruskal's MST, 
+and displayed them on the graph using the GUI.
+This improved version updates the node coordinates when a new node is added, 
+has a clearer GUI visualization, and streamlines the algorithms and their implementations.
 
 Contributors:
 
-- [Chana Levy (Rosenbluth)](https://github.com/clrosenbluth)
 - [Chaya Haor](https://github.com/chayahaor)
-- [Miriam Dreyfuss](https://github.com/MDreyfuss)
-- [Nina Churba](https://github.com/nbildiri)
-- [Rachel Nemesure](https://github.com/RachelRebecca)
 - [Sara Stavnitser](https://github.com/sarastavnitser)
 - [Sara Yaffe](https://github.com/SaraYaffe)
-
+- [Rachaeli Brisman](https://github.com/RachelBrisman)
 NOTE: Our gitignore came from [here](https://github.com/github/gitignore/blob/main/VisualStudio.gitignore)
