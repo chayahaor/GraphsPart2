@@ -1,4 +1,4 @@
-# Graphs SQL/C# Group Project
+# Graphs SQL/C# Group Project - Updated Version
 
 This is an updated, enhanced version of the Graphs Project that we did as a class last semester.
 The project merged what we learned in C# and SQL to create a program that implements popular graph algorithms.
@@ -14,4 +14,5 @@ Contributors:
 - [Sara Stavnitser](https://github.com/sarastavnitser)
 - [Sara Yaffe](https://github.com/SaraYaffe)
 - [Rachaeli Brisman](https://github.com/RachelBrisman)
+
 NOTE: Our gitignore came from [here](https://github.com/github/gitignore/blob/main/VisualStudio.gitignore)
